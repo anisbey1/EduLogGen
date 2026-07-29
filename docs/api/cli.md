@@ -1,0 +1,3 @@
+# eduloggen.cli
+
+::: eduloggen.cli
