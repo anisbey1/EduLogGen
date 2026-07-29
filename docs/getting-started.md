@@ -31,6 +31,9 @@ pytest
 You should see a semantic version string (for example `0.1.0`), CLI help text,
 and a passing test suite.
 
+The version string is defined in `src/eduloggen/__version__.py` and re-exported
+from the package root as `eduloggen.__version__`.
+
 ## Development tools
 
 | Tool | Role |
