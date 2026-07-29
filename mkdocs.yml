@@ -1,0 +1,79 @@
+# MkDocs configuration for EduLogGen documentation.
+#
+# Build locally with: mkdocs serve
+# Publish via GitHub Actions / gh-pages as the project matures.
+
+site_name: EduLogGen
+site_description: >
+  Open-source Python framework for analyzing, generating, validating,
+  and benchmarking synthetic educational interaction logs.
+site_author: EduLogGen Contributors
+site_url: https://anisbey1.github.io/EduLogGen/
+
+repo_name: anisbey1/EduLogGen
+repo_url: https://github.com/anisbey1/EduLogGen
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; 2026 EduLogGen Contributors
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            members_order: source
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Vision: 01_VISION.md
+  - Product Requirements: 02_PRD.md
+  - Architecture: 03_ARCHITECTURE.md
+  - Getting Started: getting-started.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
+  - API Reference:
+      - Overview: api/index.md
+      - eduloggen: api/eduloggen.md
+      - CLI: api/cli.md

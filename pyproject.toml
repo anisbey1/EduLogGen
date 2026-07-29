@@ -1,0 +1,176 @@
+# EduLogGen package configuration.
+#
+# This file defines project metadata, build settings, optional dependency
+# groups, and tool configurations for a production-quality open-source package.
+# Versioning follows Semantic Versioning (https://semver.org/).
+
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "eduloggen"
+dynamic = ["version"]
+description = "Open-source Python framework for analyzing, generating, validating, and benchmarking synthetic educational interaction logs."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [
+    { name = "EduLogGen Contributors" },
+]
+maintainers = [
+    { name = "EduLogGen Contributors" },
+]
+keywords = [
+    "educational-data-mining",
+    "learning-analytics",
+    "synthetic-data",
+    "interaction-logs",
+    "privacy-preserving",
+    "benchmarking",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/anisbey1/EduLogGen"
+Documentation = "https://anisbey1.github.io/EduLogGen/"
+Repository = "https://github.com/anisbey1/EduLogGen"
+Issues = "https://github.com/anisbey1/EduLogGen/issues"
+Changelog = "https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.9.0",
+    "black>=25.1.0",
+    "mypy>=1.14.0",
+    "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
+    "pre-commit>=4.0.0",
+]
+docs = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.27.0",
+]
+all = [
+    "eduloggen[dev,docs]",
+]
+
+[project.scripts]
+eduloggen = "eduloggen.cli:main"
+
+[tool.hatch.version]
+path = "src/eduloggen/__version__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/eduloggen"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/docs",
+    "/LICENSE",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/mkdocs.yml",
+]
+
+# ---------------------------------------------------------------------------
+# Ruff — linting and import sorting
+# ---------------------------------------------------------------------------
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "N",    # pep8-naming
+    "SIM",  # flake8-simplify
+    "RUF",  # Ruff-specific rules
+    "D",    # pydocstyle
+]
+ignore = [
+    "D203",  # conflicts with D211 (no-blank-line-before-class)
+    "D213",  # conflicts with D212 (multi-line-summary-first-line)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D"]
+"docs/**/*.py" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["eduloggen"]
+
+# ---------------------------------------------------------------------------
+# Black — code formatting
+# ---------------------------------------------------------------------------
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\.pyi?$'
+
+# ---------------------------------------------------------------------------
+# MyPy — static type checking
+# ---------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+warn_unreachable = true
+show_error_codes = true
+pretty = true
+mypy_path = "src"
+packages = ["eduloggen"]
+
+# ---------------------------------------------------------------------------
+# PyTest — unit testing
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--showlocals",
+]
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+branch = true
+source = ["eduloggen"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 80

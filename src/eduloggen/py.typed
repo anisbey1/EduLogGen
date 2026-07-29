@@ -1,0 +1,2 @@
+# Marker file indicating that EduLogGen ships with inline type annotations
+# and supports static type checkers (PEP 561).
