@@ -1,0 +1,3 @@
+# eduloggen.models
+
+::: eduloggen.models

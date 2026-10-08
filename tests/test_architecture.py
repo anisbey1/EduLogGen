@@ -30,6 +30,7 @@ ALL = frozenset(
         "plugins",
         "privacy",
         "utils",
+        "api",
     }
 )
 
@@ -57,6 +58,8 @@ ALLOWED: dict[str, frozenset[str]] = {
     "plugins": frozenset(
         {"core", "config", "io", "analysis", "generators", "validation", "benchmark"}
     ),
+    "api": ALL - {"api", "cli", "benchmark", "visualization", "plugins"},
+    "__main__": frozenset({"cli"}),
     "cli": ALL,
 }
 
@@ -104,4 +107,8 @@ def test_generators_and_validation_stay_separate() -> None:
     """ADR-005: neither may depend on the other."""
     assert "validation" not in ALLOWED["generators"]
     assert "generators" not in ALLOWED["validation"]
-    assert all("cli" not in deps for pkg, deps in ALLOWED.items() if pkg != "cli")
+    assert all(
+        "cli" not in deps
+        for pkg, deps in ALLOWED.items()
+        if pkg not in {"cli", "__main__"}
+    )

@@ -7,19 +7,25 @@ EduLogGen helps researchers, universities, and education-technology teams create
 privacy-preserving synthetic datasets that reproduce the statistical and
 behavioral properties of real learner interaction logs.
 
-> **Status:** early skeleton (v0.1.0). Public APIs for generators and validators
-> are under active design. See [`docs/01_VISION.md`](docs/01_VISION.md).
+> **Status:** pre-release. Ingestion, sessionization, analysis, Markov and
+> Semi-Markov generation, and validation work end to end from Python and the
+> CLI. Benchmarking and visualization are in progress. See
+> [`docs/01_VISION.md`](docs/01_VISION.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
-## Features (roadmap)
+## Features
 
-Version 1.0 targets:
-
-- Data ingestion for educational interaction logs
-- Session and statistical analysis
-- Markov and Semi-Markov generators
-- Validation and benchmarking harnesses
-- Visualization utilities
-- Command-line interface
+- **Ingest** CSV, TSV, JSON Lines, and Parquet logs through a declarative
+  field mapping, with timezone handling, salted ID pseudonymization, and a
+  value-free data quality report
+- **Sessionize** by explicit session IDs, idle timeout, or both
+- **Analyze** event mixes, n-grams, transition structure, timing, and
+  navigation graphs; export JSON and Markdown summaries
+- **Generate** with `markov` (order-k), `semi_markov` (per-activity timing),
+  or the `independent` baseline; seeded, reproducible, with remapped IDs
+- **Validate** real versus synthetic data on marginal, structural, temporal,
+  sequential, and privacy metrics, with pass/fail thresholds for CI
+- **Configure** runs in YAML/TOML/JSON with documented precedence
+  (CLI > `EDULOGGEN_*` environment > file > defaults)
 
 ## Requirements
 
@@ -36,24 +42,46 @@ Optional extras:
 
 | Extra | Purpose |
 | ----- | ------- |
-| `dev` | Ruff, Black, MyPy, PyTest, pre-commit |
+| `parquet` | Parquet reading and writing (`pyarrow`) |
+| `dev` | Ruff, Black, MyPy, PyTest, pre-commit (includes `parquet`) |
 | `docs` | MkDocs and Material theme |
 | `all` | Development and documentation tools |
 
 ## Quick start
 
+From the command line:
+
 ```bash
-# Editable install (development)
-pip install -e .
-
-# Confirm the package is importable
-python -c "import eduloggen; print(eduloggen.__version__)"
-
-# Inspect the CLI
-eduloggen --help
+eduloggen ingest --input events.csv --mapping mapping.yaml --output corpus/
+eduloggen sessionize --input corpus/ --output sessions/
+eduloggen fit --input sessions/ --generator semi_markov --output model/
+eduloggen generate --model model/ --n-sessions 1000 --seed 42 --output synthetic/
+eduloggen validate --real sessions/ --synthetic synthetic/ \
+    --threshold event_type_tvd=0.1 --output report/
 ```
 
-The public version lives in `src/eduloggen/__version__.py`.
+`validate` exits with `1` when a threshold fails, so it can gate CI jobs. See
+[`examples/configs/`](examples/configs/) for a field mapping and a complete
+experiment configuration.
+
+From Python:
+
+```python
+import eduloggen as elg
+
+real = elg.sessionize(elg.ingest("events.csv", "mapping.yaml").dataset)
+model = elg.fit_generator("semi_markov", real, hyperparameters={"order": 2})
+synthetic = elg.generate(model, n_sessions=1000, seed=42)
+report = elg.validate(real, synthetic, thresholds={"event_type_tvd": 0.1})
+print(report.to_markdown())
+```
+
+## Privacy
+
+EduLogGen runs locally and never transmits data. Synthetic data reduces but
+does not remove re-identification risk: always review the privacy indicators
+in the validation report before sharing outputs. See
+[`docs/privacy.md`](docs/privacy.md).
 
 ## Development
 
@@ -82,15 +110,21 @@ python -m build
 
 ```text
 src/eduloggen/          # Installable package (src layout)
-  ingestion/            # Log loading and normalization (planned)
-  analysis/             # Session and statistical analysis (planned)
-  generators/           # Synthetic generators (planned)
-  validation/           # Quality, similarity, privacy checks (planned)
-  visualization/        # Plotting utilities (planned)
-  cli.py                # Console entry point
+  api.py                # Workflow façade re-exported as `import eduloggen`
+  core/                 # Exceptions, constants, RunContext
+  models/               # Canonical events, sessions, datasets, model artifacts
+  config/               # Typed configuration and precedence rules
+  io/                   # Readers, writers, field mapping, ingest, corpora
+  analysis/             # Sessionization and behavioural statistics
+  generators/           # Markov, Semi-Markov, baseline; registry; artifacts
+  validation/           # Metrics, thresholds, reports
+  privacy/              # ID remapping and metadata stripping
+  utils/                # Seeding, hashing, atomic file output
+  cli/                  # `eduloggen` command line
+  visualization/        # Plotting (in progress)
 tests/                  # PyTest suite
 docs/                   # MkDocs sources
-examples/               # Runnable examples (planned)
+examples/               # Example configs (synthetic data only)
 notebooks/              # Exploratory notebooks (planned)
 ```
 

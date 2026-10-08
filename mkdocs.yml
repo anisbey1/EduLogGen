@@ -71,9 +71,19 @@ nav:
   - Product Requirements: 02_PRD.md
   - Architecture: 03_ARCHITECTURE.md
   - Getting Started: getting-started.md
+  - Privacy: privacy.md
   - Contributing: contributing.md
   - Changelog: changelog.md
   - API Reference:
       - Overview: api/index.md
       - eduloggen: api/eduloggen.md
+      - Workflow: api/workflow.md
+      - core: api/core.md
+      - models: api/models.md
+      - config: api/config.md
+      - io: api/io.md
+      - analysis: api/analysis.md
+      - generators: api/generators.md
+      - validation: api/validation.md
+      - privacy: api/privacy.md
       - CLI: api/cli.md
