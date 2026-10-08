@@ -35,6 +35,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `eduloggen.privacy`: seeded remapping of learner/session/event ids
   (default for generated data) and metadata key stripping
 - Architecture test enforcing the package dependency matrix (SAD §8.2)
+- `eduloggen.analysis`: `sessionize()` with explicit / idle-timeout /
+  composite strategies and configurable tokenization; order-k transition
+  counts with start padding and additive smoothing; n-grams and rare-n-gram
+  detection; inter-event, sojourn, and duration statistics; session feature
+  rows, learner profiles, corpus features, and a navigation graph;
+  `analyze()` returning an `AnalysisResult` with JSON and Markdown exports
 
 ### Changed
 
