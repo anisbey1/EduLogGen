@@ -8,8 +8,8 @@ privacy-preserving synthetic datasets that reproduce the statistical and
 behavioral properties of real learner interaction logs.
 
 > **Status:** pre-release. Ingestion, sessionization, analysis, Markov and
-> Semi-Markov generation, validation, and benchmarking work end to end from
-> Python and the CLI. Visualization is in progress. See
+> Semi-Markov generation, validation, benchmarking, and visualization work
+> end to end from Python and the CLI. See
 > [`docs/01_VISION.md`](docs/01_VISION.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Features
@@ -26,6 +26,8 @@ behavioral properties of real learner interaction logs.
   sequential, and privacy metrics, with pass/fail thresholds for CI
 - **Benchmark** generators fairly with protocol `session_fidelity_v1`
   (learner-level holdout, multiple seeds, real-data reference scores)
+- **Plot** real-versus-synthetic distributions, transition heatmaps, session
+  timelines, validation summaries, and benchmark dashboards (PNG/SVG/PDF)
 - **Try it instantly** with `eduloggen demo`, a fully synthetic course corpus
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)
@@ -46,7 +48,8 @@ Optional extras:
 | Extra | Purpose |
 | ----- | ------- |
 | `parquet` | Parquet reading and writing (`pyarrow`) |
-| `dev` | Ruff, Black, MyPy, PyTest, pre-commit (includes `parquet`) |
+| `viz` | Figures (`matplotlib`) |
+| `dev` | Ruff, Black, MyPy, PyTest, pre-commit (includes `parquet`, `viz`) |
 | `docs` | MkDocs and Material theme |
 | `all` | Development and documentation tools |
 
@@ -68,6 +71,7 @@ eduloggen fit --input sessions/ --generator semi_markov --output model/
 eduloggen generate --model model/ --n-sessions 1000 --seed 42 --output synthetic/
 eduloggen validate --real sessions/ --synthetic synthetic/ \
     --threshold event_type_tvd=0.1 --output report/
+eduloggen plot --real sessions/ --synthetic synthetic/ --output figures/
 ```
 
 `validate` exits with `1` when a threshold fails, so it can gate CI jobs. See
@@ -133,7 +137,7 @@ src/eduloggen/          # Installable package (src layout)
   privacy/              # ID remapping and metadata stripping
   utils/                # Seeding, hashing, atomic file output
   cli/                  # `eduloggen` command line
-  visualization/        # Plotting (in progress)
+  visualization/        # Figures for datasets and reports
 tests/                  # PyTest suite
 docs/                   # MkDocs sources
 examples/               # Example configs (synthetic data only)

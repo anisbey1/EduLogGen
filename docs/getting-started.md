@@ -113,6 +113,22 @@ Key hyperparameters: `order`, `smoothing_alpha`, `length_model`
 (`empirical`, `poisson`, `fixed`), and for `semi_markov` `timing_family`
 (`empirical`, `lognormal`, `gamma`, `exponential`).
 
+## Plot the results
+
+Install the `viz` extra (`pip install 'eduloggen[viz]'`), then:
+
+```bash
+eduloggen plot --real sessions/ --synthetic synthetic/ --output figures/
+eduloggen plot --validation report/report.json --benchmark benchmark/benchmark.json \
+    --format png,svg --output figures/
+```
+
+Dataset plots: `event_frequencies`, `activity_frequencies`, `session_lengths`,
+`session_durations`, `interevent_times`, `transitions` (heatmaps on a shared
+scale), and `timeline` (a capped random sample of sessions, labelled without
+ids). In Python, every function in `eduloggen.visualization` returns a
+matplotlib figure.
+
 ## Compare generators
 
 ```bash

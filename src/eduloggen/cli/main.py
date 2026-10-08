@@ -205,6 +205,26 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--output", required=True, help="corpus directory")
     p.add_argument("--learners", type=int, default=60, help="number of learners")
 
+    p = add(
+        "plot",
+        "render figures (requires the viz extra)",
+        "eduloggen plot --real corpus/ --synthetic synthetic/ --output figures/",
+    )
+    p.add_argument("--real", help="real corpus directory")
+    p.add_argument("--synthetic", help="synthetic corpus to overlay")
+    p.add_argument(
+        "--plots",
+        help="comma-separated: event_frequencies, activity_frequencies, "
+        "session_lengths, session_durations, interevent_times, transitions, "
+        "timeline (default: all)",
+    )
+    p.add_argument("--validation", help="report.json from validate")
+    p.add_argument("--benchmark", help="benchmark.json from benchmark")
+    p.add_argument("--format", help="comma-separated png, svg, pdf")
+    p.add_argument(
+        "--output", help="figure directory (default: visualization.output_dir)"
+    )
+
     p = add("info", "show version, environment, and plugins", "eduloggen info")
     p.add_argument("--input", help="also summarize this corpus")
 

@@ -63,6 +63,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `BenchmarkReport` JSON/Markdown output; `run_benchmark` in the API
 - CLI commands `benchmark` and `demo`
 - CI smoke job running the full pipeline and benchmark on the demo corpus
+- `eduloggen.visualization` (optional `viz` extra): event/activity frequency,
+  session length and duration, inter-event time (histogram and ECDF), and
+  transition heatmap comparisons; sampled session timelines; validation and
+  benchmark charts; colour-blind-safe palette; reproducible PNG/SVG/PDF export;
+  `plot_datasets` for the standard set; CLI `plot` command
 - `eduloggen.api` workflow façade (`load_config`, `ingest`, `load_dataset`,
   `save_dataset`, `sessionize`, `analyze`, `fit_generator`, `generate`,
   `validate`), re-exported from `import eduloggen`

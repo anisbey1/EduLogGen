@@ -327,6 +327,61 @@ def cmd_demo(args: argparse.Namespace, run: Run) -> int:
     return EXIT_OK
 
 
+def cmd_plot(args: argparse.Namespace, run: Run) -> int:
+    """Render figures for corpora and/or saved reports."""
+    from eduloggen.benchmark import BenchmarkReport
+    from eduloggen.validation import ValidationReport
+    from eduloggen.visualization import (
+        plot_benchmark,
+        plot_datasets,
+        plot_validation_report,
+        save_figure,
+    )
+
+    if not (args.real or args.validation or args.benchmark):
+        raise ConfigError(
+            "plot needs --real, --validation, or --benchmark",
+            code="cli_missing_argument",
+            context={"argument": "--real"},
+        )
+    section = run.config.visualization
+    output = _path(args.output, section.output_dir, run, "--output")
+    formats = (
+        [f.strip() for f in args.format.split(",") if f.strip()]
+        if args.format
+        else list(section.formats)
+    )
+    written: list[Path] = []
+    if args.real:
+        real = _load(_path(args.real, None, run, "--real"), run, "real")
+        synthetic = (
+            _load(_path(args.synthetic, None, run, "--synthetic"), run, "synthetic")
+            if args.synthetic
+            else None
+        )
+        plots = [p.strip() for p in args.plots.split(",")] if args.plots else None
+        for paths in plot_datasets(
+            real, synthetic, output, plots=plots, formats=formats, dpi=section.dpi
+        ).values():
+            written.extend(paths)
+    reports: list[tuple[str, Any]] = []
+    if args.validation:
+        data = load_file(_path(args.validation, None, run, "--validation"))
+        reports.append(
+            ("validation", plot_validation_report(ValidationReport.from_dict(data)))
+        )
+    if args.benchmark:
+        data = load_file(_path(args.benchmark, None, run, "--benchmark"))
+        reports.append(("benchmark", plot_benchmark(BenchmarkReport.from_dict(data))))
+    for name, figure in reports:
+        written.extend(
+            save_figure(figure, output / name, formats=formats, dpi=section.dpi)
+        )
+    run.outputs["figures"] = str(output)
+    _print("\n".join(f"wrote {path}" for path in written))
+    return EXIT_OK
+
+
 def cmd_info(args: argparse.Namespace, run: Run) -> int:
     """Show version, environment, plugins, and optionally a corpus summary."""
     lines = [
@@ -376,6 +431,7 @@ COMMANDS: Final[dict[str, Handler]] = {
     "validate": cmd_validate,
     "benchmark": cmd_benchmark,
     "demo": cmd_demo,
+    "plot": cmd_plot,
     "info": cmd_info,
     "plugins": cmd_plugins,
 }
