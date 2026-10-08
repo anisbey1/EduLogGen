@@ -72,6 +72,7 @@ nav:
   - Architecture: 03_ARCHITECTURE.md
   - Getting Started: getting-started.md
   - Privacy: privacy.md
+  - Writing plugins: plugins.md
   - Contributing: contributing.md
   - Changelog: changelog.md
   - API Reference:
@@ -88,5 +89,6 @@ nav:
       - benchmark: api/benchmark.md
       - datasets: api/datasets.md
       - visualization: api/visualization.md
+      - plugins: api/plugins.md
       - privacy: api/privacy.md
       - CLI: api/cli.md

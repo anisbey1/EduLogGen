@@ -27,6 +27,7 @@ from eduloggen.generators.distributions import (
 )
 from eduloggen.generators.markov import MarkovGenerator
 from eduloggen.generators.registry import (
+    BUILTIN_GENERATORS,
     GeneratorFactory,
     available_generators,
     get_generator,
@@ -37,6 +38,7 @@ from eduloggen.generators.semi_markov import SemiMarkovGenerator
 from eduloggen.generators.statistical import IndependentGenerator
 
 __all__ = [
+    "BUILTIN_GENERATORS",
     "BaseGenerator",
     "Categorical",
     "DurationSampler",

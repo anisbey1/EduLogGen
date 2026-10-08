@@ -28,6 +28,8 @@ behavioral properties of real learner interaction logs.
   (learner-level holdout, multiple seeds, real-data reference scores)
 - **Plot** real-versus-synthetic distributions, transition heatmaps and
   graphs, Sankey pathway diagrams, session timelines, validation summaries, and benchmark dashboards (PNG/SVG/PDF)
+- **Extend** with installable plugins for generators, metrics, readers,
+  plots, and benchmark protocols (see [`docs/plugins.md`](docs/plugins.md))
 - **Try it instantly** with `eduloggen demo`, a fully synthetic course corpus
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)
@@ -134,6 +136,7 @@ src/eduloggen/          # Installable package (src layout)
   validation/           # Metrics, thresholds, reports
   benchmark/            # Protocols, runner, comparison reports
   datasets/             # Synthetic demo corpus
+  plugins/              # Entry-point discovery and registration
   privacy/              # ID remapping and metadata stripping
   utils/                # Seeding, hashing, atomic file output
   cli/                  # `eduloggen` command line

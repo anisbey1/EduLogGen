@@ -39,7 +39,6 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
-InputFormat = Literal["auto", "csv", "tsv", "jsonl", "parquet"]
 TableFormat = Literal["csv", "tsv", "jsonl", "parquet"]
 DuplicatePolicy = Literal["keep_first", "error"]
 UnknownEventPolicy = Literal["preserve", "map_to_other", "reject"]
@@ -84,7 +83,8 @@ class IoConfig:
 
     Attributes:
         input: Source log file, relative to the config file.
-        format: Source format, or ``"auto"`` to use the file extension.
+        format: Reader name (built-in ``csv``, ``tsv``, ``jsonl``,
+            ``parquet``, or a plugin), or ``"auto"`` to use the extension.
         mapping: Field mapping file (YAML/TOML/JSON).
         output: Corpus directory to write.
         output_format: Table format for written corpora.
@@ -95,7 +95,7 @@ class IoConfig:
     """
 
     input: str | None = None
-    format: InputFormat = "auto"
+    format: str = "auto"
     mapping: str | None = None
     output: str | None = None
     output_format: TableFormat = "csv"

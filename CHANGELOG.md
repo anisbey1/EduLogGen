@@ -68,6 +68,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   transition heatmap comparisons; sampled session timelines; validation and
   benchmark charts; colour-blind-safe palette; reproducible PNG/SVG/PDF export;
   `plot_datasets` for the standard set; CLI `plot` command
+- `eduloggen.plugins`: entry-point discovery (`eduloggen.plugins.<kind>`) for
+  generators, metrics, readers, visualizers, and benchmark suites; contract
+  checks before registration; built-ins protected; broken plugins reported
+  without crashing (`strict=True` to fail); `register_plugin`,
+  `unregister_plugin`, `list_plugins`; CLI discovers at startup, `plugins`
+  shows sources, versions, and errors; run manifests record plugin versions
+- Registration hooks: `register_reader` (with file suffixes),
+  `register_plot`, `register_protocol`; `BUILTIN_*` name sets
+- Plugin author guide (`docs/plugins.md`)
 - Node-link transition graph (`plot_transition_graph`) and multi-step Sankey
   pathway diagram (`plot_sankey`, `sankey_flows`), matplotlib only
 - `eduloggen.api` workflow façade (`load_config`, `ingest`, `load_dataset`,
@@ -86,6 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   corpus and model artifacts
 - SAD §8.2: `validation` may depend on `analysis` (documented in the matrix)
 - Coverage gate raised from 80% to 95% (ADR-011)
+- `io.format` and `ingest(format=...)` accept plugin reader names
 - `eduloggen.cli` is now a package; the `eduloggen` console script entry
   point is unchanged
 

@@ -58,7 +58,16 @@ ALLOWED: dict[str, frozenset[str]] = {
         {"core", "models", "analysis", "validation", "benchmark", "utils"}
     ),
     "plugins": frozenset(
-        {"core", "config", "io", "analysis", "generators", "validation", "benchmark"}
+        {
+            "core",
+            "config",
+            "io",
+            "analysis",
+            "generators",
+            "validation",
+            "benchmark",
+            "visualization",
+        }
     ),
     "api": ALL - {"api", "cli", "visualization", "plugins"},
     "__main__": frozenset({"cli"}),

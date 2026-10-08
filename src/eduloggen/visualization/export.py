@@ -6,7 +6,7 @@ from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING, Final
 
-from eduloggen.core import ConfigError, PathLike
+from eduloggen.core import ConfigError, PathLike, PluginError
 from eduloggen.models import Dataset
 from eduloggen.visualization.base import save_figure
 from eduloggen.visualization.distributions import (
@@ -23,7 +23,14 @@ from eduloggen.visualization.timeline import plot_timeline
 if TYPE_CHECKING:
     from matplotlib.figure import Figure
 
-__all__ = ["DATASET_PLOTS", "plot_datasets"]
+__all__ = [
+    "BUILTIN_PLOTS",
+    "DATASET_PLOTS",
+    "PlotFunction",
+    "plot_datasets",
+    "register_plot",
+    "unregister_plot",
+]
 
 DATASET_PLOTS: Final[dict[str, Callable[[Dataset, Dataset | None], Figure]]] = {
     "event_frequencies": lambda real, synthetic: plot_event_frequencies(
@@ -41,6 +48,43 @@ DATASET_PLOTS: Final[dict[str, Callable[[Dataset, Dataset | None], Figure]]] = {
     "timeline": lambda real, _synthetic: plot_timeline(real),
 }
 """Plot name to function of (real, synthetic or ``None``)."""
+
+
+PlotFunction = Callable[[Dataset, Dataset | None], "Figure"]
+BUILTIN_PLOTS: Final = frozenset(DATASET_PLOTS)
+"""Names of the plots shipped with EduLogGen."""
+
+
+def register_plot(name: str, function: PlotFunction, *, replace: bool = False) -> None:
+    """Add a named dataset plot (e.g. from a plugin).
+
+    The function receives ``(real, synthetic_or_None)`` and returns a figure.
+
+    Raises:
+        PluginError: If the name is invalid, built in, or taken (without
+            ``replace``), or the function is not callable.
+    """
+    if not isinstance(name, str) or not name.isidentifier():
+        raise PluginError(
+            "plot names must be identifiers",
+            code="plugin_invalid_name",
+            context={"name": repr(name)},
+        )
+    if not callable(function):
+        raise PluginError("plot must be callable", code="plugin_invalid_factory")
+    if name in BUILTIN_PLOTS or (name in DATASET_PLOTS and not replace):
+        raise PluginError(
+            f"plot {name!r} is already registered",
+            code="plugin_duplicate",
+            context={"name": name},
+        )
+    DATASET_PLOTS[name] = function
+
+
+def unregister_plot(name: str) -> None:
+    """Remove a non-built-in plot (no-op if absent)."""
+    if name not in BUILTIN_PLOTS:
+        DATASET_PLOTS.pop(name, None)
 
 
 def plot_datasets(
