@@ -57,6 +57,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   thresholds with pass / fail / info / skip statuses; `ValidationReport` with
   JSON and Markdown output; metric registry for custom metrics
 - `eduloggen.datasets.demo_dataset`: seeded, fully synthetic demo course corpus
+- `eduloggen.benchmark`: protocol `session_fidelity_v1` with a learner-level
+  holdout split, multi-seed runs, mean/std aggregation, fit/generate timings,
+  a real-vs-real reference row, failure isolation per generator, and
+  `BenchmarkReport` JSON/Markdown output; `run_benchmark` in the API
+- CLI commands `benchmark` and `demo`
+- CI smoke job running the full pipeline and benchmark on the demo corpus
 - `eduloggen.api` workflow façade (`load_config`, `ingest`, `load_dataset`,
   `save_dataset`, `sessionize`, `analyze`, `fit_generator`, `generate`,
   `validate`), re-exported from `import eduloggen`
@@ -72,6 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Atomic output-directory writing moved to `eduloggen.utils.fs` and shared by
   corpus and model artifacts
 - SAD §8.2: `validation` may depend on `analysis` (documented in the matrix)
+- Coverage gate raised from 80% to 95% (ADR-011)
 - `eduloggen.cli` is now a package; the `eduloggen` console script entry
   point is unchanged
 

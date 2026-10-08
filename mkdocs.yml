@@ -85,5 +85,7 @@ nav:
       - analysis: api/analysis.md
       - generators: api/generators.md
       - validation: api/validation.md
+      - benchmark: api/benchmark.md
+      - datasets: api/datasets.md
       - privacy: api/privacy.md
       - CLI: api/cli.md

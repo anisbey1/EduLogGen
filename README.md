@@ -8,8 +8,8 @@ privacy-preserving synthetic datasets that reproduce the statistical and
 behavioral properties of real learner interaction logs.
 
 > **Status:** pre-release. Ingestion, sessionization, analysis, Markov and
-> Semi-Markov generation, and validation work end to end from Python and the
-> CLI. Benchmarking and visualization are in progress. See
+> Semi-Markov generation, validation, and benchmarking work end to end from
+> Python and the CLI. Visualization is in progress. See
 > [`docs/01_VISION.md`](docs/01_VISION.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Features
@@ -24,6 +24,9 @@ behavioral properties of real learner interaction logs.
   or the `independent` baseline; seeded, reproducible, with remapped IDs
 - **Validate** real versus synthetic data on marginal, structural, temporal,
   sequential, and privacy metrics, with pass/fail thresholds for CI
+- **Benchmark** generators fairly with protocol `session_fidelity_v1`
+  (learner-level holdout, multiple seeds, real-data reference scores)
+- **Try it instantly** with `eduloggen demo`, a fully synthetic course corpus
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)
 
@@ -49,7 +52,14 @@ Optional extras:
 
 ## Quick start
 
-From the command line:
+Try it on synthetic demo data:
+
+```bash
+eduloggen demo --output demo/
+eduloggen benchmark --input demo/
+```
+
+On your own data:
 
 ```bash
 eduloggen ingest --input events.csv --mapping mapping.yaml --output corpus/
@@ -118,6 +128,8 @@ src/eduloggen/          # Installable package (src layout)
   analysis/             # Sessionization and behavioural statistics
   generators/           # Markov, Semi-Markov, baseline; registry; artifacts
   validation/           # Metrics, thresholds, reports
+  benchmark/            # Protocols, runner, comparison reports
+  datasets/             # Synthetic demo corpus
   privacy/              # ID remapping and metadata stripping
   utils/                # Seeding, hashing, atomic file output
   cli/                  # `eduloggen` command line

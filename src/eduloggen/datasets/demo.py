@@ -163,10 +163,24 @@ def _session(
     rng = builder.rng
     pace = profile.pace
 
-    def emit(kind: str, activity: str, event_type: str, **extra: object) -> None:
+    def emit(
+        kind: str,
+        activity: str,
+        event_type: str,
+        score: float | None = None,
+        success: bool | None = None,
+    ) -> None:
         nonlocal clock
         clock = builder.emit(
-            learner, clock, kind, activity, event_type, device, pace, **extra  # type: ignore[arg-type]
+            learner,
+            clock,
+            kind,
+            activity,
+            event_type,
+            device,
+            pace,
+            score=score,
+            success=success,
         )
 
     emit("home", "course-home", "navigate")

@@ -33,6 +33,7 @@ examples:
   eduloggen validate --real corpus/ --synthetic synthetic/ \
       --threshold event_type_tvd=0.1
   eduloggen --config experiment.yaml fit --input corpus/ --output model/
+  eduloggen demo --output demo/ && eduloggen benchmark --input demo/
 
 exit codes: 0 success, 1 validation or quality failure, 2 usage or runtime error
 """
@@ -182,6 +183,28 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--real-split", default="full", help="label of the real reference")
     p.add_argument("--output", help="write report.json and report.md here")
 
+    p = add(
+        "benchmark",
+        "compare generators under a benchmark protocol",
+        "eduloggen benchmark --input corpus/ --generators markov,semi_markov",
+    )
+    p.add_argument("--input", required=True, help="corpus directory")
+    p.add_argument(
+        "--generators", help="comma-separated (default: benchmark.generators)"
+    )
+    p.add_argument("--protocol", help="protocol name (default: benchmark.protocol)")
+    p.add_argument("--seeds", type=int, help="repeats per generator")
+    p.add_argument("--n-sessions", type=int, help="sessions per sample")
+    p.add_argument("--output", help="write benchmark.json and benchmark.md here")
+
+    p = add(
+        "demo",
+        "write a fully synthetic demo course corpus",
+        "eduloggen demo --output demo/ --learners 100",
+    )
+    p.add_argument("--output", required=True, help="corpus directory")
+    p.add_argument("--learners", type=int, default=60, help="number of learners")
+
     p = add("info", "show version, environment, and plugins", "eduloggen info")
     p.add_argument("--input", help="also summarize this corpus")
 
@@ -196,7 +219,9 @@ def _overrides(args: argparse.Namespace) -> dict[str, Any]:
         "sessionization.idle_timeout_s": getattr(args, "idle_timeout", None),
         "sessionization.tokenization": getattr(args, "tokenization", None),
         "analysis.ngram_order": getattr(args, "ngram_order", None),
-        "generation.n_sessions": getattr(args, "n_sessions", None),
+        "generation.n_sessions": (
+            None if args.command == "benchmark" else getattr(args, "n_sessions", None)
+        ),
         "generation.id_strategy": getattr(args, "id_strategy", None),
     }
 

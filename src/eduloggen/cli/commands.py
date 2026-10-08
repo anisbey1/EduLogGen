@@ -283,6 +283,50 @@ def cmd_validate(args: argparse.Namespace, run: Run) -> int:
     return EXIT_OK if report.passed else EXIT_FAILED
 
 
+def cmd_benchmark(args: argparse.Namespace, run: Run) -> int:
+    """Compare generators under a protocol."""
+    dataset = _load(_path(args.input, None, run, "--input"), run, "corpus")
+    generators = (
+        [g.strip() for g in args.generators.split(",") if g.strip()]
+        if args.generators
+        else None
+    )
+    report = api.run_benchmark(
+        dataset,
+        config=run.config,
+        generators=generators,
+        protocol=args.protocol,
+        repeats=args.seeds,
+        n_sessions=args.n_sessions,
+    )
+    markdown = report.to_markdown()
+    _print(markdown)
+    if args.output:
+        _write_bundle(
+            _path(args.output, None, run, "--output"),
+            {"benchmark.json": report.to_dict(), "benchmark.md": markdown},
+            "benchmark.json",
+            run,
+        )
+    return EXIT_FAILED if any(r.error for r in report.results) else EXIT_OK
+
+
+def cmd_demo(args: argparse.Namespace, run: Run) -> int:
+    """Write the synthetic demo course corpus."""
+    output = _path(args.output, None, run, "--output")
+    dataset = api.demo_dataset(args.learners, seed=run.config.generation.seed or 0)
+    target = write_corpus(
+        dataset, output, format=run.config.io.output_format, force=run.force
+    )
+    run.outputs["corpus"] = str(target)
+    run.manifest_dir = target
+    _print(
+        f"wrote demo corpus {target}: {dataset.n_events} events from "
+        f"{len(dataset.learner_ids)} synthetic learners"
+    )
+    return EXIT_OK
+
+
 def cmd_info(args: argparse.Namespace, run: Run) -> int:
     """Show version, environment, plugins, and optionally a corpus summary."""
     lines = [
@@ -330,6 +374,8 @@ COMMANDS: Final[dict[str, Handler]] = {
     "fit": cmd_fit,
     "generate": cmd_generate,
     "validate": cmd_validate,
+    "benchmark": cmd_benchmark,
+    "demo": cmd_demo,
     "info": cmd_info,
     "plugins": cmd_plugins,
 }
