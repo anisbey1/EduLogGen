@@ -125,8 +125,10 @@ eduloggen plot --validation report/report.json --benchmark benchmark/benchmark.j
 
 Dataset plots: `event_frequencies`, `activity_frequencies`, `session_lengths`,
 `session_durations`, `interevent_times`, `transitions` (heatmaps on a shared
-scale), and `timeline` (a capped random sample of sessions, labelled without
-ids). In Python, every function in `eduloggen.visualization` returns a
+scale), `transition_graph` (node-link diagram: node area is token frequency,
+arrow width the share of transitions), `sankey` (session pathways over the
+first steps, with `(end)` for sessions that stop), and `timeline` (a capped
+random sample of sessions, labelled without ids). In Python, every function in `eduloggen.visualization` returns a
 matplotlib figure.
 
 ## Compare generators

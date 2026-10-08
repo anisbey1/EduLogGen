@@ -26,8 +26,8 @@ behavioral properties of real learner interaction logs.
   sequential, and privacy metrics, with pass/fail thresholds for CI
 - **Benchmark** generators fairly with protocol `session_fidelity_v1`
   (learner-level holdout, multiple seeds, real-data reference scores)
-- **Plot** real-versus-synthetic distributions, transition heatmaps, session
-  timelines, validation summaries, and benchmark dashboards (PNG/SVG/PDF)
+- **Plot** real-versus-synthetic distributions, transition heatmaps and
+  graphs, Sankey pathway diagrams, session timelines, validation summaries, and benchmark dashboards (PNG/SVG/PDF)
 - **Try it instantly** with `eduloggen demo`, a fully synthetic course corpus
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)

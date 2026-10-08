@@ -216,7 +216,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--plots",
         help="comma-separated: event_frequencies, activity_frequencies, "
         "session_lengths, session_durations, interevent_times, transitions, "
-        "timeline (default: all)",
+        "transition_graph, sankey, timeline (default: all)",
     )
     p.add_argument("--validation", help="report.json from validate")
     p.add_argument("--benchmark", help="benchmark.json from benchmark")

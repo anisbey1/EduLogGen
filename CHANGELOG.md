@@ -68,6 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   transition heatmap comparisons; sampled session timelines; validation and
   benchmark charts; colour-blind-safe palette; reproducible PNG/SVG/PDF export;
   `plot_datasets` for the standard set; CLI `plot` command
+- Node-link transition graph (`plot_transition_graph`) and multi-step Sankey
+  pathway diagram (`plot_sankey`, `sankey_flows`), matplotlib only
 - `eduloggen.api` workflow façade (`load_config`, `ingest`, `load_dataset`,
   `save_dataset`, `sessionize`, `analyze`, `fit_generator`, `generate`,
   `validate`), re-exported from `import eduloggen`
