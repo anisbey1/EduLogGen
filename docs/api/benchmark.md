@@ -1,0 +1,3 @@
+# eduloggen.benchmark
+
+::: eduloggen.benchmark

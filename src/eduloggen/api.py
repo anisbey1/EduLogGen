@@ -24,8 +24,11 @@ from typing import Any
 from eduloggen.analysis import AnalysisResult, SessionStrategy
 from eduloggen.analysis import analyze as _analyze
 from eduloggen.analysis import sessionize as _sessionize
+from eduloggen.benchmark import BenchmarkReport
+from eduloggen.benchmark import run_benchmark as _run_benchmark
 from eduloggen.config import AppConfig, resolve_config
 from eduloggen.core import GenerationError, PathLike
+from eduloggen.datasets import demo_dataset
 from eduloggen.generators import get_generator
 from eduloggen.io import (
     FieldMapping,
@@ -50,11 +53,13 @@ from eduloggen.validation import validate as _validate
 
 __all__ = [
     "analyze",
+    "demo_dataset",
     "fit_generator",
     "generate",
     "ingest",
     "load_config",
     "load_dataset",
+    "run_benchmark",
     "save_dataset",
     "sessionize",
     "validate",
@@ -231,4 +236,33 @@ def validate(
         thresholds=limits,
         seed=seed if seed is not None else (cfg.generation.seed or 0),
         real_split=real_split,
+    )
+
+
+def run_benchmark(
+    dataset: Dataset,
+    *,
+    config: AppConfig | None = None,
+    generators: Iterable[str] | None = None,
+    protocol: str | None = None,
+    repeats: int | None = None,
+    n_sessions: int | None = None,
+    seed: int | None = None,
+) -> BenchmarkReport:
+    """Compare generators using the ``benchmark`` settings.
+
+    Unsessionized data is sessionized with the config first. Hyperparameters
+    from the ``generator`` section apply to the configured generator only.
+    """
+    cfg = config or AppConfig()
+    if dataset.sessions is None:
+        dataset = sessionize(dataset, config=cfg)
+    return _run_benchmark(
+        dataset,
+        list(generators) if generators is not None else list(cfg.benchmark.generators),
+        protocol=protocol or cfg.benchmark.protocol,
+        repeats=repeats or cfg.benchmark.repeats,
+        n_sessions=n_sessions,
+        seed=seed if seed is not None else (cfg.generation.seed or 0),
+        hyperparameters={cfg.generator.name: dict(cfg.generator.params)},
     )

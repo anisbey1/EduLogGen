@@ -36,11 +36,13 @@ from __future__ import annotations
 from eduloggen.__version__ import __version__
 from eduloggen.api import (
     analyze,
+    demo_dataset,
     fit_generator,
     generate,
     ingest,
     load_config,
     load_dataset,
+    run_benchmark,
     save_dataset,
     sessionize,
     validate,
@@ -49,11 +51,13 @@ from eduloggen.api import (
 __all__ = [
     "__version__",
     "analyze",
+    "demo_dataset",
     "fit_generator",
     "generate",
     "ingest",
     "load_config",
     "load_dataset",
+    "run_benchmark",
     "save_dataset",
     "sessionize",
     "validate",

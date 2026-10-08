@@ -21,6 +21,18 @@ eduloggen info
 pytest
 ```
 
+## Try it on demo data first
+
+No data at hand? EduLogGen can simulate a small course (fully synthetic):
+
+```bash
+eduloggen demo --output demo/
+eduloggen benchmark --input demo/
+```
+
+The benchmark prints a comparison of all generators. Continue with your own
+data below.
+
 ## 1. Describe your log with a field mapping
 
 EduLogGen reads any tabular log (CSV, TSV, JSON Lines, Parquet) once you say
@@ -100,6 +112,20 @@ print(report.status, report.metric("bigram_tvd").value)
 Key hyperparameters: `order`, `smoothing_alpha`, `length_model`
 (`empirical`, `poisson`, `fixed`), and for `semi_markov` `timing_family`
 (`empirical`, `lognormal`, `gamma`, `exponential`).
+
+## Compare generators
+
+```bash
+eduloggen benchmark --input sessions/ --generators markov,semi_markov,independent \
+    --seeds 3 --output benchmark/
+```
+
+Protocol `session_fidelity_v1` holds out 30% of learners, fits each generator
+on the rest, generates as many sessions as the holdout has with three seeds,
+and scores every sample against the holdout. The **Reference** column scores
+the real training data against the holdout: it shows what a perfect generator
+could reach on this dataset, so compare generators to it rather than to zero.
+Results describe your dataset only; they are not a general ranking.
 
 ## Before sharing outputs
 
