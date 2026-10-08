@@ -29,23 +29,29 @@ from eduloggen.visualization.distributions import (
     plot_session_lengths,
 )
 from eduloggen.visualization.export import DATASET_PLOTS, plot_datasets
+from eduloggen.visualization.graphs import plot_transition_graph
 from eduloggen.visualization.heatmaps import plot_transition_heatmap, transition_matrix
+from eduloggen.visualization.sankey import SankeyLayout, plot_sankey, sankey_flows
 from eduloggen.visualization.timeline import plot_timeline
 
 __all__ = [
     "DATASET_PLOTS",
     "FIGURE_FORMATS",
     "PALETTE",
+    "SankeyLayout",
     "plot_benchmark",
     "plot_datasets",
     "plot_event_frequencies",
     "plot_interevent_times",
+    "plot_sankey",
     "plot_session_durations",
     "plot_session_lengths",
     "plot_timeline",
+    "plot_transition_graph",
     "plot_transition_heatmap",
     "plot_validation_report",
     "require_matplotlib",
+    "sankey_flows",
     "save_figure",
     "transition_matrix",
 ]

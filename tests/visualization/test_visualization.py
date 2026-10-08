@@ -26,11 +26,14 @@ from eduloggen.visualization import (
     plot_datasets,
     plot_event_frequencies,
     plot_interevent_times,
+    plot_sankey,
     plot_session_lengths,
     plot_timeline,
+    plot_transition_graph,
     plot_transition_heatmap,
     plot_validation_report,
     require_matplotlib,
+    sankey_flows,
     save_figure,
     transition_matrix,
 )
@@ -160,7 +163,7 @@ def test_plot_datasets(tmp_path: Path, real: Dataset, synthetic: Dataset) -> Non
     assert set(written) == {"timeline", "transitions"}
     assert (tmp_path / "transitions.svg").exists()
     with pytest.raises(ConfigError) as info:
-        plot_datasets(real, None, tmp_path, plots=["sankey"])
+        plot_datasets(real, None, tmp_path, plots=["pie"])
     assert info.value.code == "plot_unknown"
 
 
@@ -263,3 +266,78 @@ def test_cli_plot_requires_input(
 ) -> None:
     assert main(["plot", "--output", str(tmp_path), "--quiet"]) == 2
     assert "cli_missing_argument" in capsys.readouterr().err
+
+
+# --------------------------------------------------------------------------
+# Sankey and transition graph
+# --------------------------------------------------------------------------
+
+
+def test_sankey_flows_counts_paths_and_ends() -> None:
+    from eduloggen.visualization.sankey import END, OTHER
+
+    layout = sankey_flows(
+        [("a", "b", "c"), ("a", "b"), ("a", "c", "d"), ("x",)], steps=3, top_n=2
+    )
+    assert layout.nodes[0] == {"a": 3, "x": 1}
+    assert layout.nodes[1] == {"b": 2, "c": 1, END: 1}
+    assert layout.nodes[2] == {"c": 1, "d": 1, END: 1}
+    assert layout.flows[0] == {("a", "b"): 2, ("a", "c"): 1, ("x", END): 1}
+    assert layout.flows[1] == {("b", "c"): 1, ("b", END): 1, ("c", "d"): 1}
+
+    grouped = sankey_flows([("a",), ("b",), ("c",)], steps=1, top_n=1)
+    assert grouped.nodes[0] == {"a": 1, OTHER: 2}
+    assert grouped.flows == ()
+
+
+def test_sankey_flow_conservation(real: Dataset) -> None:
+    from eduloggen.analysis import session_sequences
+
+    layout = sankey_flows(session_sequences(real), steps=5)
+    assert sum(layout.nodes[0].values()) == real.n_sessions
+    for step, flows in enumerate(layout.flows):
+        out: dict[str, int] = {}
+        into: dict[str, int] = {}
+        for (src, dst), count in flows.items():
+            out[src] = out.get(src, 0) + count
+            into[dst] = into.get(dst, 0) + count
+        assert out == {k: v for k, v in layout.nodes[step].items() if k != "(end)"}
+        assert into == layout.nodes[step + 1]
+
+
+def test_plot_sankey(real: Dataset, synthetic: Dataset) -> None:
+    figure = plot_sankey(real, synthetic, steps=3, top_n=4)
+    titles = [ax.get_title() for ax in figure.axes]
+    assert titles == [
+        "Session pathways, first 3 steps (real)",
+        "Session pathways, first 3 steps (synthetic)",
+    ]
+    assert "step 3" in _texts(figure)
+    empty = sessionize(Dataset(dataset_id="e", events=()))
+    assert "no sessions" in _texts(plot_sankey(empty))
+
+
+def test_plot_sankey_draws_end_and_other_nodes() -> None:
+    from ..generators.conftest import build
+
+    data = build([("a", "b"), ("a",), ("a", "b", "c"), ("d", "e"), ("f", "e")])
+    text = _texts(plot_sankey(data, steps=3, top_n=1))
+    assert "(end) (" in text
+    assert "other (" in text
+
+
+def test_plot_transition_graph(real: Dataset, synthetic: Dataset) -> None:
+    figure = plot_transition_graph(real, synthetic, top_n=4, max_edges=5)
+    assert [ax.get_title() for ax in figure.axes] == [
+        "Transition graph (real)",
+        "Transition graph (synthetic)",
+    ]
+    from matplotlib.patches import Circle, FancyArrowPatch
+
+    ax = figure.axes[0]
+    arrows = [p for p in ax.patches if isinstance(p, FancyArrowPatch)]
+    nodes = [p for p in ax.patches if isinstance(p, Circle) and p.get_fill()]
+    assert len(nodes) == 4
+    assert 0 < len(arrows) <= 5
+    single = plot_transition_graph(real)
+    assert len(single.axes) == 1
