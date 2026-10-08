@@ -41,6 +41,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   detection; inter-event, sojourn, and duration statistics; session feature
   rows, learner profiles, corpus features, and a navigation graph;
   `analyze()` returning an `AnalysisResult` with JSON and Markdown exports
+- `eduloggen.generators`: `BaseGenerator` contract (fit / generate / describe /
+  save / load) with shared population modelling (sessions per learner,
+  inter-session gaps, companion fields, courses) and seeded, id-remapped
+  output; `markov` (order-k with backoff and additive smoothing; empirical,
+  Poisson, or fixed lengths), `semi_markov` (per-token sojourn timing:
+  empirical, lognormal, gamma, exponential), and `independent` baseline;
+  generator registry; inspectable JSON model artifacts with integrity checks
+- `GeneratorModel` in `eduloggen.models`
+
+### Changed
+
+- Atomic output-directory writing moved to `eduloggen.utils.fs` and shared by
+  corpus and model artifacts
 
 ### Changed
 

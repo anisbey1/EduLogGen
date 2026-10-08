@@ -15,6 +15,7 @@ from eduloggen.models.dataset import (
     SyntheticDataset,
 )
 from eduloggen.models.features import Feature, FeatureScope
+from eduloggen.models.generator_model import GeneratorModel
 from eduloggen.models.records import LogRecord, Participant, Session, TokenField
 from eduloggen.models.schema_validate import (
     check_schema_version,
@@ -34,6 +35,7 @@ __all__ = [
     "Feature",
     "FeatureScope",
     "GenerationMetadata",
+    "GeneratorModel",
     "LogRecord",
     "Participant",
     "Session",

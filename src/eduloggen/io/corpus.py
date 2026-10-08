@@ -18,8 +18,6 @@ empty. Reads verify the content fingerprint recorded in the manifest.
 from __future__ import annotations
 
 import json
-import shutil
-import tempfile
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import Any, Final, cast, get_args
@@ -40,6 +38,7 @@ from eduloggen.models import (
     SyntheticDataset,
     check_schema_version,
 )
+from eduloggen.utils.fs import atomic_directory, write_json
 
 __all__ = ["EVENT_COLUMNS", "SESSION_COLUMNS", "read_corpus", "write_corpus"]
 
@@ -122,18 +121,10 @@ def write_corpus(
             context={"format": format, "supported": sorted(_SUFFIX)},
         )
     target = Path(path).expanduser().absolute()
-    _check_target(target, force)
-    target.parent.mkdir(parents=True, exist_ok=True)
-
-    staging = Path(tempfile.mkdtemp(prefix=f".{target.name}.", dir=target.parent))
-    try:
+    with atomic_directory(target, marker=MANIFEST, force=force) as staging:
         files = _write_contents(staging, dataset, format, quality_report, mapping)
         manifest = dataset.to_manifest() | {"format": format, "files": files}
-        _write_json(staging / MANIFEST, manifest)
-        _swap_into_place(staging, target)
-    except BaseException:
-        shutil.rmtree(staging, ignore_errors=True)
-        raise
+        write_json(staging / MANIFEST, manifest)
     return target
 
 
@@ -203,31 +194,6 @@ def read_corpus(path: PathLike) -> Dataset:
 # ---------------------------------------------------------------------------
 
 
-def _check_target(target: Path, force: bool) -> None:
-    if target.is_symlink():
-        raise ExportError(
-            "refusing to write through a symbolic link",
-            code="export_unsafe_path",
-            context={"path": str(target)},
-        )
-    if not target.exists():
-        return
-    if not force:
-        raise ExportError(
-            "output path already exists; pass force=True to replace it",
-            code="export_exists",
-            context={"path": str(target)},
-        )
-    if not target.is_dir() or not (
-        (target / MANIFEST).is_file() or not any(target.iterdir())
-    ):
-        raise ExportError(
-            "refusing to replace a path that is not a corpus or empty directory",
-            code="export_unsafe_path",
-            context={"path": str(target)},
-        )
-
-
 def _write_contents(
     staging: Path,
     dataset: Dataset,
@@ -248,10 +214,10 @@ def _write_contents(
         )
     files: dict[str, str | None] = {"events": events_name, "sessions": sessions_name}
     if report is not None:
-        _write_json(staging / QUALITY_REPORT, report.to_dict())
+        write_json(staging / QUALITY_REPORT, report.to_dict())
         files["quality_report"] = QUALITY_REPORT
     if mapping is not None:
-        _write_json(staging / MAPPING_USED, mapping.to_dict())
+        write_json(staging / MAPPING_USED, mapping.to_dict())
         files["mapping"] = MAPPING_USED
     return files
 
@@ -267,35 +233,6 @@ def _session_row(session: Session) -> dict[str, Any]:
     row = {name: getattr(session, name) for name, _ in SESSION_COLUMNS}
     row["event_sequence"] = list(session.event_sequence)
     return row
-
-
-def _write_json(path: Path, payload: Mapping[str, Any]) -> None:
-    try:
-        path.write_text(
-            json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n",
-            encoding="utf-8",
-        )
-    except (OSError, TypeError, ValueError) as exc:
-        raise ExportError(
-            f"could not write {path.name}",
-            code="export_write_failed",
-            context={"path": str(path)},
-        ) from exc
-
-
-def _swap_into_place(staging: Path, target: Path) -> None:
-    if not target.exists():
-        staging.rename(target)
-        return
-    backup = Path(tempfile.mkdtemp(prefix=f".{target.name}.old.", dir=target.parent))
-    backup.rmdir()
-    target.rename(backup)
-    try:
-        staging.rename(target)
-    except OSError:
-        backup.rename(target)
-        raise
-    shutil.rmtree(backup, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------
