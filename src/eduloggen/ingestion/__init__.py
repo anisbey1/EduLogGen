@@ -1,11 +1,12 @@
-"""Data ingestion for educational interaction logs.
+"""Compatibility alias for ingest helpers now living in :mod:`eduloggen.io`.
 
-This subpackage will provide loaders and normalizers for common educational
-log formats (LMS exports, ITS traces, MOOC event streams, and related
-sources). Implementations land in later milestones; this module establishes
-the public package namespace.
+Ingestion is a workflow over the ``io`` package (ADR-017). New code should
+import from :mod:`eduloggen.io`; this module re-exports the ingest entry
+points for the 0.1.0 namespace.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from eduloggen.io import FieldMapping, FieldSpec, IngestResult, QualityReport, ingest
+
+__all__ = ["FieldMapping", "FieldSpec", "IngestResult", "QualityReport", "ingest"]

@@ -16,6 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `Session`, and `Participant`; `Dataset` / `SyntheticDataset` snapshots with
   cross-record checks, content fingerprints, and manifests; `EventVocabulary`
   with preserve / map-to-other / reject policies; `Feature`
+- `eduloggen.io` ingestion and corpus I/O: streaming CSV/TSV, JSON Lines, and
+  Parquet readers and writers; `FieldMapping` with automatic casting,
+  timestamp formats and timezone policy, defaults, salted ID pseudonymization,
+  and metadata passthrough; `ingest()` with deduplication, sorting, strict
+  mode, and a value-free data quality report; atomic corpus directory
+  read/write with overwrite protection and fingerprint integrity checks
+- `parquet` optional extra (`pyarrow`)
+
+### Changed
+
+- `eduloggen.ingestion` now re-exports the ingest API from `eduloggen.io`
 
 ### Planned
 
