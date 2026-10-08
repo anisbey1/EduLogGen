@@ -5,6 +5,7 @@ validating, and benchmarking synthetic educational interaction logs.
 
 The package is organized into focused subpackages:
 
+- ``core``: exceptions, constants, run context, and shared types
 - ``ingestion``: load and normalize educational interaction logs
 - ``analysis``: session and statistical analysis of learner behavior
 - ``generators``: statistical and learning-based synthetic generators

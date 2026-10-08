@@ -30,6 +30,7 @@ def test_version_module_matches_package() -> None:
 @pytest.mark.parametrize(
     "module_name",
     [
+        "eduloggen.core",
         "eduloggen.ingestion",
         "eduloggen.analysis",
         "eduloggen.generators",

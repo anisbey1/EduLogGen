@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `eduloggen.core` foundation package: exception hierarchy with machine-readable
+  codes, schema/artifact/report version constants, default `event_type`
+  vocabulary, immutable `RunContext`, and shared type aliases
+
 ### Planned
 
 - Data ingestion APIs for educational interaction logs
