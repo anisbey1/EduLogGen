@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   mode, and a value-free data quality report; atomic corpus directory
   read/write with overwrite protection and fingerprint integrity checks
 - `parquet` optional extra (`pyarrow`)
+- `eduloggen.config`: strict, immutable `AppConfig` with sections from PRD §16.4;
+  YAML/TOML/JSON loading; precedence CLI > `EDULOGGEN_*` env allowlist > file >
+  defaults via `resolve_config`; config fingerprints; relative paths resolved
+  against the config file
+- `FieldMapping.from_file` for YAML/TOML/JSON mapping files
+- Example experiment config and field mapping under `examples/configs/`
+- `pyyaml` as the first runtime dependency
 
 ### Changed
 
