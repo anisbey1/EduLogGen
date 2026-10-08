@@ -7,7 +7,9 @@ The package is organized into focused subpackages:
 
 - ``core``: exceptions, constants, run context, and shared types
 - ``models``: canonical events, sessions, datasets, and vocabulary
-- ``ingestion``: load and normalize educational interaction logs
+- ``config``: typed settings, file loading, and precedence rules
+- ``io``: readers, writers, field mapping, ingest, and corpus directories
+- ``ingestion``: compatibility alias for the ingest API in ``io``
 - ``analysis``: session and statistical analysis of learner behavior
 - ``generators``: statistical and learning-based synthetic generators
 - ``validation``: quality, similarity, and privacy validation

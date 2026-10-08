@@ -1,0 +1,49 @@
+# Minimal EduLogGen experiment (SAD §29M.1).
+#
+# Relative paths resolve against this file's directory. Values here can be
+# overridden by EDULOGGEN_* environment variables and by CLI flags.
+
+project:
+  name: demo-markov
+  output_dir: runs/demo
+
+logging:
+  level: INFO
+  json: false
+
+io:
+  input: data/demo/events.csv
+  format: csv
+  mapping: demo_mapping.yaml
+
+sessionization:
+  strategy: idle_timeout
+  idle_timeout_s: 1800
+  tokenization: activity_id
+
+generator:
+  name: markov
+  # Every key besides `name` is a generator hyperparameter.
+  order: 1
+  length_model: empirical
+  smoothing: laplace
+  smoothing_alpha: 0.1
+
+generation:
+  n_sessions: 1000
+  seed: 42
+  id_strategy: remap
+
+validation:
+  metrics:
+    - event_type_tvd
+    - bigram_tvd
+    - session_length_ks
+    - interevent_time_ks
+    - exact_session_dup_rate
+  thresholds:
+    event_type_tvd: 0.25
+    exact_session_dup_rate: 0.01
+
+privacy:
+  strip_metadata_keys: ["ip", "email", "raw_message"]

@@ -35,7 +35,8 @@ from types import MappingProxyType
 from typing import Any, Final
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from eduloggen.core import EVENT_REQUIRED_FIELDS, ConfigError
+from eduloggen.config import load_file
+from eduloggen.core import EVENT_REQUIRED_FIELDS, ConfigError, PathLike
 from eduloggen.io import coerce
 
 __all__ = ["FieldMapping", "FieldSpec", "MappedRow", "RowIssue"]
@@ -207,6 +208,15 @@ class FieldMapping:
             drop=_str_list("drop", data.get("drop", ())),
             timezone=_optional_text("timezone", data.get("timezone")),
         )
+
+    @classmethod
+    def from_file(cls, path: PathLike) -> FieldMapping:
+        """Load a mapping from a YAML, TOML, or JSON file.
+
+        Raises:
+            ConfigError: If the file cannot be loaded or the mapping is invalid.
+        """
+        return cls.from_dict(load_file(path))
 
     @classmethod
     def identity(cls) -> FieldMapping:

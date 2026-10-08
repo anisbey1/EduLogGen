@@ -1,0 +1,26 @@
+# Field mapping for a generic LMS export (synthetic column names).
+#
+# Each canonical field names its source column, optionally with transforms.
+# Columns not listed are dropped unless kept under `metadata`.
+
+fields:
+  event_id: log_id
+  learner_id:
+    source: user_id
+    # Replace ids with salted pseudonyms. Keep the real salt out of
+    # version control; this placeholder is for the demo only.
+    hash:
+      salt: demo-salt-change-me
+  timestamp:
+    source: time
+    format: "%Y-%m-%d %H:%M:%S"
+  activity_id: resource
+  event_type:
+    source: action
+    default: other
+  course_id: course
+  score: grade
+
+metadata: [device]
+drop: [user_email, ip_address]
+timezone: Europe/Paris
