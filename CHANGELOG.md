@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `eduloggen.core` foundation package: exception hierarchy with machine-readable
   codes, schema/artifact/report version constants, default `event_type`
   vocabulary, immutable `RunContext`, and shared type aliases
+- `eduloggen.models` canonical domain model: immutable, validated `LogRecord`,
+  `Session`, and `Participant`; `Dataset` / `SyntheticDataset` snapshots with
+  cross-record checks, content fingerprints, and manifests; `EventVocabulary`
+  with preserve / map-to-other / reject policies; `Feature`
 
 ### Planned
 
