@@ -30,6 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `FieldMapping.from_file` for YAML/TOML/JSON mapping files
 - Example experiment config and field mapping under `examples/configs/`
 - `pyyaml` as the first runtime dependency
+- `eduloggen.utils`: versioned, order-independent seed derivation
+  (`derive_seed`, `make_rng`) and canonical JSON fingerprints
+- `eduloggen.privacy`: seeded remapping of learner/session/event ids
+  (default for generated data) and metadata key stripping
+- Architecture test enforcing the package dependency matrix (SAD §8.2)
 
 ### Changed
 

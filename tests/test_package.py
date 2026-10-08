@@ -34,6 +34,8 @@ def test_version_module_matches_package() -> None:
         "eduloggen.models",
         "eduloggen.config",
         "eduloggen.io",
+        "eduloggen.privacy",
+        "eduloggen.utils",
         "eduloggen.ingestion",
         "eduloggen.analysis",
         "eduloggen.generators",
