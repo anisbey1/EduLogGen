@@ -9,6 +9,8 @@ The package is organized into focused subpackages:
 - ``models``: canonical events, sessions, datasets, and vocabulary
 - ``config``: typed settings, file loading, and precedence rules
 - ``io``: readers, writers, field mapping, ingest, and corpus directories
+- ``privacy``: id remapping and metadata stripping
+- ``utils``: seed derivation and hashing helpers
 - ``ingestion``: compatibility alias for the ingest API in ``io``
 - ``analysis``: session and statistical analysis of learner behavior
 - ``generators``: statistical and learning-based synthetic generators
