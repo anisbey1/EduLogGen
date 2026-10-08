@@ -16,5 +16,6 @@
 | [`eduloggen.validation`](validation.md) | Metrics, `validate`, `ValidationReport` |
 | [`eduloggen.benchmark`](benchmark.md) | `run_benchmark`, protocols, `BenchmarkReport` |
 | [`eduloggen.datasets`](datasets.md) | Synthetic demo corpus |
+| [`eduloggen.visualization`](visualization.md) | Figures (requires the `viz` extra) |
 | [`eduloggen.privacy`](privacy.md) | ID remapping, metadata stripping |
 | [`eduloggen.cli`](cli.md) | Command-line entry point |

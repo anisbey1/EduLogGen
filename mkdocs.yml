@@ -87,5 +87,6 @@ nav:
       - validation: api/validation.md
       - benchmark: api/benchmark.md
       - datasets: api/datasets.md
+      - visualization: api/visualization.md
       - privacy: api/privacy.md
       - CLI: api/cli.md
