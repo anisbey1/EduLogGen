@@ -1,13 +1,7 @@
 # Getting started
 
-This guide installs EduLogGen from a local clone and verifies that the package
-and tooling work on your machine.
-
-## Prerequisites
-
-- Python 3.11 or newer
-- A virtual environment tool (`venv`, `virtualenv`, or equivalent)
-- Git
+This guide installs EduLogGen and walks through the full workflow: ingest a
+log, build sessions, fit a generator, sample synthetic data, and validate it.
 
 ## Install
 
@@ -20,57 +14,95 @@ pip install -U pip
 pip install -e ".[dev,docs]"
 ```
 
-## Verify the installation
+Check the installation:
 
 ```bash
-python -c "import eduloggen; print(eduloggen.__version__)"
-eduloggen --help
+eduloggen info
 pytest
 ```
 
-You should see a semantic version string (for example `0.1.0`), CLI help text,
-and a passing test suite.
+## 1. Describe your log with a field mapping
 
-The version string is defined in `src/eduloggen/__version__.py` and re-exported
-from the package root as `eduloggen.__version__`.
+EduLogGen reads any tabular log (CSV, TSV, JSON Lines, Parquet) once you say
+which column fills each canonical field. Required fields are `learner_id`,
+`timestamp`, `activity_id`, and `event_type`; `event_id` is generated from
+row numbers when absent.
 
-## Development tools
+```yaml
+# mapping.yaml
+fields:
+  event_id: log_id
+  learner_id:
+    source: user_id
+    hash: {salt: change-me}      # replace ids with salted pseudonyms
+  timestamp:
+    source: time
+    format: "%Y-%m-%d %H:%M:%S"  # or iso, epoch_s, epoch_ms
+  activity_id: resource
+  event_type:
+    source: action
+    default: other
+  score: grade
+metadata: [device]               # extra columns to keep
+drop: [user_email]               # columns ignored on purpose
+timezone: Europe/Paris           # zone for timestamps without one
+```
 
-| Tool | Role |
-| ---- | ---- |
-| Ruff | Linting and fast formatting checks |
-| Black | Canonical code formatting |
-| MyPy | Strict static type checking |
-| PyTest | Unit tests and coverage |
-| Pre-commit | Git hooks for local quality gates |
-| MkDocs | Documentation site |
+A fuller example is in `examples/configs/demo_mapping.yaml`.
 
-Enable hooks once:
+## 2. Run the pipeline
 
 ```bash
-pre-commit install
+eduloggen ingest --input events.csv --mapping mapping.yaml --output corpus/
+eduloggen sessionize --input corpus/ --strategy idle_timeout --output sessions/
+eduloggen analyze --input sessions/ --output analysis/
+eduloggen fit --input sessions/ --generator semi_markov --set order=2 --output model/
+eduloggen generate --model model/ --n-sessions 1000 --seed 42 --output synthetic/
+eduloggen validate --real sessions/ --synthetic synthetic/ --output report/
 ```
 
-Build and preview docs:
+Each output directory also holds a `run_manifest.json` recording the command,
+configuration fingerprint, and input fingerprints. Outputs are never
+overwritten unless you pass `--force`.
 
-```bash
-mkdocs serve
+## 3. Use a configuration file
+
+Put settings in YAML, TOML, or JSON and pass `--config`; see
+`examples/configs/minimal.yaml`. Relative paths are resolved against the
+config file. Precedence, highest first: command-line flags, `EDULOGGEN_*`
+environment variables (`EDULOGGEN_SEED`, `EDULOGGEN_LOG_LEVEL`,
+`EDULOGGEN_OUTPUT_DIR`, `EDULOGGEN_CONFIG`), the config file, built-in
+defaults.
+
+## 4. Or work in Python
+
+```python
+import eduloggen as elg
+
+cfg = elg.load_config("experiment.yaml")
+real = elg.sessionize(elg.ingest("events.csv", "mapping.yaml", config=cfg).dataset, config=cfg)
+print(elg.analyze(real).to_markdown())
+
+model = elg.fit_generator("semi_markov", real, config=cfg)
+synthetic = elg.generate(model, n_sessions=1000, seed=42)
+report = elg.validate(real, synthetic, thresholds={"event_type_tvd": 0.1})
+print(report.status, report.metric("bigram_tvd").value)
 ```
 
-## Package layout
+## Generators
 
-EduLogGen uses a `src` layout:
+| Name | Models | Use when |
+| ---- | ------ | -------- |
+| `markov` | Order-k token transitions; constant gap between events | Sequence structure matters, timing does not |
+| `semi_markov` | Transitions plus time spent on each token | Realistic timing matters |
+| `independent` | Tokens drawn independently | Baseline for benchmarks |
 
-```text
-src/eduloggen/
-  ingestion/       # planned: load and normalize logs
-  analysis/        # planned: session and statistical analysis
-  generators/      # planned: synthetic generators
-  validation/      # planned: quality and privacy validation
-  visualization/   # planned: plotting helpers
-  cli.py           # console entry point
-```
+Key hyperparameters: `order`, `smoothing_alpha`, `length_model`
+(`empirical`, `poisson`, `fixed`), and for `semi_markov` `timing_family`
+(`empirical`, `lognormal`, `gamma`, `exponential`).
 
-Business logic for these modules is intentionally absent in `0.1.0`. The
-namespaces exist so contributors can land features without reshaping the
-package later.
+## Before sharing outputs
+
+Read [Privacy and responsible use](privacy.md). Synthetic data can still
+resemble real sessions; check the privacy indicators in every validation
+report.

@@ -1,0 +1,3 @@
+# eduloggen.core
+
+::: eduloggen.core

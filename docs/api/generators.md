@@ -1,0 +1,3 @@
+# eduloggen.generators
+
+::: eduloggen.generators

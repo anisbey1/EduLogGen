@@ -56,12 +56,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `exact_session_dup_rate`, `rare_ngram_replay_rate`, `nn_distance_p05`;
   thresholds with pass / fail / info / skip statuses; `ValidationReport` with
   JSON and Markdown output; metric registry for custom metrics
+- `eduloggen.api` workflow façade (`load_config`, `ingest`, `load_dataset`,
+  `save_dataset`, `sessionize`, `analyze`, `fit_generator`, `generate`,
+  `validate`), re-exported from `import eduloggen`
+- CLI commands `ingest`, `sessionize`, `analyze`, `fit`, `generate`,
+  `validate`, `info`, `plugins` with global `--config`, `--seed`, `-v`,
+  `--quiet`, `--json-logs`, `--force`, `--run-id`; exit codes 0/1/2;
+  `run_manifest.json` in every output directory; `python -m eduloggen`
+- Documentation: privacy and responsible-use statement, end-to-end
+  getting-started guide, API reference pages for every package
 
 ### Changed
 
 - Atomic output-directory writing moved to `eduloggen.utils.fs` and shared by
   corpus and model artifacts
 - SAD §8.2: `validation` may depend on `analysis` (documented in the matrix)
+- `eduloggen.cli` is now a package; the `eduloggen` console script entry
+  point is unchanged
 
 ### Changed
 

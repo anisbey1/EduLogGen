@@ -18,9 +18,15 @@ The package is organized into focused subpackages:
 - ``visualization``: plotting and exploratory visualization utilities
 - ``cli``: command-line interface entry points
 
-Public API surface will expand as generators and validators are implemented.
-Until then, consumers should rely on ``__version__`` and the documented
-subpackage layout.
+The top-level namespace re-exports the workflow façade from
+:mod:`eduloggen.api`::
+
+    import eduloggen as elg
+
+    real = elg.sessionize(elg.ingest("events.csv", "mapping.yaml").dataset)
+    model = elg.fit_generator("semi_markov", real)
+    synthetic = elg.generate(model, n_sessions=1000, seed=7)
+    report = elg.validate(real, synthetic)
 
 See the project vision document (``docs/01_VISION.md``) for goals and scope.
 """
@@ -28,5 +34,27 @@ See the project vision document (``docs/01_VISION.md``) for goals and scope.
 from __future__ import annotations
 
 from eduloggen.__version__ import __version__
+from eduloggen.api import (
+    analyze,
+    fit_generator,
+    generate,
+    ingest,
+    load_config,
+    load_dataset,
+    save_dataset,
+    sessionize,
+    validate,
+)
 
-__all__ = ["__version__"]
+__all__ = [
+    "__version__",
+    "analyze",
+    "fit_generator",
+    "generate",
+    "ingest",
+    "load_config",
+    "load_dataset",
+    "save_dataset",
+    "sessionize",
+    "validate",
+]
