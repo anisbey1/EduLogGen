@@ -4,20 +4,30 @@ from __future__ import annotations
 
 import csv
 import json
-from collections.abc import Iterator
+from collections.abc import Callable, Iterable, Iterator
 from pathlib import Path
 from typing import Any, ClassVar
 
-from eduloggen.core import IngestionError, IoError
-from eduloggen.io.base import BaseReader, Format, FormatOrAuto, detect_format
+from eduloggen.core import IngestionError, IoError, PluginError
+from eduloggen.io.base import (
+    BaseReader,
+    Format,
+    detect_format,
+    register_suffixes,
+    unregister_suffixes,
+)
 
 __all__ = [
     "CsvReader",
     "JsonlReader",
     "ParquetReader",
+    "ReaderFactory",
     "TsvReader",
+    "available_readers",
     "get_reader",
+    "register_reader",
     "require_pyarrow",
+    "unregister_reader",
 ]
 
 
@@ -161,29 +171,99 @@ def require_pyarrow() -> Any:
     return pyarrow
 
 
-_READERS: dict[Format, type[BaseReader]] = {
+ReaderFactory = Callable[[], BaseReader]
+"""Zero-argument callable returning a reader (a reader class works)."""
+
+_READERS: dict[str, ReaderFactory] = {
     "csv": CsvReader,
     "tsv": TsvReader,
     "jsonl": JsonlReader,
     "parquet": ParquetReader,
 }
+BUILTIN_READERS: frozenset[str] = frozenset(_READERS)
+"""Names of the readers shipped with EduLogGen."""
 
 
-def get_reader(fmt: FormatOrAuto, path: Path | str | None = None) -> BaseReader:
+def register_reader(
+    name: str,
+    factory: ReaderFactory,
+    *,
+    suffixes: Iterable[str] = (),
+    replace: bool = False,
+) -> None:
+    """Add a reader for a new source format (e.g. from a plugin).
+
+    Args:
+        name: Format name used with ``format=`` and ``--format``.
+        factory: Zero-argument callable returning a :class:`BaseReader`.
+        suffixes: File extensions (like ``".xes"``) detected as this format.
+        replace: Allow overriding a non-built-in registration.
+
+    Raises:
+        PluginError: If the name is invalid, built in, or taken, the factory
+            is not callable, or a suffix is already claimed.
+    """
+    if not isinstance(name, str) or not name.isidentifier():
+        raise PluginError(
+            "reader names must be identifiers",
+            code="plugin_invalid_name",
+            context={"name": repr(name)},
+        )
+    if not callable(factory):
+        raise PluginError("factory must be callable", code="plugin_invalid_factory")
+    if name in BUILTIN_READERS or (name in _READERS and not replace):
+        raise PluginError(
+            f"reader {name!r} is already registered",
+            code="plugin_duplicate",
+            context={"name": name},
+        )
+    register_suffixes(name, suffixes, replace=replace)
+    _READERS[name] = factory
+
+
+def unregister_reader(name: str) -> None:
+    """Remove a non-built-in reader and its suffixes (no-op if absent)."""
+    if name in BUILTIN_READERS:
+        return
+    _READERS.pop(name, None)
+    unregister_suffixes(name)
+
+
+def available_readers() -> list[str]:
+    """Registered reader format names, sorted."""
+    return sorted(_READERS)
+
+
+def get_reader(fmt: str, path: Path | str | None = None) -> BaseReader:
     """Return a reader for a format, detecting it from ``path`` if ``"auto"``.
 
     Raises:
         IngestionError: If the format is unknown or cannot be detected.
+        PluginError: If a plugin factory fails or returns a non-reader.
     """
     if fmt == "auto":
         if path is None:
             raise IngestionError("format 'auto' needs a path", code="io_unknown_format")
         fmt = detect_format(path)
-    try:
-        return _READERS[fmt]()
-    except KeyError:
+    factory = _READERS.get(fmt)
+    if factory is None:
         raise IngestionError(
             "unsupported format",
             code="io_unknown_format",
             context={"format": fmt, "supported": sorted(_READERS)},
-        ) from None
+        )
+    try:
+        reader = factory()
+    except Exception as exc:
+        raise PluginError(
+            f"reader factory for {fmt!r} failed: {exc}",
+            code="plugin_factory_failed",
+            context={"name": fmt},
+        ) from exc
+    if not isinstance(reader, BaseReader):
+        raise PluginError(
+            f"reader factory for {fmt!r} did not return a BaseReader",
+            code="plugin_contract_violation",
+            context={"name": fmt},
+        )
+    return reader

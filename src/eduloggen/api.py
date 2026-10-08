@@ -32,7 +32,6 @@ from eduloggen.datasets import demo_dataset
 from eduloggen.generators import get_generator
 from eduloggen.io import (
     FieldMapping,
-    FormatOrAuto,
     IngestResult,
     read_corpus,
     write_corpus,
@@ -84,7 +83,7 @@ def ingest(
     mapping: FieldMapping | PathLike,
     *,
     config: AppConfig | None = None,
-    format: FormatOrAuto | None = None,
+    format: str | None = None,
     strict: bool | None = None,
     dataset_id: str | None = None,
 ) -> IngestResult:

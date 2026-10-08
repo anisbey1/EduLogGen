@@ -17,6 +17,7 @@ from eduloggen.cli.commands import COMMANDS, Run
 from eduloggen.cli.logs import configure_logging, level_for
 from eduloggen.config import resolve_config
 from eduloggen.core import EduLogGenError, RunContext
+from eduloggen.plugins import discover_plugins
 from eduloggen.utils.fs import write_json
 
 __all__ = ["build_parser", "main"]
@@ -119,7 +120,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--input", help="source file (default: io.input)")
     p.add_argument("--mapping", help="field mapping file (default: io.mapping)")
     p.add_argument("--output", help="corpus directory (default: io.output)")
-    p.add_argument("--format", choices=["auto", "csv", "tsv", "jsonl", "parquet"])
+    p.add_argument(
+        "--format", help="auto (default), csv, tsv, jsonl, parquet, or a plugin reader"
+    )
     p.add_argument("--output-format", choices=["csv", "tsv", "jsonl", "parquet"])
     p.add_argument(
         "--strict", action="store_true", default=None, help="stop at the first bad row"
@@ -228,7 +231,11 @@ def build_parser() -> argparse.ArgumentParser:
     p = add("info", "show version, environment, and plugins", "eduloggen info")
     p.add_argument("--input", help="also summarize this corpus")
 
-    add("plugins", "list registered generators and metrics", "eduloggen plugins")
+    add(
+        "plugins",
+        "list built-in and installed extensions (exit 1 if a plugin failed)",
+        "eduloggen plugins",
+    )
     return parser
 
 
@@ -288,11 +295,13 @@ def main(argv: list[str] | None = None) -> int:
             json_logs=getattr(args, "json_logs", False) or config.logging.json,
             run_id=context.run_id,
         )
+        discovery = discover_plugins()
         run = Run(
             context=context,
             config=config,
             argv=arguments,
             force=getattr(args, "force", False),
+            plugin_errors=discovery.errors,
         )
         code = COMMANDS[args.command](args, run)
     except EduLogGenError as exc:

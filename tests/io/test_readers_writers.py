@@ -66,7 +66,7 @@ def test_get_reader() -> None:
     with pytest.raises(IngestionError):
         get_reader("auto")
     with pytest.raises(IngestionError):
-        get_reader("xml")  # type: ignore[arg-type]
+        get_reader("xml")
 
 
 def test_get_writer_unknown() -> None:

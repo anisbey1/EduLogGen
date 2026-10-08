@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Literal
 
 from eduloggen.core import PathLike, SchemaError
-from eduloggen.io.base import FormatOrAuto, resolve_source
+from eduloggen.io.base import resolve_source
 from eduloggen.io.mapping import FieldMapping, RowIssue
 from eduloggen.io.quality import IssueLog, QualityReport
 from eduloggen.io.readers import get_reader
@@ -45,7 +45,7 @@ def ingest(
     source: PathLike,
     mapping: FieldMapping,
     *,
-    format: FormatOrAuto = "auto",
+    format: str = "auto",
     strict: bool = False,
     on_duplicate: DuplicatePolicy = "keep_first",
     vocabulary: EventVocabulary | None = None,
@@ -57,7 +57,8 @@ def ingest(
     Args:
         source: Source file path.
         mapping: Source-to-canonical field mapping.
-        format: File format, or ``"auto"`` to detect it from the extension.
+        format: Reader name (built-in or plugin), or ``"auto"`` to detect it
+            from the extension.
         strict: Raise on the first invalid row instead of dropping it.
         on_duplicate: Keep the first event of a repeated ``event_id``, or
             raise.

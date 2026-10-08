@@ -24,6 +24,7 @@ from eduloggen.core import ConfigError, RunContext
 from eduloggen.generators import available_generators, get_generator, load_model
 from eduloggen.io import write_corpus
 from eduloggen.models import Dataset
+from eduloggen.plugins import KINDS, list_plugins
 from eduloggen.utils.fs import atomic_directory, write_json
 from eduloggen.validation import available_metrics, get_metric
 
@@ -46,6 +47,7 @@ class Run:
     inputs: dict[str, str] = field(default_factory=dict)
     outputs: dict[str, str] = field(default_factory=dict)
     manifest_dir: Path | None = None
+    plugin_errors: tuple[tuple[str, str], ...] = ()
 
     def manifest(self, exit_status: int) -> dict[str, Any]:
         """The ``run_manifest.json`` payload (SAD §29P)."""
@@ -53,7 +55,14 @@ class Run:
             **self.context.to_dict(),
             "argv": self.argv,
             "config_fingerprint": config_fingerprint(self.config),
-            "plugins": {"generators": available_generators()},
+            "plugins": {
+                "generators": available_generators(),
+                "external": [
+                    info.to_dict()
+                    for info in list_plugins()
+                    if info.source != "builtin"
+                ],
+            },
             "inputs": self.inputs,
             "outputs": self.outputs,
             "exit_status": exit_status,
@@ -408,18 +417,31 @@ def cmd_info(args: argparse.Namespace, run: Run) -> int:
 
 
 def cmd_plugins(args: argparse.Namespace, run: Run) -> int:
-    """List registered generators and metrics."""
-    lines = ["generators:"]
-    for name in available_generators():
-        tags = ", ".join(sorted(get_generator(name).tags))
-        lines.append(f"  {name}" + (f"  [{tags}]" if tags else ""))
-    lines.append("metrics:")
-    for name in available_metrics():
-        metric = get_metric(name)
-        better = "lower" if metric.direction == "lower_better" else "higher"
-        lines.append(f"  {name}  ({metric.category}, {better} is better)")
+    """List generators, metrics, readers, plots, and benchmark suites."""
+    lines: list[str] = []
+    for kind in KINDS:
+        lines.append(f"{kind}s:")
+        for info in list_plugins(kind):
+            detail = []
+            if info.tags:
+                detail.append(", ".join(info.tags))
+            if kind == "metric":
+                metric = get_metric(info.name)
+                better = "lower" if metric.direction == "lower_better" else "higher"
+                detail.append(f"{metric.category}, {better} is better")
+            if info.source != "builtin":
+                origin = info.distribution or info.source
+                detail.append(
+                    f"from {origin}" + (f" {info.version}" if info.version else "")
+                )
+            lines.append(
+                f"  {info.name}" + (f"  [{'; '.join(detail)}]" if detail else "")
+            )
+    if run.plugin_errors:
+        lines.append("errors:")
+        lines += [f"  {label}: {message}" for label, message in run.plugin_errors]
     _print("\n".join(lines))
-    return EXIT_OK
+    return EXIT_FAILED if run.plugin_errors else EXIT_OK
 
 
 COMMANDS: Final[dict[str, Handler]] = {

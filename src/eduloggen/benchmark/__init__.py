@@ -11,10 +11,13 @@ Typical use::
 from __future__ import annotations
 
 from eduloggen.benchmark.protocol import (
+    BUILTIN_PROTOCOLS,
     PROTOCOLS,
     BenchmarkProtocol,
     get_protocol,
+    register_protocol,
     split_by_learner,
+    unregister_protocol,
 )
 from eduloggen.benchmark.report import (
     BenchmarkReport,
@@ -25,6 +28,7 @@ from eduloggen.benchmark.report import (
 from eduloggen.benchmark.runner import DEFAULT_GENERATORS, run_benchmark
 
 __all__ = [
+    "BUILTIN_PROTOCOLS",
     "DEFAULT_GENERATORS",
     "PROTOCOLS",
     "BenchmarkProtocol",
@@ -32,7 +36,9 @@ __all__ = [
     "GeneratorResult",
     "MetricSummary",
     "get_protocol",
+    "register_protocol",
     "run_benchmark",
     "split_by_learner",
     "summarize",
+    "unregister_protocol",
 ]

@@ -11,12 +11,20 @@ import math
 from dataclasses import dataclass
 from typing import Any
 
-from eduloggen.core import BenchmarkError, ConfigError
+from eduloggen.core import BenchmarkError, ConfigError, PluginError
 from eduloggen.models import Dataset
 from eduloggen.utils import make_rng
-from eduloggen.validation import DEFAULT_METRICS
+from eduloggen.validation import DEFAULT_METRICS, available_metrics
 
-__all__ = ["PROTOCOLS", "BenchmarkProtocol", "get_protocol", "split_by_learner"]
+__all__ = [
+    "BUILTIN_PROTOCOLS",
+    "PROTOCOLS",
+    "BenchmarkProtocol",
+    "get_protocol",
+    "register_protocol",
+    "split_by_learner",
+    "unregister_protocol",
+]
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -61,6 +69,52 @@ PROTOCOLS: dict[str, BenchmarkProtocol] = {
         ),
     ),
 }
+
+
+BUILTIN_PROTOCOLS = frozenset(PROTOCOLS)
+"""Names of the protocols shipped with EduLogGen."""
+
+
+def register_protocol(protocol: BenchmarkProtocol, *, replace: bool = False) -> None:
+    """Add a benchmark protocol (e.g. from a plugin).
+
+    Raises:
+        PluginError: If the object is not a protocol, its name is invalid,
+            built in, or taken (without ``replace``), or a metric is unknown.
+    """
+    if not isinstance(protocol, BenchmarkProtocol):
+        raise PluginError(
+            "benchmark suites must be BenchmarkProtocol instances",
+            code="plugin_contract_violation",
+        )
+    if not protocol.name.isidentifier():
+        raise PluginError(
+            "protocol names must be identifiers",
+            code="plugin_invalid_name",
+            context={"name": protocol.name},
+        )
+    if protocol.name in BUILTIN_PROTOCOLS or (
+        protocol.name in PROTOCOLS and not replace
+    ):
+        raise PluginError(
+            f"protocol {protocol.name!r} is already registered",
+            code="plugin_duplicate",
+            context={"name": protocol.name},
+        )
+    unknown = sorted(set(protocol.metrics) - set(available_metrics()))
+    if unknown or not 0 < protocol.holdout_fraction < 1 or protocol.repeats < 1:
+        raise PluginError(
+            "protocol has unknown metrics or invalid settings",
+            code="plugin_contract_violation",
+            context={"name": protocol.name, "unknown_metrics": unknown},
+        )
+    PROTOCOLS[protocol.name] = protocol
+
+
+def unregister_protocol(name: str) -> None:
+    """Remove a non-built-in protocol (no-op if absent)."""
+    if name not in BUILTIN_PROTOCOLS:
+        PROTOCOLS.pop(name, None)
 
 
 def get_protocol(name: str) -> BenchmarkProtocol:

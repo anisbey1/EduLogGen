@@ -45,11 +45,16 @@ from eduloggen.io.mapping import (
 )
 from eduloggen.io.quality import QualityReport, QualityStatus
 from eduloggen.io.readers import (
+    BUILTIN_READERS,
     CsvReader,
     JsonlReader,
     ParquetReader,
+    ReaderFactory,
     TsvReader,
+    available_readers,
     get_reader,
+    register_reader,
+    unregister_reader,
 )
 from eduloggen.io.streaming import chunked
 from eduloggen.io.writers import (
@@ -61,6 +66,7 @@ from eduloggen.io.writers import (
 )
 
 __all__ = [
+    "BUILTIN_READERS",
     "EVENT_COLUMNS",
     "SESSION_COLUMNS",
     "BaseReader",
@@ -82,9 +88,11 @@ __all__ = [
     "ParquetWriter",
     "QualityReport",
     "QualityStatus",
+    "ReaderFactory",
     "RowIssue",
     "TsvReader",
     "TsvWriter",
+    "available_readers",
     "chunked",
     "detect_format",
     "get_reader",
@@ -92,5 +100,7 @@ __all__ = [
     "ingest",
     "pseudonymize",
     "read_corpus",
+    "register_reader",
+    "unregister_reader",
     "write_corpus",
 ]

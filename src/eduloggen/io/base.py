@@ -23,7 +23,9 @@ __all__ = [
     "Format",
     "FormatOrAuto",
     "detect_format",
+    "register_suffixes",
     "resolve_source",
+    "unregister_suffixes",
 ]
 
 Format = Literal["csv", "tsv", "jsonl", "parquet"]
@@ -38,7 +40,7 @@ ColumnType = Literal["string", "int", "float", "bool", "timestamp", "json"]
 Column = tuple[str, ColumnType]
 """A column name and its logical type."""
 
-_SUFFIXES: dict[str, Format] = {
+_SUFFIXES: dict[str, str] = {
     ".csv": "csv",
     ".tsv": "tsv",
     ".jsonl": "jsonl",
@@ -48,7 +50,10 @@ _SUFFIXES: dict[str, Format] = {
 }
 
 
-def detect_format(path: PathLike) -> Format:
+_BUILTIN_SUFFIXES = frozenset(_SUFFIXES)
+
+
+def detect_format(path: PathLike) -> str:
     """Infer the file format from the extension.
 
     Raises:
@@ -63,6 +68,43 @@ def detect_format(path: PathLike) -> Format:
             code="io_unknown_format",
             context={"suffix": suffix, "supported": sorted(_SUFFIXES)},
         ) from None
+
+
+def register_suffixes(
+    fmt: str, suffixes: Iterable[str], *, replace: bool = False
+) -> None:
+    """Map file extensions to a (plugin) format for ``format="auto"``.
+
+    Raises:
+        PluginError: If a suffix is malformed, built in, or already claimed
+            by another format (without ``replace``).
+    """
+    from eduloggen.core import PluginError
+
+    normalized = [s.lower() for s in suffixes]
+    for suffix in normalized:
+        if not suffix.startswith(".") or len(suffix) < 2:
+            raise PluginError(
+                "suffixes must look like '.ext'",
+                code="plugin_invalid_name",
+                context={"suffix": suffix},
+            )
+        owner = _SUFFIXES.get(suffix)
+        if suffix in _BUILTIN_SUFFIXES or (owner not in (None, fmt) and not replace):
+            raise PluginError(
+                f"suffix {suffix} is already used by {owner}",
+                code="plugin_duplicate",
+                context={"suffix": suffix},
+            )
+    for suffix in normalized:
+        _SUFFIXES[suffix] = fmt
+
+
+def unregister_suffixes(fmt: str) -> None:
+    """Remove non-built-in suffixes mapped to ``fmt``."""
+    for suffix in [s for s, f in _SUFFIXES.items() if f == fmt]:
+        if suffix not in _BUILTIN_SUFFIXES:
+            del _SUFFIXES[suffix]
 
 
 def resolve_source(path: PathLike) -> Path:
@@ -93,7 +135,7 @@ class BaseReader(ABC):
     Subclasses set :attr:`format` and implement :meth:`_iter_rows`.
     """
 
-    format: ClassVar[Format]
+    format: ClassVar[str]
 
     def read(self, path: PathLike) -> Iterator[dict[str, Any]]:
         """Yield the rows of ``path`` lazily.
