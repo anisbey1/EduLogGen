@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `exact_session_dup_rate`, `rare_ngram_replay_rate`, `nn_distance_p05`;
   thresholds with pass / fail / info / skip statuses; `ValidationReport` with
   JSON and Markdown output; metric registry for custom metrics
+- `eduloggen.datasets.demo_dataset`: seeded, fully synthetic demo course corpus
 - `eduloggen.api` workflow façade (`load_config`, `ingest`, `load_dataset`,
   `save_dataset`, `sessionize`, `analyze`, `fit_generator`, `generate`,
   `validate`), re-exported from `import eduloggen`
