@@ -31,6 +31,7 @@ ALL = frozenset(
         "privacy",
         "utils",
         "api",
+        "datasets",
     }
 )
 
@@ -38,6 +39,7 @@ ALLOWED: dict[str, frozenset[str]] = {
     "core": frozenset(),
     "models": frozenset({"core"}),
     "utils": frozenset({"core"}),
+    "datasets": frozenset({"core", "models", "utils"}),
     "config": frozenset({"core", "models"}),
     "privacy": frozenset({"core", "models", "utils"}),
     "io": frozenset({"core", "config", "models", "utils", "privacy"}),
