@@ -832,7 +832,7 @@ config ◄──────────── utils ◄────────
 | io | ✓ | ✓ | ✓ | — | | | | | | | ✓ | ✓* |
 | analysis | ✓ | | ✓ | | — | | | | | | ✓ | |
 | generators | ✓ | ✓ | ✓ | | ✓ | — | ✗ | | | | ✓ | ✓ |
-| validation | ✓ | ✓ | ✓ | | | ✗ | — | | | | ✓ | ✓ |
+| validation | ✓ | ✓ | ✓ | | ✓† | ✗ | — | | | | ✓ | ✓ |
 | benchmark | ✓ | ✓ | ✓ | | ✓ | ✓ | ✓ | — | | | ✓ | |
 | visualization | ✓ | | ✓ | | ✓* | | ✓* | ✓* | — | | | |
 | cli | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ |
@@ -840,6 +840,8 @@ config ◄──────────── utils ◄────────
 | privacy | ✓ | | ✓ | | | | | | | | ✓ | — |
 
 \* optional/read-only consumption of analysis or report DTOs  
+† validation reuses analysis statistics (sequences, n-grams, timing) instead
+of re-implementing them; analysis never imports generators, so ADR-005 holds  
 ✗ **forbidden**
 
 ### 8.3 Forbidden dependencies (normative)

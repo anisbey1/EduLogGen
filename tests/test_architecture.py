@@ -45,7 +45,9 @@ ALLOWED: dict[str, frozenset[str]] = {
     "generators": frozenset(
         {"core", "config", "models", "analysis", "utils", "privacy"}
     ),
-    "validation": frozenset({"core", "config", "models", "utils", "privacy"}),
+    "validation": frozenset(
+        {"core", "config", "models", "analysis", "utils", "privacy"}
+    ),
     "benchmark": frozenset(
         {"core", "config", "models", "analysis", "generators", "validation", "utils"}
     ),

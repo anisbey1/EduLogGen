@@ -49,11 +49,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   empirical, lognormal, gamma, exponential), and `independent` baseline;
   generator registry; inspectable JSON model artifacts with integrity checks
 - `GeneratorModel` in `eduloggen.models`
+- `eduloggen.validation`: `validate()` comparing real and synthetic datasets
+  with 11 built-in metrics — `event_type_tvd`, `activity_jsd`,
+  `session_length_ks`, `session_duration_w1`, `interevent_time_ks`,
+  `bigram_tvd`, `transition_jsd`, `topn_path_overlap`, and privacy indicators
+  `exact_session_dup_rate`, `rare_ngram_replay_rate`, `nn_distance_p05`;
+  thresholds with pass / fail / info / skip statuses; `ValidationReport` with
+  JSON and Markdown output; metric registry for custom metrics
 
 ### Changed
 
 - Atomic output-directory writing moved to `eduloggen.utils.fs` and shared by
   corpus and model artifacts
+- SAD §8.2: `validation` may depend on `analysis` (documented in the matrix)
 
 ### Changed
 
