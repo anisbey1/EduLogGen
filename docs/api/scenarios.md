@@ -1,0 +1,3 @@
+# eduloggen.scenarios
+
+::: eduloggen.scenarios

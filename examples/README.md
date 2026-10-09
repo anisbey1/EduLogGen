@@ -11,5 +11,8 @@ learner identifiers or institutional exports.
   for a generic LMS export, including salted ID pseudonymization and a
   timezone for naive timestamps.
 
-Both files are loaded by the test suite, so they stay valid as the schema
+- [`configs/anomalies.yaml`](configs/anomalies.yaml) — the five Level 2
+  anomaly types, for `eduloggen generate --anomalies`.
+
+All files are loaded by the test suite, so they stay valid as the schema
 evolves.

@@ -170,6 +170,30 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--n-sessions", type=int, help="number of sessions")
     p.add_argument("--id-strategy", choices=["remap", "preserve"])
     p.add_argument("--format", choices=["csv", "tsv", "jsonl", "parquet"])
+    p.add_argument(
+        "--anomalies",
+        help="YAML/TOML/JSON with an 'anomalies' list to inject; writes "
+        "annotations.csv (ids are always remapped)",
+    )
+
+    p = add(
+        "evaluate",
+        "score anomaly-detector predictions against a corpus's annotations",
+        "eduloggen evaluate --corpus synthetic/ --predictions preds.csv",
+    )
+    p.add_argument("--corpus", required=True, help="corpus with annotations.csv")
+    p.add_argument(
+        "--predictions",
+        required=True,
+        help="CSV with an 'id' column and optional 'score' or 'flag' column",
+    )
+    p.add_argument(
+        "--level", choices=["session", "event", "learner"], default="session"
+    )
+    p.add_argument(
+        "--threshold", type=float, default=0.5, help="score cut-off (default 0.5)"
+    )
+    p.add_argument("--output", help="write evaluation.json and evaluation.md here")
 
     p = add(
         "validate",

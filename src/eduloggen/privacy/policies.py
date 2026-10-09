@@ -9,15 +9,23 @@ from __future__ import annotations
 
 import logging
 import random
-from collections.abc import Iterable
-from dataclasses import replace
+from collections.abc import Iterable, Mapping
+from dataclasses import dataclass, replace
+from types import MappingProxyType
 from typing import Literal, TypeVar
 
 from eduloggen.core import ConfigError
 from eduloggen.models import Dataset
 from eduloggen.utils import make_rng
 
-__all__ = ["IdStrategy", "apply_id_strategy", "remap_ids", "strip_metadata"]
+__all__ = [
+    "IdMapping",
+    "IdStrategy",
+    "apply_id_strategy",
+    "remap_ids",
+    "remap_ids_with_mapping",
+    "strip_metadata",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +33,15 @@ IdStrategy = Literal["remap", "preserve"]
 """``remap`` assigns fresh ids; ``preserve`` keeps them (local use only)."""
 
 D = TypeVar("D", bound=Dataset)
+
+
+@dataclass(frozen=True, slots=True)
+class IdMapping:
+    """Old id to new id per identifier kind (see :func:`remap_ids_with_mapping`)."""
+
+    learners: Mapping[str, str]
+    sessions: Mapping[str, str]
+    events: Mapping[str, str]
 
 
 def remap_ids(dataset: D, seed: int | None) -> D:
@@ -43,6 +60,15 @@ def remap_ids(dataset: D, seed: int | None) -> D:
     Returns:
         A new dataset of the same type.
     """
+    return remap_ids_with_mapping(dataset, seed)[0]
+
+
+def remap_ids_with_mapping(dataset: D, seed: int | None) -> tuple[D, IdMapping]:
+    """Like :func:`remap_ids`, also returning the old-to-new id mapping.
+
+    Use the mapping to carry references held elsewhere (such as ground-truth
+    annotations) through the remapping.
+    """
     rng = make_rng(seed, "privacy", "remap_ids")
     learners = _shuffled_ids(dataset.learner_ids, "L", rng)
     session_ids = {e.session_id for e in dataset.events if e.session_id is not None}
@@ -50,19 +76,26 @@ def remap_ids(dataset: D, seed: int | None) -> D:
     sessions = _shuffled_ids(session_ids, "S", rng)
 
     renamed = [
-        replace(
-            event,
-            learner_id=learners[event.learner_id],
-            session_id=None if event.session_id is None else sessions[event.session_id],
+        (
+            event.event_id,
+            replace(
+                event,
+                learner_id=learners[event.learner_id],
+                session_id=(
+                    None if event.session_id is None else sessions[event.session_id]
+                ),
+            ),
         )
         for event in dataset.events
     ]
-    renamed.sort(key=lambda event: event.sort_key)
+    renamed.sort(key=lambda pair: pair[1].sort_key)
     width = len(str(len(renamed)))
-    events = tuple(
-        replace(event, event_id=f"E{i:0{width}d}")
-        for i, event in enumerate(renamed, start=1)
-    )
+    event_map: dict[str, str] = {}
+    events = []
+    for i, (old_id, event) in enumerate(renamed, start=1):
+        new_id = f"E{i:0{width}d}"
+        event_map[old_id] = new_id
+        events.append(replace(event, event_id=new_id))
     new_sessions = (
         None
         if dataset.sessions is None
@@ -80,7 +113,12 @@ def remap_ids(dataset: D, seed: int | None) -> D:
             )
         )
     )
-    return replace(dataset, events=events, sessions=new_sessions)
+    mapping = IdMapping(
+        learners=MappingProxyType(learners),
+        sessions=MappingProxyType(sessions),
+        events=MappingProxyType(event_map),
+    )
+    return replace(dataset, events=tuple(events), sessions=new_sessions), mapping
 
 
 def strip_metadata(dataset: D, keys: Iterable[str]) -> D:

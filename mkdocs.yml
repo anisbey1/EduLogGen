@@ -91,5 +91,7 @@ nav:
       - datasets: api/datasets.md
       - visualization: api/visualization.md
       - plugins: api/plugins.md
+      - scenarios: api/scenarios.md
+      - evaluation: api/evaluation.md
       - privacy: api/privacy.md
       - CLI: api/cli.md

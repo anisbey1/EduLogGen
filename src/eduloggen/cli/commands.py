@@ -7,6 +7,7 @@ Handlers return a process exit code and record inputs and outputs on the
 from __future__ import annotations
 
 import argparse
+import csv
 import logging
 import platform
 import sys
@@ -22,9 +23,11 @@ from eduloggen.__version__ import __version__
 from eduloggen.config import AppConfig, config_fingerprint, load_file
 from eduloggen.core import ConfigError, RunContext
 from eduloggen.generators import available_generators, get_generator, load_model
-from eduloggen.io import write_corpus
+from eduloggen.io import read_annotations, write_corpus
 from eduloggen.models import Dataset
 from eduloggen.plugins import KINDS, list_plugins
+from eduloggen.scenarios import load_anomaly_specs
+from eduloggen.utils import derive_seed
 from eduloggen.utils.fs import atomic_directory, write_json
 from eduloggen.validation import available_metrics, get_metric
 
@@ -238,19 +241,94 @@ def cmd_generate(args: argparse.Namespace, run: Run) -> int:
         n_sessions=args.n_sessions,
         id_strategy=args.id_strategy,
     )
+    annotations = None
+    dataset: Dataset = synthetic
+    if args.anomalies:
+        specs = load_anomaly_specs(_path(args.anomalies, None, run, "--anomalies"))
+        injected = api.inject_anomalies(
+            synthetic,
+            specs,
+            seed=derive_seed(synthetic.generation.seed, "anomalies") or 0,
+        )
+        dataset, annotations = injected.dataset, injected.annotations
+        for name, info in injected.report["anomalies"].items():
+            _print(
+                f"injected {name} ({info['category']}): {info['injected']} of "
+                f"{info['requested']} sessions"
+            )
     target = write_corpus(
-        synthetic,
+        dataset,
         output,
         format=args.format or run.config.io.output_format,
+        annotations=annotations,
         force=run.force,
     )
     run.outputs["corpus"] = str(target)
     run.manifest_dir = target
     _print(
-        f"generated {synthetic.n_sessions} sessions ({synthetic.n_events} events) "
+        f"generated {dataset.n_sessions} sessions ({dataset.n_events} events) "
         f"with seed {synthetic.generation.seed}; wrote corpus {target}"
     )
     return EXIT_OK
+
+
+def cmd_evaluate(args: argparse.Namespace, run: Run) -> int:
+    """Score detector predictions against a corpus's ground truth."""
+    corpus = _path(args.corpus, None, run, "--corpus")
+    dataset = api.load_dataset(corpus)
+    annotations = read_annotations(corpus)
+    if annotations is None:
+        raise ConfigError(
+            "the corpus has no annotations; generate it with --anomalies",
+            code="cli_missing_annotations",
+            context={"path": str(corpus)},
+        )
+    run.inputs["corpus"] = dataset.fingerprint()
+    predictions = _read_predictions(_path(args.predictions, None, run, "--predictions"))
+    report = api.evaluate_detection(
+        dataset, annotations, predictions, level=args.level, threshold=args.threshold
+    )
+    markdown = report.to_markdown()
+    _print(markdown)
+    if args.output:
+        _write_bundle(
+            _path(args.output, None, run, "--output"),
+            {"evaluation.json": report.to_dict(), "evaluation.md": markdown},
+            "evaluation.json",
+            run,
+        )
+    return EXIT_OK
+
+
+def _read_predictions(path: Path) -> set[str] | dict[str, float]:
+    """Read ``id`` plus optional ``score`` or ``flag`` columns from CSV."""
+    try:
+        with path.open(newline="", encoding="utf-8-sig") as handle:
+            reader = csv.DictReader(handle)
+            columns = set(reader.fieldnames or ())
+            if "id" not in columns:
+                raise ConfigError(
+                    "predictions need an 'id' column (plus optional 'score' or 'flag')",
+                    code="cli_invalid_argument",
+                )
+            rows = list(reader)
+    except FileNotFoundError:
+        raise ConfigError(
+            "predictions file not found",
+            code="cli_missing_argument",
+            context={"path": str(path)},
+        ) from None
+    try:
+        if "score" in columns:
+            return {row["id"]: float(row["score"]) for row in rows}
+        if "flag" in columns:
+            truthy = {"1", "true", "yes", "y", "t"}
+            return {row["id"] for row in rows if row["flag"].strip().lower() in truthy}
+    except (TypeError, ValueError):
+        raise ConfigError(
+            "prediction scores must be numbers", code="cli_invalid_argument"
+        ) from None
+    return {row["id"] for row in rows}
 
 
 def cmd_validate(args: argparse.Namespace, run: Run) -> int:
@@ -450,6 +528,7 @@ COMMANDS: Final[dict[str, Handler]] = {
     "analyze": cmd_analyze,
     "fit": cmd_fit,
     "generate": cmd_generate,
+    "evaluate": cmd_evaluate,
     "validate": cmd_validate,
     "benchmark": cmd_benchmark,
     "demo": cmd_demo,
