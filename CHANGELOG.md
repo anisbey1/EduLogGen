@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-09
+
+First stable release: the complete Level 1 log generator. Learn from real
+educational interaction logs, generate privacy-conscious synthetic sessions,
+validate them, compare generators, and plot the results, from Python or the
+`eduloggen` command line.
+
 ### Added
 
 - `eduloggen.core` foundation package: exception hierarchy with machine-readable
@@ -98,18 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `io.format` and `ingest(format=...)` accept plugin reader names
 - `eduloggen.cli` is now a package; the `eduloggen` console script entry
   point is unchanged
-
-### Changed
-
 - `eduloggen.ingestion` now re-exports the ingest API from `eduloggen.io`
-
-### Planned
-
-- Data ingestion APIs for educational interaction logs
-- Session and statistical analysis modules
-- Markov and Semi-Markov generators
-- Validation and benchmarking framework
-- Visualization utilities and expanded CLI
 
 ## [0.1.0] - 2026-07-29
 
@@ -123,5 +119,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/anisbey1/EduLogGen/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/anisbey1/EduLogGen/releases/tag/v0.1.0
