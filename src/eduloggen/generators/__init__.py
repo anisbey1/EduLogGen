@@ -18,6 +18,7 @@ from __future__ import annotations
 
 from eduloggen.generators.artifact import describe_markdown, load_model, save_model
 from eduloggen.generators.base import BaseGenerator, SequenceSampler
+from eduloggen.generators.calendar import Deadline, SessionCalendar
 from eduloggen.generators.distributions import (
     Categorical,
     DurationSampler,
@@ -41,6 +42,7 @@ __all__ = [
     "BUILTIN_GENERATORS",
     "BaseGenerator",
     "Categorical",
+    "Deadline",
     "DurationSampler",
     "GeneratorFactory",
     "IndependentGenerator",
@@ -48,6 +50,7 @@ __all__ = [
     "MarkovGenerator",
     "SemiMarkovGenerator",
     "SequenceSampler",
+    "SessionCalendar",
     "available_generators",
     "describe_markdown",
     "fit_duration",

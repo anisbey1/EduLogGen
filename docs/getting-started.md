@@ -171,6 +171,37 @@ intentions; do not read them as evidence of misconduct.
 In Python: `elg.inject_anomalies(dataset, specs, seed=...)` and
 `elg.evaluate_detection(dataset, annotations, predictions)`.
 
+## Run a controlled experiment (Level 2)
+
+Change behaviour on purpose and prove the change took effect:
+
+```bash
+eduloggen generate --model model/ --n-sessions 1000 --seed 7 \
+    --experiment examples/configs/experiment.yaml --output synthetic/
+```
+
+The experiment file has three optional sections:
+
+- `controls` — `event_weights` (e.g. `forum_post: 2.0`; `0` removes a
+  token), `dwell_scale` (time spent before the next event, per token or
+  `"*"`), `session_length` (`{scale: 1.2}` or `{fixed: 8}`),
+  `sessions_per_learner` (`{mean: 5}` or `{fixed: 3}`);
+- `calendar` — period (`start`, `weeks`), `timezone`, 24 `hours` weights,
+  7 `weekdays` weights, and `deadlines` with a `surge` over `days_before`;
+- `anomalies` — as above.
+
+The output corpus contains `manipulation_check.md`: each control is compared
+with an **uncontrolled baseline** drawn with the same model, seed, and size.
+Exact rules (removed tokens, closed hours, the period) must hold strictly;
+distributional checks (hour and weekday mix, deadline surges) use
+sample-size-aware tolerances, become more sensitive with more sessions, and
+fail by chance roughly 1% of the time with small samples. Controls change the
+generator, not real learners: report them as simulated conditions.
+
+In Python: `apply_controls(model, Controls(...))`, `SessionCalendar`, and
+`run_experiment(...)` in `eduloggen.scenarios`; `elg.generate(...,
+calendar=...)`.
+
 ## Before sharing outputs
 
 Read [Privacy and responsible use](privacy.md). Synthetic data can still

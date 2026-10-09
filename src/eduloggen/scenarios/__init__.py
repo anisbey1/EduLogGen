@@ -1,6 +1,7 @@
 """Level 2 experimental generation (design: ``docs/04_EXPERIMENTAL_GENERATOR.md``).
 
-Milestone M1 provides labelled anomaly injection::
+Available so far: labelled anomaly injection (M1); controls, calendars, and
+the manipulation check (M2). Anomaly injection::
 
     from eduloggen.scenarios import inject_anomalies
 
@@ -34,6 +35,13 @@ from eduloggen.scenarios.anomalies import (
     get_anomaly,
     register_anomaly,
 )
+from eduloggen.scenarios.check import CheckItem, ManipulationCheck, manipulation_check
+from eduloggen.scenarios.controls import Controls, apply_controls
+from eduloggen.scenarios.experiment import (
+    ExperimentResult,
+    ExperimentSettings,
+    run_experiment,
+)
 from eduloggen.scenarios.inject import (
     AnomalySpec,
     InjectionResult,
@@ -47,16 +55,24 @@ __all__ = [
     "AbnormalTiming",
     "AnomalySpec",
     "BaseAnomaly",
+    "CheckItem",
+    "Controls",
     "EventFrequency",
+    "ExperimentResult",
+    "ExperimentSettings",
     "Inactivity",
     "Injection",
     "InjectionContext",
     "InjectionResult",
+    "ManipulationCheck",
     "Repetition",
     "UnexpectedTransition",
+    "apply_controls",
     "available_anomalies",
     "get_anomaly",
     "inject_anomalies",
     "load_anomaly_specs",
+    "manipulation_check",
     "register_anomaly",
+    "run_experiment",
 ]

@@ -26,7 +26,7 @@ from eduloggen.generators import available_generators, get_generator, load_model
 from eduloggen.io import read_annotations, write_corpus
 from eduloggen.models import Dataset
 from eduloggen.plugins import KINDS, list_plugins
-from eduloggen.scenarios import load_anomaly_specs
+from eduloggen.scenarios import ExperimentSettings, load_anomaly_specs, run_experiment
 from eduloggen.utils import derive_seed
 from eduloggen.utils.fs import atomic_directory, write_json
 from eduloggen.validation import available_metrics, get_metric
@@ -230,11 +230,18 @@ def cmd_fit(args: argparse.Namespace, run: Run) -> int:
 
 
 def cmd_generate(args: argparse.Namespace, run: Run) -> int:
-    """Sample a synthetic corpus from a saved model."""
+    """Sample a synthetic corpus from a saved model (optionally an experiment)."""
     model_path = _path(args.model, None, run, "--model")
     output = _path(args.output, None, run, "--output")
     model = load_model(model_path)
     run.inputs["model"] = model.fingerprint()
+    if args.experiment and args.anomalies:
+        raise ConfigError(
+            "use --experiment (with an anomalies section) or --anomalies, not both",
+            code="cli_invalid_argument",
+        )
+    if args.experiment:
+        return _generate_experiment(args, run, model, output)
     synthetic = api.generate(
         model,
         config=run.config,
@@ -251,11 +258,7 @@ def cmd_generate(args: argparse.Namespace, run: Run) -> int:
             seed=derive_seed(synthetic.generation.seed, "anomalies") or 0,
         )
         dataset, annotations = injected.dataset, injected.annotations
-        for name, info in injected.report["anomalies"].items():
-            _print(
-                f"injected {name} ({info['category']}): {info['injected']} of "
-                f"{info['requested']} sessions"
-            )
+        _print_injection(injected.report)
     target = write_corpus(
         dataset,
         output,
@@ -268,6 +271,55 @@ def cmd_generate(args: argparse.Namespace, run: Run) -> int:
     _print(
         f"generated {dataset.n_sessions} sessions ({dataset.n_events} events) "
         f"with seed {synthetic.generation.seed}; wrote corpus {target}"
+    )
+    return EXIT_OK
+
+
+def _print_injection(report: Mapping[str, Any]) -> None:
+    for name, info in report["anomalies"].items():
+        _print(
+            f"injected {name} ({info['category']}): {info['injected']} of "
+            f"{info['requested']} sessions"
+        )
+
+
+def _generate_experiment(
+    args: argparse.Namespace, run: Run, model: Any, output: Path
+) -> int:
+    settings = ExperimentSettings.from_file(
+        _path(args.experiment, None, run, "--experiment")
+    )
+    seed = run.config.generation.seed
+    if seed is None:
+        raise ConfigError(
+            "generation needs a seed: pass --seed or set generation.seed",
+            code="generation_missing_seed",
+        )
+    result = run_experiment(
+        get_generator(model.generator_id),
+        model,
+        settings,
+        n_sessions=args.n_sessions or run.config.generation.n_sessions,
+        seed=seed,
+        id_strategy=args.id_strategy or run.config.generation.id_strategy,
+    )
+    target = write_corpus(
+        result.dataset,
+        output,
+        format=args.format or run.config.io.output_format,
+        annotations=result.annotations,
+        force=run.force,
+    )
+    markdown = result.check.to_markdown()
+    write_json(target / "manipulation_check.json", result.check.to_dict())
+    (target / "manipulation_check.md").write_text(markdown, encoding="utf-8")
+    run.inputs["controlled_model"] = result.model.fingerprint()
+    run.outputs["corpus"] = str(target)
+    run.manifest_dir = target
+    _print(markdown)
+    _print(
+        f"generated {result.dataset.n_sessions} sessions "
+        f"({result.dataset.n_events} events) with seed {seed}; wrote corpus {target}"
     )
     return EXIT_OK
 

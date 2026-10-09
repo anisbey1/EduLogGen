@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Status | **Accepted** — decisions in §15; **M1 implemented** (1.1.0) |
+| Status | **Accepted** — decisions in §15; **M1** (1.1.0) and **M2** (1.2.0) implemented |
 | Builds on | Vision, PRD, SAD (`docs/01`–`03`), release 1.0.0 |
 | Releases | M1 → 1.1.0, then one minor release per milestone |
 
@@ -213,9 +213,10 @@ A combined `scenario run` may come later as a thin wrapper over fit and
 generate. A scenario model is a versioned directory of per-profile model
 artifacts plus the resolved scenario, shareable without real data.
 
-Before scenarios exist (M1), anomalies are available directly:
-`eduloggen generate --anomalies anomalies.yaml` and
-`eduloggen.inject_anomalies(dataset, specs, seed=...)`.
+Before full scenario files exist, M1 and M2 are available directly:
+`eduloggen generate --anomalies anomalies.yaml`, `eduloggen generate
+--experiment experiment.yaml` (controls, calendar, anomalies), and in Python
+`inject_anomalies`, `apply_controls`, `SessionCalendar`, `run_experiment`.
 
 ## 13. Architecture
 

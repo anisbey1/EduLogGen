@@ -30,7 +30,9 @@ class IndependentGenerator(BaseGenerator):
     """Sessions of independently drawn tokens."""
 
     name: ClassVar[str] = "independent"
-    tags: ClassVar[frozenset[str]] = frozenset({"statistical", "baseline"})
+    tags: ClassVar[frozenset[str]] = frozenset(
+        {"statistical", "baseline", "supports_event_weights"}
+    )
 
     def _fit_family(
         self,
@@ -45,7 +47,14 @@ class IndependentGenerator(BaseGenerator):
 
     def _sequence_sampler(self, model: GeneratorModel) -> SequenceSampler:
         try:
-            unigram = Categorical.from_counts(model.parameters["unigram"])
+            weights = model.parameters.get("token_weights", {})
+            unigram = Categorical.from_counts(
+                {
+                    token: count * float(weights.get(token, 1.0))
+                    for token, count in model.parameters["unigram"].items()
+                    if count * float(weights.get(token, 1.0)) > 0
+                }
+            )
             gap = DurationSampler(model.parameters["timing"]["pooled"])
         except (KeyError, TypeError, ValueError, AttributeError) as exc:
             raise GenerationError(

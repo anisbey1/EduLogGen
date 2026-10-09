@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Level 2, milestone M2: behavioural controls, course calendars, and
+  manipulation checks
+- `eduloggen.scenarios.Controls` / `apply_controls`: `event_weights`
+  (reweight transitions into a token; `0` removes it), `dwell_scale`,
+  `session_length` (scale or fixed), `sessions_per_learner` (mean or fixed);
+  controls produce a new model whose parameters record them
+- `eduloggen.generators.SessionCalendar`: period, timezone-aware hour and
+  weekday weights, deadline surges; `generate(..., calendar=...)` for every
+  generator; a learner's sessions never overlap and never start in
+  zero-weight hours
+- `manipulation_check`: compares a controlled sample with an uncontrolled
+  baseline (same model, seed, size) for every control, the calendar, and
+  anomalies; sample-size-aware tolerances for distributional checks
+- `ExperimentSettings` / `run_experiment` and CLI
+  `generate --experiment FILE` (controls, calendar, anomalies), writing
+  `manipulation_check.json` / `.md`
+- Generator capability tag `supports_event_weights`
+- Example `examples/configs/experiment.yaml`; experiment guide
+
 ## [1.1.0] - 2026-10-09
 
 Level 2, milestone M1: benchmark anomaly detectors on synthetic data with
