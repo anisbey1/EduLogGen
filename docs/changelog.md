@@ -7,6 +7,11 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.2.0] - 2026-10-09
+
+Level 2, milestone M2: behavioural controls, course calendars with deadline
+surges, and manipulation checks (`eduloggen generate --experiment`).
+
 ## [1.1.0] - 2026-10-09
 
 Level 2, milestone M1: five labelled anomaly types, ground-truth
