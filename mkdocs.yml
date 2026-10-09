@@ -70,7 +70,7 @@ nav:
   - Vision: 01_VISION.md
   - Product Requirements: 02_PRD.md
   - Architecture: 03_ARCHITECTURE.md
-  - Experimental Generator (draft): 04_EXPERIMENTAL_GENERATOR.md
+  - Experimental Generator (Level 2): 04_EXPERIMENTAL_GENERATOR.md
   - Getting Started: getting-started.md
   - Privacy: privacy.md
   - Writing plugins: plugins.md
