@@ -17,10 +17,10 @@ license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [
-    { name = "EduLogGen Contributors" },
+    { name = "Anis Bey", email = "beyanisse@gmail.com" },
 ]
 maintainers = [
-    { name = "EduLogGen Contributors" },
+    { name = "Anis Bey", email = "beyanisse@gmail.com" },
 ]
 keywords = [
     "educational-data-mining",
