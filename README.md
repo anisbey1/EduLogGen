@@ -7,10 +7,11 @@ EduLogGen helps researchers, universities, and education-technology teams create
 privacy-preserving synthetic datasets that reproduce the statistical and
 behavioral properties of real learner interaction logs.
 
-> **Status:** pre-release. Ingestion, sessionization, analysis, Markov and
-> Semi-Markov generation, validation, benchmarking, and visualization work
-> end to end from Python and the CLI. See
-> [`docs/01_VISION.md`](docs/01_VISION.md) and [`CHANGELOG.md`](CHANGELOG.md).
+> **Status:** 1.0.0 — the Level 1 log generator is complete: ingestion,
+> sessionization, analysis, Markov and Semi-Markov generation, validation,
+> benchmarking, visualization, and plugins, from Python and the CLI. Next:
+> Level 2, an experimental generator with controllable profiles and labelled
+> anomalies ([design note](docs/04_EXPERIMENTAL_GENERATOR.md)).
 
 ## Features
 

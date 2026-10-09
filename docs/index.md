@@ -21,14 +21,15 @@ using a unified API.
 
 ## Current status
 
-The project is in an early scaffolding phase (`0.1.0`). The installable package
-layout, tooling, documentation site, and continuous integration pipeline are in
-place. Generator and validator implementations will follow the roadmap described
-in the [Vision](01_VISION.md) document.
+**1.0.0** completes Level 1, the log generator: ingest real logs, build
+sessions, analyze behaviour, fit Markov and Semi-Markov generators, generate
+synthetic data, validate fidelity and privacy, benchmark generators, and plot
+the results. Next is Level 2, an experimental generator with controllable
+profiles, temporal patterns, and labelled anomalies (see the design note).
 
 ## Next steps
 
-- [Getting Started](getting-started.md) — install and verify the package
+- [Getting Started](getting-started.md) — install and run the full workflow
 - [Vision](01_VISION.md) — goals, scope, and scientific contributions
 - [API Reference](api/index.md) — package surface area
 - [Contributing](contributing.md) — how to contribute
