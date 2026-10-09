@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-09
+
+Level 2, milestone M3: behavioural profiles and profile mixtures, and
+generators that learn when sessions start.
+
 ### Changed
 
 - Generators now learn **when** sessions start (generator version 1.1):
@@ -228,7 +233,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/anisbey1/EduLogGen/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/anisbey1/EduLogGen/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/anisbey1/EduLogGen/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/anisbey1/EduLogGen/compare/v1.0.0...v1.1.0
