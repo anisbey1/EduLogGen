@@ -82,7 +82,8 @@ class BaseGenerator(ABC):
     """
 
     name: ClassVar[str]
-    version: ClassVar[str] = "1.0"
+    version: ClassVar[str] = "1.1"
+    """1.1: models also learn when sessions start (hour of day, day of period)."""
     tags: ClassVar[frozenset[str]] = frozenset()
     defaults: ClassVar[Mapping[str, Any]] = {}
 
@@ -370,6 +371,14 @@ def _fit_population(dataset: Dataset, tokenization: TokenField) -> dict[str, Any
         for earlier, later in pairwise(owned)
     ]
     starts = [session.start_time for session in sessions]
+    first_day = min(starts).astimezone(UTC).date()
+    span_days = (max(starts).astimezone(UTC).date() - first_day).days + 1
+    start_hours = [0] * 24
+    start_days = [0] * span_days
+    for moment in starts:
+        utc = moment.astimezone(UTC)
+        start_hours[utc.hour] += 1
+        start_days[(utc.date() - first_day).days] += 1
     courses = Counter(session.course_id or "" for session in sessions)
     return {
         "tokenization": tokenization,
@@ -383,6 +392,8 @@ def _fit_population(dataset: Dataset, tokenization: TokenField) -> dict[str, Any
         "session_gaps_s": sketch(max(gap, 0.0) for gap in gaps),
         "time_origin": min(starts).isoformat(),
         "time_span_s": (max(starts) - min(starts)).total_seconds(),
+        "start_hours_utc": start_hours,
+        "start_days": start_days,
         "n_sessions": len(sessions),
         "n_learners": len(per_learner),
     }
@@ -419,6 +430,10 @@ def _assemble(
         span = float(population["time_span_s"])
         lengths = LengthSampler(params["length"])
         dwell = {str(k): float(v) for k, v in params.get("timing_scale", {}).items()}
+        not_before = None
+        if calendar is None and "start_hours_utc" in population:
+            calendar = _learned_calendar(population, origin)
+            not_before = origin.astimezone(UTC)
     except (KeyError, TypeError, ValueError, AttributeError) as exc:
         raise GenerationError(
             "model parameters are malformed", code="generation_invalid_model"
@@ -439,6 +454,12 @@ def _assemble(
         else:
             count = min(per_learner.sample(rng), n_sessions - len(sessions))
             starts = sorted(calendar.sample(rng) for _ in range(count))
+            if not_before is not None:
+                # learned calendars start at midnight; keep the origin as the floor
+                starts = sorted(
+                    s if s >= not_before else calendar.next_allowed(not_before)
+                    for s in starts
+                )
             clock = starts[0]
         for position in range(count):
             if starts is not None and position:
@@ -482,6 +503,24 @@ def _assemble(
             if starts is None:
                 clock += timedelta(seconds=max(session_gaps.sample(rng), MIN_GAP_S))
     return events, sessions
+
+
+def _learned_calendar(
+    population: Mapping[str, Any], origin: datetime
+) -> SessionCalendar:
+    """Session-start calendar learned at fit time (models from version 1.1).
+
+    Days and hours with no training sessions get no synthetic sessions
+    either. ``origin`` (the training start, or ``start_time``) sets the first
+    day, so the learned pattern can be moved to another period.
+    """
+    return SessionCalendar(
+        start=origin.astimezone(UTC).date(),
+        days=len(population["start_days"]),
+        timezone="UTC",
+        hours=tuple(float(h) for h in population["start_hours_utc"]),
+        daily=tuple(float(d) for d in population["start_days"]),
+    )
 
 
 # ---------------------------------------------------------------------------

@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Generators now learn **when** sessions start (generator version 1.1):
+  models record session starts per hour of day (UTC) and per day of the
+  training period, and generation draws starts from that learned calendar.
+  Synthetic sessions no longer start in hours or on days without real
+  activity (on the demo course, 45% of sessions previously started in hours
+  with no real sessions; now none do). Models fitted with earlier versions
+  lack these counts and generate exactly as before. An explicit `calendar`
+  still takes precedence; `start_time` moves the learned pattern and remains
+  the earliest possible start.
+
+### Added
+
+- `SessionCalendar.daily`: optional per-day weights (used by learned
+  calendars; also available in calendar files)
+
 ## [1.3.0] - 2026-10-09
 
 Fine-grained analysis: per activity, over time, per group, and a ranked view
