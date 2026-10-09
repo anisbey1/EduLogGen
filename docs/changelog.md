@@ -7,6 +7,12 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.4.1] - 2026-10-09
+
+Ready for public release: PyPI publishing workflow, citation metadata, an
+OULAD case study, and more robust automatic profiles on real data (rare
+activities pooled, capped z-scores, back-off for very short sessions).
+
 ## [1.4.0] - 2026-10-09
 
 Level 2, milestone M3: behavioural profiles learned from data (`auto`),

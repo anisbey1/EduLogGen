@@ -7,12 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-10-09
+
+Ready for public release: PyPI publishing, citation metadata, an OULAD case
+study, and more robust automatic profiles on real data.
+
 ### Added
 
 - Publishing: PyPI release workflow (trusted publishing, triggered by a
   version tag, with a GitHub release from the changelog), documentation
   deployment to GitHub Pages, `CITATION.cff`, `SECURITY.md`, and
   `CODE_OF_CONDUCT.md`
+- Case study on the Open University Learning Analytics Dataset
+  (`studies/oulad/`, docs page "Case study: OULAD") and a SoftwareX
+  manuscript draft (`paper/softwarex/`)
 
 ### Changed
 
@@ -21,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Markov back-off now says when every session has a single event, instead
+  of "reducing Markov order from 1 to 1"
 - Automatic profiles on real data: event types below 1% of events are now
   pooled into one `share:(other)` feature, and standardised features are
   capped at ±3, so a handful of learners who used a rare activity no longer
@@ -258,7 +268,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/anisbey1/EduLogGen/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/anisbey1/EduLogGen/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/anisbey1/EduLogGen/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/anisbey1/EduLogGen/compare/v1.1.0...v1.2.0
