@@ -26,6 +26,7 @@ from typing import Any, ClassVar, Final
 from eduloggen.analysis import session_sequences
 from eduloggen.core import ConfigError, FitError, GenerationError, PathLike
 from eduloggen.generators.artifact import load_model, save_model
+from eduloggen.generators.calendar import SessionCalendar
 from eduloggen.generators.distributions import (
     Categorical,
     DurationSampler,
@@ -205,6 +206,7 @@ class BaseGenerator(ABC):
         id_strategy: IdStrategy = "remap",
         start_time: datetime | None = None,
         dataset_id: str | None = None,
+        calendar: SessionCalendar | None = None,
     ) -> SyntheticDataset:
         """Sample a synthetic, sessionized dataset.
 
@@ -218,6 +220,8 @@ class BaseGenerator(ABC):
             start_time: Earliest possible session start; defaults to the
                 earliest start seen in training.
             dataset_id: Name of the output; defaults to ``<generator>-synthetic``.
+            calendar: Draw session start times from this calendar instead of
+                the training period (Level 2); ``start_time`` is then ignored.
 
         Returns:
             The synthetic dataset with sessions attached.
@@ -229,7 +233,9 @@ class BaseGenerator(ABC):
         self._check_generate_args(model, n_sessions, seed, start_time)
         rng = make_rng(seed, "generate", self.name)
         sampler = self._sequence_sampler(model)
-        events, sessions = _assemble(model, n_sessions, rng, sampler, start_time)
+        events, sessions = _assemble(
+            model, n_sessions, rng, sampler, start_time, calendar
+        )
         synthetic = SyntheticDataset(
             dataset_id=dataset_id or f"{self.name}-synthetic",
             events=tuple(events),
@@ -266,6 +272,13 @@ class BaseGenerator(ABC):
         start_time: datetime | None,
     ) -> None:
         self._check_owner(model)
+        if model.parameters.get("token_weights") and (
+            "supports_event_weights" not in self.tags
+        ):
+            raise GenerationError(
+                f"{self.name} does not support event_weights controls",
+                code="generation_unsupported_control",
+            )
         if _not_int(n_sessions) or n_sessions < 1:
             raise GenerationError(
                 "n_sessions must be a positive integer",
@@ -381,6 +394,7 @@ def _assemble(
     rng: random.Random,
     sampler: SequenceSampler,
     start_time: datetime | None,
+    calendar: SessionCalendar | None = None,
 ) -> tuple[list[LogRecord], list[Session]]:
     params = model.parameters
     try:
@@ -404,6 +418,7 @@ def _assemble(
         origin = start_time or datetime.fromisoformat(population["time_origin"])
         span = float(population["time_span_s"])
         lengths = LengthSampler(params["length"])
+        dwell = {str(k): float(v) for k, v in params.get("timing_scale", {}).items()}
     except (KeyError, TypeError, ValueError, AttributeError) as exc:
         raise GenerationError(
             "model parameters are malformed", code="generation_invalid_model"
@@ -417,15 +432,32 @@ def _assemble(
         learner += 1
         learner_id = f"L{learner}"
         course = courses.sample(rng) or None
-        clock = origin + timedelta(seconds=rng.uniform(0.0, span))
-        count = min(per_learner.sample(rng), n_sessions - len(sessions))
-        for _ in range(count):
+        if calendar is None:
+            clock = origin + timedelta(seconds=rng.uniform(0.0, span))
+            count = min(per_learner.sample(rng), n_sessions - len(sessions))
+            starts = None
+        else:
+            count = min(per_learner.sample(rng), n_sessions - len(sessions))
+            starts = sorted(calendar.sample(rng) for _ in range(count))
+            clock = starts[0]
+        for position in range(count):
+            if starts is not None and position:
+                earliest = clock + timedelta(seconds=60)
+                clock = (
+                    starts[position]
+                    if starts[position] >= earliest
+                    else calendar.next_allowed(earliest)  # type: ignore[union-attr]
+                )
             session_id = f"S{len(sessions) + 1}"
             tokens, gaps = sampler(rng, lengths.sample(rng))
             members: list[LogRecord] = []
             for index, token in enumerate(tokens):
                 if index:
-                    clock += timedelta(seconds=max(gaps[index - 1], MIN_GAP_S))
+                    gap = gaps[index - 1]
+                    if dwell:
+                        previous = tokens[index - 1]
+                        gap *= dwell.get(previous, dwell.get("*", 1.0))
+                    clock += timedelta(seconds=max(gap, MIN_GAP_S))
                 companion = companions.get(token)
                 if companion is None:
                     raise GenerationError(
@@ -447,7 +479,8 @@ def _assemble(
             sessions.append(
                 Session.from_events(session_id, members, token_field=tokenization)
             )
-            clock += timedelta(seconds=max(session_gaps.sample(rng), MIN_GAP_S))
+            if starts is None:
+                clock += timedelta(seconds=max(session_gaps.sample(rng), MIN_GAP_S))
     return events, sessions
 
 

@@ -1,0 +1,30 @@
+# A Level 2 experiment for `eduloggen generate --experiment` (M2).
+#
+#   eduloggen generate --model model/ --n-sessions 1000 --seed 7 \
+#       --experiment examples/configs/experiment.yaml --output synthetic/
+#
+# All sections are optional. The run also writes manipulation_check.md,
+# comparing the controlled sample with an uncontrolled baseline.
+# Token names must exist in the model (e.g. the demo course uses navigate,
+# view, attempt, submit, video_play, forum_post).
+
+controls:
+  event_weights: {forum_post: 2.0}       # forum posts twice as likely
+  dwell_scale: {attempt: 1.5}            # 50% more time per quiz attempt
+  session_length: {scale: 1.2}           # sessions 20% longer
+  sessions_per_learner: {mean: 5}
+
+calendar:
+  start: 2026-09-07
+  weeks: 12
+  timezone: Europe/Paris
+  #       0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+  hours: [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 2, 2, 3, 3, 3, 3, 4, 5, 5, 4, 2, 1, 0]
+  weekdays: [1, 1, 1, 1, 1, 0.5, 0.5]    # Monday..Sunday
+  deadlines:
+    - {date: 2026-10-16, surge: 3.0, days_before: 3}
+    - {date: 2026-11-27, surge: 3.0, days_before: 3}
+
+anomalies:
+  - {type: inactivity, rate: 0.02, gap_s: 2400}
+  - {type: unexpected_transition, rate: 0.02}

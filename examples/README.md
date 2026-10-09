@@ -13,6 +13,8 @@ learner identifiers or institutional exports.
 
 - [`configs/anomalies.yaml`](configs/anomalies.yaml) — the five Level 2
   anomaly types, for `eduloggen generate --anomalies`.
+- [`configs/experiment.yaml`](configs/experiment.yaml) — controls, a course
+  calendar with deadlines, and anomalies, for `eduloggen generate --experiment`.
 
 All files are loaded by the test suite, so they stay valid as the schema
 evolves.

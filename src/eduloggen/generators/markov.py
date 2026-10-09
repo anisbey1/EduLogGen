@@ -52,7 +52,9 @@ class MarkovGenerator(BaseGenerator):
     """Sessions as order-k Markov chains over tokens."""
 
     name: ClassVar[str] = "markov"
-    tags: ClassVar[frozenset[str]] = frozenset({"probabilistic", "sequence"})
+    tags: ClassVar[frozenset[str]] = frozenset(
+        {"probabilistic", "sequence", "supports_event_weights"}
+    )
     defaults: ClassVar[Mapping[str, Any]] = {
         "order": 1,
         "smoothing_alpha": 0.0,
@@ -149,19 +151,39 @@ def _transition_tables(
         params = model.parameters
         order = int(params["order"])
         alpha = float(model.hyperparameters["smoothing_alpha"])
+        weights = {str(k): float(v) for k, v in params.get("token_weights", {}).items()}
         tables: dict[int, dict[Context, Categorical[str]]] = {}
         for k in range(1, order + 1):
             counts = TransitionCounts.from_dict(params["transitions"][str(k)])
             tables[k] = {
-                context: Categorical.from_counts(row)
+                context: Categorical.from_counts(weighted)
                 for context, row in counts.probabilities(alpha).items()
+                if (weighted := _weighted(row, weights))
             }
-        unigram = Categorical.from_counts(params["unigram"])
+        unigram_row = _weighted(params["unigram"], weights)
+        if not unigram_row:
+            raise GenerationError(
+                "event_weights remove every token", code="generation_invalid_model"
+            )
+        unigram = Categorical.from_counts(unigram_row)
     except (KeyError, TypeError, ValueError, AttributeError) as exc:
         raise GenerationError(
             "model parameters are malformed", code="generation_invalid_model"
         ) from exc
     return tables, unigram, order
+
+
+def _weighted(
+    row: Mapping[str, float], weights: Mapping[str, float]
+) -> dict[str, float]:
+    """Apply token weights to a probability or count row; drop zeros.
+
+    An empty result means the row is unusable and sampling backs off.
+    """
+    if not weights:
+        return dict(row)
+    weighted = {token: value * weights.get(token, 1.0) for token, value in row.items()}
+    return {token: value for token, value in weighted.items() if value > 0}
 
 
 def _next_token(

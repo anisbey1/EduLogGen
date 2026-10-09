@@ -32,7 +32,7 @@ class SemiMarkovGenerator(MarkovGenerator):
 
     name: ClassVar[str] = "semi_markov"
     tags: ClassVar[frozenset[str]] = frozenset(
-        {"probabilistic", "sequence", "supports_timing"}
+        {"probabilistic", "sequence", "supports_timing", "supports_event_weights"}
     )
     defaults: ClassVar[Mapping[str, Any]] = {
         **MarkovGenerator.defaults,

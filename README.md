@@ -10,8 +10,9 @@ behavioral properties of real learner interaction logs.
 > **Status:** 1.1.0 — the Level 1 log generator is complete: ingestion,
 > sessionization, analysis, Markov and Semi-Markov generation, validation,
 > benchmarking, visualization, and plugins, from Python and the CLI.
-> Level 2, the experimental generator, is under way: labelled anomalies and
-> detector scoring are available; profiles, controls, and outcomes follow
+> Level 2, the experimental generator, is under way: labelled anomalies,
+> detector scoring, behavioural controls, course calendars, and manipulation
+> checks are available; profiles and outcomes follow
 > ([design](docs/04_EXPERIMENTAL_GENERATOR.md)).
 
 ## Features
@@ -33,6 +34,9 @@ behavioral properties of real learner interaction logs.
 - **Benchmark anomaly detectors** (Level 2): inject five labelled anomaly
   types, keep ground truth in a separate `annotations.csv`, and score
   detectors with `eduloggen evaluate`
+- **Run controlled experiments** (Level 2): reweight events, scale time on
+  task and session lengths, schedule sessions with a course calendar and
+  deadline surges, and get a manipulation check proving each effect
 - **Extend** with installable plugins for generators, metrics, readers,
   plots, and benchmark protocols (see [`docs/plugins.md`](docs/plugins.md))
 - **Try it instantly** with `eduloggen demo`, a fully synthetic course corpus

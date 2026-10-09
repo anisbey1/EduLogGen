@@ -236,7 +236,8 @@ def test_info_and_plugins(pipeline: Path, capsys: pytest.CaptureFixture[str]) ->
     code, out, _ = run(capsys, "info", "--input", str(pipeline / "synthetic"))
     assert "(SyntheticDataset)" in out
     code, out, _ = run(capsys, "plugins")
-    assert "semi_markov  [probabilistic, sequence, supports_timing]" in out
+    tags = "probabilistic, sequence, supports_event_weights, supports_timing"
+    assert f"semi_markov  [{tags}]" in out
     assert "nn_distance_p05  [privacy, higher is better]" in out
     assert "benchmark_suites:" in out
     assert "  session_fidelity_v1" in out

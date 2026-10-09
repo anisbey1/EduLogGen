@@ -175,6 +175,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="YAML/TOML/JSON with an 'anomalies' list to inject; writes "
         "annotations.csv (ids are always remapped)",
     )
+    p.add_argument(
+        "--experiment",
+        help="YAML/TOML/JSON with optional 'controls', 'calendar', and 'anomalies' "
+        "sections; writes manipulation_check.json/.md",
+    )
 
     p = add(
         "evaluate",

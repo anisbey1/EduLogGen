@@ -30,7 +30,7 @@ from eduloggen.config import AppConfig, resolve_config
 from eduloggen.core import GenerationError, PathLike
 from eduloggen.datasets import demo_dataset
 from eduloggen.evaluation import evaluate_detection
-from eduloggen.generators import get_generator
+from eduloggen.generators import SessionCalendar, get_generator
 from eduloggen.io import (
     FieldMapping,
     IngestResult,
@@ -188,8 +188,11 @@ def generate(
     n_sessions: int | None = None,
     seed: int | None = None,
     id_strategy: IdStrategy | None = None,
+    calendar: SessionCalendar | None = None,
 ) -> SyntheticDataset:
     """Sample synthetic data from a fitted model.
+
+    ``calendar`` (Level 2) draws session start times from a course calendar.
 
     Raises:
         GenerationError: If no seed is given here or in ``generation.seed``.
@@ -207,6 +210,7 @@ def generate(
         n_sessions or section.n_sessions,
         chosen_seed,
         id_strategy=id_strategy or section.id_strategy,
+        calendar=calendar,
     )
 
 
