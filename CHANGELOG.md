@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-09
+
+Level 2, milestone M2: run controlled experiments and prove each control
+took effect.
+
 ### Added
 
 - Level 2, milestone M2: behavioural controls, course calendars, and
@@ -164,7 +169,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/anisbey1/EduLogGen/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/anisbey1/EduLogGen/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/anisbey1/EduLogGen/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/anisbey1/EduLogGen/releases/tag/v0.1.0
