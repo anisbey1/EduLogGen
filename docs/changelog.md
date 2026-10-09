@@ -7,6 +7,10 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.4.2] - 2026-10-09
+
+Author and citation metadata (Anis Bey, ORCID 0000-0001-9410-0851).
+
 ## [1.4.1] - 2026-10-09
 
 Ready for public release: PyPI publishing workflow, citation metadata, an
