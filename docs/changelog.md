@@ -7,6 +7,13 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.4.0] - 2026-10-09
+
+Level 2, milestone M3: behavioural profiles learned from data (`auto`),
+imported (`provided`), or defined without data (`manual`); profile mixtures
+with ground-truth annotations; `evaluate_clustering`. Generators now also
+learn when sessions start, so synthetic sessions follow real hours and days.
+
 ## [1.3.0] - 2026-10-09
 
 Fine-grained analysis: per-activity profiles, temporal analysis with
