@@ -32,6 +32,7 @@ from eduloggen.io.base import (
 from eduloggen.io.corpus import (
     EVENT_COLUMNS,
     SESSION_COLUMNS,
+    read_annotations,
     read_corpus,
     write_corpus,
 )
@@ -99,6 +100,7 @@ __all__ = [
     "get_writer",
     "ingest",
     "pseudonymize",
+    "read_annotations",
     "read_corpus",
     "register_reader",
     "unregister_reader",

@@ -145,6 +145,32 @@ the real training data against the holdout: it shows what a perfect generator
 could reach on this dataset, so compare generators to it rather than to zero.
 Results describe your dataset only; they are not a general ranking.
 
+## Test an anomaly detector (Level 2)
+
+Generate data with known, labelled anomalies, run your detector on the
+events, and score it against the ground truth:
+
+```bash
+eduloggen generate --model model/ --n-sessions 1000 --seed 7 \
+    --anomalies examples/configs/anomalies.yaml --output synthetic/
+# run your detector on synthetic/events.csv and write preds.csv with
+# columns: id (session id) and score (higher = more anomalous)
+eduloggen evaluate --corpus synthetic/ --predictions preds.csv
+```
+
+Five anomaly types are available. `unexpected_transition` is an
+**invalid workflow** (it breaks the event model); `event_frequency`,
+`abnormal_timing`, `repetition`, and `inactivity` are **unusual but valid**.
+The report gives precision, recall, F1, ROC-AUC, and average precision, plus
+recall per type and per category, since many methods find malformed records
+but miss rare valid behaviour. Ground truth lives in `annotations.csv`,
+separate from the events, and all ids are remapped after injection so they
+cannot give the answer away. Anomalies describe data patterns, never
+intentions; do not read them as evidence of misconduct.
+
+In Python: `elg.inject_anomalies(dataset, specs, seed=...)` and
+`elg.evaluate_detection(dataset, annotations, predictions)`.
+
 ## Before sharing outputs
 
 Read [Privacy and responsible use](privacy.md). Synthetic data can still

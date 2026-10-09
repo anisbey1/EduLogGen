@@ -29,6 +29,7 @@ from eduloggen.benchmark import run_benchmark as _run_benchmark
 from eduloggen.config import AppConfig, resolve_config
 from eduloggen.core import GenerationError, PathLike
 from eduloggen.datasets import demo_dataset
+from eduloggen.evaluation import evaluate_detection
 from eduloggen.generators import get_generator
 from eduloggen.io import (
     FieldMapping,
@@ -47,15 +48,18 @@ from eduloggen.models import (
     UnknownEventPolicy,
 )
 from eduloggen.privacy import IdStrategy, strip_metadata
+from eduloggen.scenarios import inject_anomalies
 from eduloggen.validation import ValidationReport
 from eduloggen.validation import validate as _validate
 
 __all__ = [
     "analyze",
     "demo_dataset",
+    "evaluate_detection",
     "fit_generator",
     "generate",
     "ingest",
+    "inject_anomalies",
     "load_config",
     "load_dataset",
     "run_benchmark",

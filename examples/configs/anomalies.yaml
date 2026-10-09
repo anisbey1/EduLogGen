@@ -1,0 +1,20 @@
+# Anomalies to inject for benchmarking an anomaly detector (Level 2, M1).
+#
+#   eduloggen generate --model model/ --n-sessions 1000 --seed 7 \
+#       --anomalies examples/configs/anomalies.yaml --output synthetic/
+#
+# `rate` is the share of sessions that receive this anomaly; each session gets
+# at most one. Ground truth is written to synthetic/annotations.csv.
+# Anomalies describe data patterns, not intentions or misconduct.
+
+anomalies:
+  # unusual but valid: 20 events of one type within 3 minutes
+  - {type: event_frequency, rate: 0.03, count: 20, window_s: 180}
+  # unusual but valid: a whole session compressed to 5% of its duration
+  - {type: abnormal_timing, rate: 0.03, factor: 0.05}
+  # invalid workflow: a transition never observed in the data
+  - {type: unexpected_transition, rate: 0.03}
+  # unusual but valid: switching back and forth between two activities
+  - {type: repetition, rate: 0.03, pattern: ping_pong, length: 12}
+  # unusual but valid: 40 minutes without activity inside a session
+  - {type: inactivity, rate: 0.03, gap_s: 2400}

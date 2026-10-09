@@ -17,6 +17,7 @@ empty. Reads verify the content fingerprint recorded in the manifest.
 
 from __future__ import annotations
 
+import csv
 import json
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from pathlib import Path
@@ -30,6 +31,8 @@ from eduloggen.io.quality import QualityReport
 from eduloggen.io.readers import get_reader
 from eduloggen.io.writers import get_writer
 from eduloggen.models import (
+    ANNOTATION_COLUMNS,
+    Annotations,
     Dataset,
     DatasetMetadata,
     GenerationMetadata,
@@ -40,11 +43,18 @@ from eduloggen.models import (
 )
 from eduloggen.utils.fs import atomic_directory, write_json
 
-__all__ = ["EVENT_COLUMNS", "SESSION_COLUMNS", "read_corpus", "write_corpus"]
+__all__ = [
+    "EVENT_COLUMNS",
+    "SESSION_COLUMNS",
+    "read_annotations",
+    "read_corpus",
+    "write_corpus",
+]
 
 MANIFEST: Final = "manifest.json"
 QUALITY_REPORT: Final = "quality_report.json"
 MAPPING_USED: Final = "mapping.used.json"
+ANNOTATIONS: Final = "annotations.csv"
 
 EVENT_COLUMNS: Final[tuple[Column, ...]] = (
     ("event_id", "string"),
@@ -88,6 +98,7 @@ def write_corpus(
     format: Format = "csv",
     quality_report: QualityReport | None = None,
     mapping: FieldMapping | None = None,
+    annotations: Annotations | None = None,
     force: bool = False,
 ) -> Path:
     """Write a dataset as a corpus directory.
@@ -98,6 +109,8 @@ def write_corpus(
         format: Table format for events and sessions.
         quality_report: Ingest report to store alongside the data.
         mapping: Ingest mapping to store for provenance.
+        annotations: Ground truth to store in ``annotations.csv`` (Level 2);
+            every annotated id must exist in ``dataset``.
         force: Replace an existing corpus (or empty directory) at ``path``.
 
     Returns:
@@ -124,6 +137,14 @@ def write_corpus(
     with atomic_directory(target, marker=MANIFEST, force=force) as staging:
         files = _write_contents(staging, dataset, format, quality_report, mapping)
         manifest = dataset.to_manifest() | {"format": format, "files": files}
+        if annotations is not None:
+            annotations.check_against(dataset)
+            _write_annotations(staging / ANNOTATIONS, annotations)
+            files["annotations"] = ANNOTATIONS
+            manifest["annotations"] = {
+                "fingerprint": annotations.fingerprint(),
+                **annotations.summary(),
+            }
         write_json(staging / MANIFEST, manifest)
     return target
 
@@ -192,6 +213,61 @@ def read_corpus(path: PathLike) -> Dataset:
 # ---------------------------------------------------------------------------
 # Writing helpers
 # ---------------------------------------------------------------------------
+
+
+def read_annotations(path: PathLike) -> Annotations | None:
+    """Load the ground-truth annotations of a corpus, if it has any.
+
+    Returns:
+        The annotations, or ``None`` when the corpus has none.
+
+    Raises:
+        IngestionError: If the manifest or file is missing or malformed, or
+            the content does not match the recorded fingerprint.
+        SchemaError: If a row is invalid.
+    """
+    root = Path(path).expanduser().resolve()
+    manifest = _read_manifest(root)
+    name = _get(manifest, "files", dict).get("annotations")
+    if name is None:
+        return None
+    if not isinstance(name, str) or Path(name).name != name:
+        raise _corrupt(root, "manifest names an invalid annotations file")
+    try:
+        with (root / name).open(newline="", encoding="utf-8") as handle:
+            annotations = Annotations.from_rows(csv.DictReader(handle))
+    except FileNotFoundError:
+        raise IngestionError(
+            "annotations file is missing",
+            code="io_not_found",
+            context={"path": str(root / name)},
+        ) from None
+    except (OSError, UnicodeDecodeError, csv.Error) as exc:
+        raise _corrupt(root, "annotations file is not readable CSV") from exc
+    recorded = manifest.get("annotations", {})
+    if not isinstance(recorded, dict) or annotations.fingerprint() != recorded.get(
+        "fingerprint"
+    ):
+        raise IngestionError(
+            "annotations do not match their manifest fingerprint",
+            code="io_corpus_integrity",
+            context={"path": str(root)},
+        )
+    return annotations
+
+
+def _write_annotations(path: Path, annotations: Annotations) -> None:
+    try:
+        with path.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=list(ANNOTATION_COLUMNS))
+            writer.writeheader()
+            writer.writerows(annotations.to_rows())
+    except OSError as exc:
+        raise ExportError(
+            "could not write annotations",
+            code="export_write_failed",
+            context={"path": str(path)},
+        ) from exc
 
 
 def _write_contents(

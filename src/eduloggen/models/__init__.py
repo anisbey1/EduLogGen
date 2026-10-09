@@ -8,6 +8,14 @@ cross-record schema checks. It depends only on :mod:`eduloggen.core`.
 
 from __future__ import annotations
 
+from eduloggen.models.annotations import (
+    ANNOTATION_COLUMNS,
+    Annotation,
+    AnnotationKind,
+    AnnotationLevel,
+    Annotations,
+    AnomalyCategory,
+)
 from eduloggen.models.dataset import (
     Dataset,
     DatasetMetadata,
@@ -28,6 +36,12 @@ Event = LogRecord
 """Alias: *event* and *log record* are synonyms at the domain layer (SAD §9.5)."""
 
 __all__ = [
+    "ANNOTATION_COLUMNS",
+    "Annotation",
+    "AnnotationKind",
+    "AnnotationLevel",
+    "Annotations",
+    "AnomalyCategory",
     "Dataset",
     "DatasetMetadata",
     "Event",

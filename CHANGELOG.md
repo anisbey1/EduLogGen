@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Level 2, milestone M1 (`docs/04_EXPERIMENTAL_GENERATOR.md`): labelled
+  anomaly injection for benchmarking detectors
+- `eduloggen.scenarios`: five anomaly injectors — `event_frequency`,
+  `abnormal_timing`, `repetition`, `inactivity` (unusual but valid) and
+  `unexpected_transition` (invalid workflow); `inject_anomalies` with seeded,
+  disjoint session selection, one anomaly per session, no overlapping
+  sessions, and full id remapping so ids never reveal injected records;
+  `register_anomaly` for custom injectors
+- `Annotations` ground-truth table in `eduloggen.models`, stored as
+  `annotations.csv` in corpora with its own fingerprint (`read_annotations`)
+- `eduloggen.evaluation.evaluate_detection`: precision, recall, F1, false
+  positive rate, ROC-AUC, average precision, and recall per anomaly type and
+  per category
+- CLI: `generate --anomalies FILE` and `evaluate --corpus --predictions`
+- `privacy.remap_ids_with_mapping` returning the old-to-new id mapping
+- Example `examples/configs/anomalies.yaml`; detector-testing guide
+
 ## [1.0.0] - 2026-10-09
 
 First stable release: the complete Level 1 log generator. Learn from real

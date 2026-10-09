@@ -9,10 +9,19 @@ privacy indicators in :mod:`eduloggen.validation`.
 from __future__ import annotations
 
 from eduloggen.privacy.policies import (
+    IdMapping,
     IdStrategy,
     apply_id_strategy,
     remap_ids,
+    remap_ids_with_mapping,
     strip_metadata,
 )
 
-__all__ = ["IdStrategy", "apply_id_strategy", "remap_ids", "strip_metadata"]
+__all__ = [
+    "IdMapping",
+    "IdStrategy",
+    "apply_id_strategy",
+    "remap_ids",
+    "remap_ids_with_mapping",
+    "strip_metadata",
+]
