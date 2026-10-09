@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-10-09
+
+Fine-grained analysis: per activity, over time, per group, and a ranked view
+of where synthetic data differs from real data.
+
 ### Added
 
-- Fine-grained analysis
 - Per-activity profiles (`activity_profiles`): share, session and learner
   reach, start/end shares, repeat share, dwell-time distribution,
   predecessors and successors, success rate, mean score, companions
@@ -188,7 +192,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/anisbey1/EduLogGen/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/anisbey1/EduLogGen/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/anisbey1/EduLogGen/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/anisbey1/EduLogGen/compare/v0.1.0...v1.0.0

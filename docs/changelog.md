@@ -7,6 +7,12 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.3.0] - 2026-10-09
+
+Fine-grained analysis: per-activity profiles, temporal analysis with
+deadline effects, stratified analysis by course, week, cohort, or device, and
+a ranked comparison of where synthetic data differs from real data.
+
 ## [1.2.0] - 2026-10-09
 
 Level 2, milestone M2: behavioural controls, course calendars with deadline
