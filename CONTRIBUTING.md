@@ -7,8 +7,9 @@ gates every change must pass, and the expectations for pull requests.
 
 ## Code of conduct
 
-Be respectful and constructive. Harassment or discrimination of any kind is
-not tolerated.
+This project follows the [code of conduct](CODE_OF_CONDUCT.md). Report
+security or privacy problems privately as described in
+[SECURITY.md](SECURITY.md).
 
 ## Development setup
 
