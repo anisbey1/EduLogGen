@@ -100,7 +100,9 @@ def test_standardizer_and_means() -> None:
     assert scaler.means == (2.0, 5.0)
     assert scaler.stds == (1.0, 1.0)  # constant feature keeps std 1
     assert scaler.transform([3.0, 6.0]) == [1.0, 1.0]
-    assert scaler.to_dict() == {"means": [2.0, 5.0], "stds": [1.0, 1.0]}
+    assert scaler.to_dict() == {"means": [2.0, 5.0], "stds": [1.0, 1.0], "clip": 3.0}
+    assert scaler.transform([20.0, -20.0]) == [3.0, -3.0]
+    assert Standardizer.fit([[1.0], [3.0]], clip=None).transform([20.0]) == [18.0]
     assert feature_means({"a": [1.0], "b": [3.0]}, ["a", "b"]) == [2.0]
 
 
@@ -501,3 +503,50 @@ def test_load_profile_assignments(tmp_path: Path) -> None:
         load_profile_assignments(tmp_path / "c.csv")
     with pytest.raises(IngestionError, match="not found"):
         load_profile_assignments(tmp_path / "none.csv")
+
+
+def test_rare_tokens_are_pooled() -> None:
+    from eduloggen.scenarios.clustering import OTHER
+
+    from ..generators.conftest import build
+
+    data = build([("a", "b")] * 60 + [("a", "rare")])
+    names, vectors = learner_features(data)
+    assert names[4:] == ["share:a", "share:b", f"share:{OTHER}"]
+    assert all(sum(v[4:]) == pytest.approx(1) for v in vectors.values())
+    names, _ = learner_features(data, min_share=0.0)
+    assert "share:rare" in names
+    names, vectors = learner_features(data, ["a", OTHER])
+    assert names[4:] == ["share:a", f"share:{OTHER}"]
+    assert all(v[5] == pytest.approx(0.5) for v in vectors.values())
+
+
+def test_profiles_saved_without_clip_assign_unclipped(
+    auto: ProfileSet, real: Dataset
+) -> None:
+    assert auto.clustering is not None
+    assert auto.clustering["clip"] == 3.0
+    legacy_clustering = {k: v for k, v in auto.clustering.items() if k != "clip"}
+    legacy = ProfileSet("auto", auto.generator_id, auto.profiles, legacy_clustering)
+    assert set(legacy.assign(real).values()) <= set(auto.names)
+
+
+def test_profiles_back_off_on_short_sessions() -> None:
+    from ..generators.conftest import build
+
+    # learner 0 has three-event sessions, learner 1 only one-event sessions
+    data = build([("a", "b", "a"), ("a",)] * 10, learners=2)
+    first, second = sorted(data.learner_ids)
+    mapping = {first: "many", second: "one"}
+    profiles = fit_profiles(data, mode="provided", assignments=mapping, min_learners=1)
+    assert profiles.names == ["many", "one"]
+    sessions = generate_profiles(profiles, 20, seed=0).dataset.sessions or ()
+    assert {len(s.event_sequence) for s in sessions} == {1, 3}
+    with pytest.raises(FitError, match="profile 'one'"):
+        fit_profiles(
+            data,
+            mode="provided",
+            assignments=mapping,
+            min_learners=1,
+            hyperparameters={"on_insufficient_data": "fail"},
+        )
