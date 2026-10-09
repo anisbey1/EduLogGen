@@ -164,7 +164,10 @@ class ProfileSet:
                 code="config_invalid_value",
             )
         scaler = Standardizer(
-            tuple(self.clustering["means"]), tuple(self.clustering["stds"])
+            tuple(self.clustering["means"]),
+            tuple(self.clustering["stds"]),
+            # profile sets saved by 1.4.0 have no cap recorded
+            self.clustering.get("clip"),
         )
         centroids = self.clustering["centroids"]
         _, vectors = learner_features(dataset, self.clustering["tokens"])
@@ -386,6 +389,7 @@ def fit_profiles(
             ],
             "means": list(scaler.means),
             "stds": list(scaler.stds),
+            "clip": scaler.clip,
             "centroids": [list(result.centroids[c]) for c in order],
             "inertia": result.inertia,
             "seed": seed,
@@ -427,11 +431,17 @@ def fit_profiles(
     overall = feature_means(vectors, sorted(vectors))
     scaler_all = Standardizer.fit([vectors[i] for i in sorted(vectors)])
     family = get_generator(generator)
+    params = dict(hyperparameters or {})
+    if "on_insufficient_data" in family.validate_hyperparameters({}):
+        # A profile is a subset by design (e.g. learners active one day a
+        # week have only one-event sessions), so lower the order rather
+        # than fail, unless the caller chose otherwise.
+        params.setdefault("on_insufficient_data", "backoff")
     profiles = []
     for name, ids in renamed.items():
         subset = _subset(dataset, set(ids), name)
         try:
-            model = family.fit(subset, hyperparameters)
+            model = family.fit(subset, params)
         except FitError as exc:
             raise FitError(
                 f"profile {name!r}: {exc.message}",

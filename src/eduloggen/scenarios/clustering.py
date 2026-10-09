@@ -19,6 +19,7 @@ from eduloggen.core import ConfigError
 from eduloggen.models import Dataset
 
 __all__ = [
+    "OTHER",
     "KMeansResult",
     "Standardizer",
     "feature_means",
@@ -28,28 +29,46 @@ __all__ = [
 ]
 
 
+OTHER = "(other)"
+"""Token column pooling the event types too rare to be features of their own."""
+
+
 def learner_features(
-    dataset: Dataset, tokens: Sequence[str] | None = None
+    dataset: Dataset,
+    tokens: Sequence[str] | None = None,
+    *,
+    min_share: float = 0.01,
 ) -> tuple[list[str], dict[str, list[float]]]:
     """Behavioural features per learner.
 
     Features: number of sessions, mean session length, log mean session
     duration, success rate (0.5 when unknown), and the share of each token.
+    Tokens below ``min_share`` of all events are pooled into one
+    ``share:(other)`` column: standardised, a rare token would otherwise
+    turn the few learners who used it into clusters of their own.
 
     Args:
         dataset: Sessionized dataset.
-        tokens: Token columns to use (defaults to the dataset's tokens, sorted);
-            pass the training tokens when featurising new data.
+        tokens: Token columns to use (defaults to the dataset's tokens with at
+            least ``min_share`` of events, sorted, plus ``(other)`` when any
+            are pooled); pass the training tokens when featurising new data.
+        min_share: Smallest share of events for a token column of its own.
 
     Returns:
         Feature names and learner id to feature vector.
     """
     sequences = session_sequences(dataset)
-    vocabulary = (
-        list(tokens)
-        if tokens is not None
-        else sorted({t for s in sequences for t in s})
-    )
+    if tokens is not None:
+        vocabulary = list(tokens)
+    else:
+        frequency = Counter(t for s in sequences for t in s)
+        total_events = sum(frequency.values()) or 1
+        vocabulary = sorted(
+            t for t, c in frequency.items() if c / total_events >= min_share
+        )
+        if len(vocabulary) < len(frequency):
+            vocabulary.append(OTHER)
+    listed = set(vocabulary) - {OTHER}
     token_counts: defaultdict[str, Counter[str]] = defaultdict(Counter)
     for session in dataset.sessions or ():
         token_counts[session.learner_id].update(session.event_sequence)
@@ -72,20 +91,39 @@ def learner_features(
             float(row["mean_session_length"]),
             math.log1p(float(row["mean_session_duration_s"])),
             sum(flags) / len(flags) if flags else 0.5,
-            *(counts.get(t, 0) / total for t in vocabulary),
+            *(
+                (
+                    sum(c for t2, c in counts.items() if t2 not in listed)
+                    if t == OTHER
+                    else counts.get(t, 0)
+                )
+                / total
+                for t in vocabulary
+            ),
         ]
     return names, vectors
 
 
 @dataclass(frozen=True, slots=True)
 class Standardizer:
-    """Per-feature mean and standard deviation (1 where a feature is constant)."""
+    """Per-feature mean and standard deviation (1 where a feature is constant).
+
+    Attributes:
+        means: Training means.
+        stds: Training standard deviations.
+        clip: Z-scores are capped at plus or minus this value (``None``: no
+            cap), so a handful of extreme learners cannot claim a cluster of
+            their own.
+    """
 
     means: tuple[float, ...]
     stds: tuple[float, ...]
+    clip: float | None = 3.0
 
     @classmethod
-    def fit(cls, rows: Sequence[Sequence[float]]) -> Standardizer:
+    def fit(
+        cls, rows: Sequence[Sequence[float]], *, clip: float | None = 3.0
+    ) -> Standardizer:
         """Estimate from training rows."""
         n = len(rows)
         means = [sum(col) / n for col in zip(*rows, strict=True)]
@@ -93,15 +131,18 @@ class Standardizer:
             math.sqrt(sum((v - m) ** 2 for v in col) / n) or 1.0
             for col, m in zip(zip(*rows, strict=True), means, strict=True)
         ]
-        return cls(tuple(means), tuple(stds))
+        return cls(tuple(means), tuple(stds), clip)
 
     def transform(self, row: Sequence[float]) -> list[float]:
-        """Z-scores of one row."""
-        return [(v - m) / s for v, m, s in zip(row, self.means, self.stds, strict=True)]
+        """Z-scores of one row (capped at ``clip``)."""
+        z = [(v - m) / s for v, m, s in zip(row, self.means, self.stds, strict=True)]
+        if self.clip is None:
+            return z
+        return [max(-self.clip, min(self.clip, v)) for v in z]
 
     def to_dict(self) -> dict[str, Any]:
         """Serialize to JSON-compatible data."""
-        return {"means": list(self.means), "stds": list(self.stds)}
+        return {"means": list(self.means), "stds": list(self.stds), "clip": self.clip}
 
 
 @dataclass(frozen=True, slots=True)

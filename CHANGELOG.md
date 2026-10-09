@@ -19,6 +19,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: `pip install eduloggen`, a citation section, and absolute links so
   they work on PyPI
 
+### Fixed
+
+- Automatic profiles on real data: event types below 1% of events are now
+  pooled into one `share:(other)` feature, and standardised features are
+  capped at ±3, so a handful of learners who used a rare activity no longer
+  form clusters of their own (found on OULAD, where k=4 produced clusters of
+  3 and 4 learners; now 42–80). `Standardizer` gains `clip` (default 3);
+  profile sets saved by 1.4.0 keep assigning without a cap.
+- `fit_profiles` no longer fails when a profile only has very short sessions
+  (e.g. learners active one day a week): per-profile models now lower the
+  Markov order instead (`on_insufficient_data: backoff`) unless you set
+  `on_insufficient_data` yourself.
+
 ## [1.4.0] - 2026-10-09
 
 Level 2, milestone M3: behavioural profiles and profile mixtures, and
