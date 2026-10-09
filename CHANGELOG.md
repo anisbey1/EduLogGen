@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-09
+
+Level 2, milestone M1: benchmark anomaly detectors on synthetic data with
+labelled ground truth.
+
 ### Added
 
 - Level 2, milestone M1 (`docs/04_EXPERIMENTAL_GENERATOR.md`): labelled
@@ -138,6 +143,7 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/anisbey1/EduLogGen/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/anisbey1/EduLogGen/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/anisbey1/EduLogGen/releases/tag/v0.1.0
