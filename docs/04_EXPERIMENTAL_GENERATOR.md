@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Status | **Accepted** — decisions in §15; **M1** (1.1.0) and **M2** (1.2.0) implemented |
+| Status | **Accepted** — decisions in §15; **M1** (1.1.0), **M2** (1.2.0), and **M3** (1.4.0) implemented |
 | Builds on | Vision, PRD, SAD (`docs/01`–`03`), release 1.0.0 |
 | Releases | M1 → 1.1.0, then one minor release per milestone |
 

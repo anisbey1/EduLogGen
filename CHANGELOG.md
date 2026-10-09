@@ -21,6 +21,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Level 2, M3 — behavioural profiles (`eduloggen.scenarios`):
+  - `fit_profiles(mode="auto")`: seeded k-means++ (with restarts) on
+    standardised per-learner features (sessions, session length, duration,
+    success rate, event-type shares); profiles `profile_1..k` ordered by
+    size, with a table of distinguishing features; `ProfileSet.assign` maps
+    new (e.g. holdout) learners to the nearest training profile
+  - `fit_profiles(mode="provided")` with a `learner_id -> profile` mapping
+    (`load_profile_assignments` reads a CSV)
+  - `define_profiles` (manual): profiles defined by start and transition
+    probabilities, session lengths, sessions per learner, dwell times, and
+    activities, without real data; proportions alone are rejected
+  - one generator model per profile; profiles below `min_learners`
+    (default 5) are an error with guidance
+  - `generate_profiles`: mixture by share of synthetic learners, optional
+    per-profile controls and a shared calendar, ids remapped after mixing,
+    one learner-level `profile` annotation per synthetic learner
+  - `ProfileSet.save` / `load_profiles` with a content fingerprint
+- `evaluate_clustering` (`eduloggen.evaluation`): adjusted Rand index,
+  normalised mutual information, purity, and the contingency table
 - `SessionCalendar.daily`: optional per-day weights (used by learned
   calendars; also available in calendar files)
 
