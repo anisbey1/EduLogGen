@@ -21,15 +21,25 @@ using a unified API.
 
 ## Current status
 
-**1.0.0** completes Level 1, the log generator: ingest real logs, build
-sessions, analyze behaviour, fit Markov and Semi-Markov generators, generate
-synthetic data, validate fidelity and privacy, benchmark generators, and plot
-the results. Next is Level 2, an experimental generator with controllable
-profiles, temporal patterns, and labelled anomalies (see the design note).
+Install with `pip install eduloggen`. Level 1, the log generator, is
+complete: ingest real logs, build sessions, analyze behaviour, fit Markov and
+Semi-Markov generators, generate synthetic data, validate fidelity and
+privacy, benchmark generators, and plot the results.
+
+Level 2, the experimental generator, is under way: labelled anomalies with
+detector scoring, behavioural controls and course calendars with a
+manipulation check, and behavioural profiles (learned, provided, or defined
+by hand) are available; simulated outcomes follow (see the
+[design note](04_EXPERIMENTAL_GENERATOR.md)). The
+[OULAD case study](case-study-oulad.md) shows the package on real data.
+
+To cite EduLogGen, use the "Cite this repository" button on GitHub or the
+Zenodo DOI [10.5281/zenodo.23264161](https://doi.org/10.5281/zenodo.23264161).
 
 ## Next steps
 
 - [Getting Started](getting-started.md) — install and run the full workflow
+- [Case study: OULAD](case-study-oulad.md) — results on real data
 - [Vision](01_VISION.md) — goals, scope, and scientific contributions
 - [API Reference](api/index.md) — package surface area
 - [Contributing](contributing.md) — how to contribute

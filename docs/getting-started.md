@@ -5,19 +5,22 @@ log, build sessions, fit a generator, sample synthetic data, and validate it.
 
 ## Install
 
+EduLogGen needs Python 3.11 or newer.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -U pip
+pip install "eduloggen[viz]"   # add ,parquet for Parquet files
+eduloggen info
+```
+
+To work on EduLogGen itself, install from a clone instead:
+
 ```bash
 git clone https://github.com/anisbey1/EduLogGen.git
 cd EduLogGen
-python3.11 -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -U pip
 pip install -e ".[dev,docs]"
-```
-
-Check the installation:
-
-```bash
-eduloggen info
 pytest
 ```
 
