@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Fine-grained analysis
+- Per-activity profiles (`activity_profiles`): share, session and learner
+  reach, start/end shares, repeat share, dwell-time distribution,
+  predecessors and successors, success rate, mean score, companions
+- Temporal analysis (`temporal_profile`, `deadline_effects`): timezone-aware
+  activity by hour and weekday, weekday x hour table, weekly trends from the
+  first session, daily counts, gaps between a learner's sessions, activity
+  ratio before deadlines
+- Stratified analysis (FR-A.7; `analyze_by`, `split_by`, `session_groups`):
+  by `course`, `week`, `weekday`, `hour`, `learner_group`, or
+  `metadata:<key>`, with each group's mix compared to the overall mix
+- Fine-grained validation (`compare_detailed`): ranked per-token,
+  per-transition (including invented and never-produced transitions),
+  per-length, per-hour, per-weekday, and per-group differences
+- CLI: `analyze --detail --by --groups --timezone --deadlines`,
+  `validate --detailed --by --groups --timezone`; plot `activity_heatmap`
+
 ## [1.2.0] - 2026-10-09
 
 Level 2, milestone M2: run controlled experiments and prove each control

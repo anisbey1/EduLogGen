@@ -101,6 +101,36 @@ report = elg.validate(real, synthetic, thresholds={"event_type_tvd": 0.1})
 print(report.status, report.metric("bigram_tvd").value)
 ```
 
+## Look closer: fine-grained analysis
+
+```bash
+eduloggen analyze --input sessions/ --detail --timezone Europe/Paris \
+    --deadlines 2026-10-16,2026-11-27 --by week --output analysis/
+```
+
+- `--detail` adds **per-activity** profiles (share, reach, where sessions
+  start and end, repeats, median time spent, success rate, what usually
+  comes next) and **temporal** analysis in your timezone (hours, weekdays,
+  a weekday x hour table, weekly trends, gaps between a learner's sessions,
+  and the activity ratio before each deadline).
+- `--by` breaks every statistic down by `course`, `week`, `weekday`, `hour`,
+  `learner_group` (with `--groups cohorts.csv`, columns `learner_id,group`),
+  or `metadata:<key>` such as `metadata:device`. Each group's event mix is
+  compared with the overall mix.
+
+To see **where** synthetic data differs from real data, not just how much:
+
+```bash
+eduloggen validate --real sessions/ --synthetic synthetic/ \
+    --detailed --by weekday --timezone Europe/Paris --output report/
+```
+
+`detailed.md` ranks the largest gaps per activity (share and time spent),
+per transition (including transitions the generator invents or never
+produces), per session length, per hour and weekday, and per group.
+`eduloggen plot --plots activity_heatmap` draws the weekday x hour pattern
+of session starts side by side.
+
 ## Generators
 
 | Name | Models | Use when |

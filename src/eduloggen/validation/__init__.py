@@ -23,6 +23,7 @@ from eduloggen.validation.base import (
     Status,
     ValidationContext,
 )
+from eduloggen.validation.detailed import DetailedComparison, compare_detailed
 from eduloggen.validation.distances import (
     jensen_shannon,
     ks_statistic,
@@ -46,6 +47,7 @@ __all__ = [
     "DEFAULT_METRICS",
     "BaseMetric",
     "Category",
+    "DetailedComparison",
     "Direction",
     "MetricResult",
     "ReportStatus",
@@ -53,6 +55,7 @@ __all__ = [
     "ValidationContext",
     "ValidationReport",
     "available_metrics",
+    "compare_detailed",
     "get_metric",
     "jensen_shannon",
     "ks_statistic",

@@ -35,7 +35,10 @@ from __future__ import annotations
 
 from eduloggen.__version__ import __version__
 from eduloggen.api import (
+    activity_profiles,
     analyze,
+    analyze_by,
+    compare_detailed,
     demo_dataset,
     evaluate_detection,
     fit_generator,
@@ -47,12 +50,16 @@ from eduloggen.api import (
     run_benchmark,
     save_dataset,
     sessionize,
+    temporal_profile,
     validate,
 )
 
 __all__ = [
     "__version__",
+    "activity_profiles",
     "analyze",
+    "analyze_by",
+    "compare_detailed",
     "demo_dataset",
     "evaluate_detection",
     "fit_generator",
@@ -64,5 +71,6 @@ __all__ = [
     "run_benchmark",
     "save_dataset",
     "sessionize",
+    "temporal_profile",
     "validate",
 ]

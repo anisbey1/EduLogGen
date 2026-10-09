@@ -16,7 +16,10 @@ from eduloggen.visualization.distributions import (
     plot_session_lengths,
 )
 from eduloggen.visualization.graphs import plot_transition_graph
-from eduloggen.visualization.heatmaps import plot_transition_heatmap
+from eduloggen.visualization.heatmaps import (
+    plot_activity_heatmap,
+    plot_transition_heatmap,
+)
 from eduloggen.visualization.sankey import plot_sankey
 from eduloggen.visualization.timeline import plot_timeline
 
@@ -45,6 +48,7 @@ DATASET_PLOTS: Final[dict[str, Callable[[Dataset, Dataset | None], Figure]]] = {
     "transitions": lambda real, synthetic: plot_transition_heatmap(real, synthetic),
     "transition_graph": lambda real, synthetic: plot_transition_graph(real, synthetic),
     "sankey": lambda real, synthetic: plot_sankey(real, synthetic),
+    "activity_heatmap": lambda real, synthetic: plot_activity_heatmap(real, synthetic),
     "timeline": lambda real, _synthetic: plot_timeline(real),
 }
 """Plot name to function of (real, synthetic or ``None``)."""
