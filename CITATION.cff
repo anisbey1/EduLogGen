@@ -3,11 +3,11 @@ message: "If you use EduLogGen in your research, please cite it as below."
 title: "EduLogGen: synthetic educational interaction logs for reproducible learning analytics"
 type: software
 authors:
-  # TODO(author): replace with your name, affiliation, and ORCID
-  - family-names: "TODO-family-name"
-    given-names: "TODO-given-names"
-    affiliation: "TODO-affiliation"
-    # orcid: "https://orcid.org/0000-0000-0000-0000"
+  - family-names: "Bey"
+    given-names: "Anis"
+    affiliation: "Higher School of Management Sciences, Annaba, Algeria"
+    email: "beyanisse@gmail.com"
+    orcid: "https://orcid.org/0000-0001-9410-0851"
 version: 1.4.1
 date-released: "2026-10-09"
 license: MIT
