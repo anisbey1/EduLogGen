@@ -21,7 +21,13 @@ from collections.abc import Iterable, Mapping
 from pathlib import Path
 from typing import Any
 
-from eduloggen.analysis import AnalysisResult, SessionStrategy
+from eduloggen.analysis import (
+    AnalysisResult,
+    SessionStrategy,
+    activity_profiles,
+    analyze_by,
+    temporal_profile,
+)
 from eduloggen.analysis import analyze as _analyze
 from eduloggen.analysis import sessionize as _sessionize
 from eduloggen.benchmark import BenchmarkReport
@@ -49,11 +55,14 @@ from eduloggen.models import (
 )
 from eduloggen.privacy import IdStrategy, strip_metadata
 from eduloggen.scenarios import inject_anomalies
-from eduloggen.validation import ValidationReport
+from eduloggen.validation import ValidationReport, compare_detailed
 from eduloggen.validation import validate as _validate
 
 __all__ = [
+    "activity_profiles",
     "analyze",
+    "analyze_by",
+    "compare_detailed",
     "demo_dataset",
     "evaluate_detection",
     "fit_generator",
@@ -65,6 +74,7 @@ __all__ = [
     "run_benchmark",
     "save_dataset",
     "sessionize",
+    "temporal_profile",
     "validate",
 ]
 

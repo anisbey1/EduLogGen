@@ -147,6 +147,26 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--input", required=True, help="corpus directory")
     p.add_argument("--output", help="write analysis.json and analysis.md here")
     p.add_argument("--ngram-order", type=int, help="longest n-gram to count")
+    p.add_argument(
+        "--detail",
+        action="store_true",
+        help="add per-activity and temporal reports (activities.*, temporal.*)",
+    )
+    p.add_argument(
+        "--by",
+        help="also break statistics down by course, week, weekday, hour, "
+        "learner_group (needs --groups), or metadata:<key> (strata.*)",
+    )
+    p.add_argument("--groups", help="CSV with learner_id,group for --by learner_group")
+    p.add_argument(
+        "--timezone",
+        default="UTC",
+        help="IANA zone for hours and weekdays (default UTC)",
+    )
+    p.add_argument(
+        "--deadlines",
+        help="comma-separated dates for the deadline effect (with --detail)",
+    )
 
     p = add(
         "fit",
@@ -213,6 +233,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--threshold", action="append", metavar="METRIC=VALUE", help="one threshold"
     )
     p.add_argument("--real-split", default="full", help="label of the real reference")
+    p.add_argument(
+        "--detailed",
+        action="store_true",
+        help="add a ranked report of where synthetic differs (detailed.*)",
+    )
+    p.add_argument("--by", help="with --detailed: compare per group (see analyze --by)")
+    p.add_argument("--groups", help="CSV with learner_id,group for --by learner_group")
+    p.add_argument("--timezone", default="UTC", help="IANA zone for hours and weekdays")
     p.add_argument("--output", help="write report.json and report.md here")
 
     p = add(
@@ -248,7 +276,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--plots",
         help="comma-separated: event_frequencies, activity_frequencies, "
         "session_lengths, session_durations, interevent_times, transitions, "
-        "transition_graph, sankey, timeline (default: all)",
+        "transition_graph, sankey, activity_heatmap, timeline (default: all)",
     )
     p.add_argument("--validation", help="report.json from validate")
     p.add_argument("--benchmark", help="benchmark.json from benchmark")

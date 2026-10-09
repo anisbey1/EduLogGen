@@ -23,6 +23,9 @@ behavioral properties of real learner interaction logs.
 - **Sessionize** by explicit session IDs, idle timeout, or both
 - **Analyze** event mixes, n-grams, transition structure, timing, and
   navigation graphs; export JSON and Markdown summaries
+- **Drill down** per activity, over time (hours, weekdays, weeks, deadlines),
+  and per group (course, week, cohort, device…); see exactly where synthetic
+  data differs from real data
 - **Generate** with `markov` (order-k), `semi_markov` (per-activity timing),
   or the `independent` baseline; seeded, reproducible, with remapped IDs
 - **Validate** real versus synthetic data on marginal, structural, temporal,

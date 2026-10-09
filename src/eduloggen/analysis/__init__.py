@@ -14,6 +14,11 @@ that validation and visualization compare.
 
 from __future__ import annotations
 
+from eduloggen.analysis.activity import (
+    ActivityProfile,
+    activity_profiles,
+    activity_table_markdown,
+)
 from eduloggen.analysis.features import corpus_features, session_feature_rows
 from eduloggen.analysis.graphs import NavigationGraph, navigation_graph
 from eduloggen.analysis.profiles import learner_profiles
@@ -26,6 +31,20 @@ from eduloggen.analysis.sessionize import (
     sessionize,
 )
 from eduloggen.analysis.stats import Summary, describe, entropy, quantile
+from eduloggen.analysis.strata import (
+    GROUP_KEYS,
+    GroupSummary,
+    StratifiedAnalysis,
+    analyze_by,
+    session_groups,
+    split_by,
+)
+from eduloggen.analysis.temporal import (
+    DeadlineEffect,
+    TemporalProfile,
+    deadline_effects,
+    temporal_profile,
+)
 from eduloggen.analysis.timing import (
     interevent_times,
     session_durations,
@@ -35,15 +54,25 @@ from eduloggen.analysis.transitions import START, TransitionCounts, count_transi
 
 __all__ = [
     "DEFAULT_IDLE_TIMEOUT_S",
+    "GROUP_KEYS",
     "START",
+    "ActivityProfile",
     "AnalysisResult",
+    "DeadlineEffect",
+    "GroupSummary",
     "NavigationGraph",
     "SessionStrategy",
+    "StratifiedAnalysis",
     "Summary",
+    "TemporalProfile",
     "TransitionCounts",
+    "activity_profiles",
+    "activity_table_markdown",
     "analyze",
+    "analyze_by",
     "corpus_features",
     "count_transitions",
+    "deadline_effects",
     "describe",
     "entropy",
     "interevent_times",
@@ -54,7 +83,10 @@ __all__ = [
     "rare_ngrams",
     "session_durations",
     "session_feature_rows",
+    "session_groups",
     "session_sequences",
     "sessionize",
     "sojourn_times",
+    "split_by",
+    "temporal_profile",
 ]

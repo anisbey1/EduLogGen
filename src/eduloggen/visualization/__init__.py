@@ -37,7 +37,11 @@ from eduloggen.visualization.export import (
     unregister_plot,
 )
 from eduloggen.visualization.graphs import plot_transition_graph
-from eduloggen.visualization.heatmaps import plot_transition_heatmap, transition_matrix
+from eduloggen.visualization.heatmaps import (
+    plot_activity_heatmap,
+    plot_transition_heatmap,
+    transition_matrix,
+)
 from eduloggen.visualization.sankey import SankeyLayout, plot_sankey, sankey_flows
 from eduloggen.visualization.timeline import plot_timeline
 
@@ -48,6 +52,7 @@ __all__ = [
     "PALETTE",
     "PlotFunction",
     "SankeyLayout",
+    "plot_activity_heatmap",
     "plot_benchmark",
     "plot_datasets",
     "plot_event_frequencies",

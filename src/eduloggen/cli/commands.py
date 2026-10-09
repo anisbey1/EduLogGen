@@ -20,6 +20,7 @@ import yaml
 
 from eduloggen import api
 from eduloggen.__version__ import __version__
+from eduloggen.analysis import activity_table_markdown, deadline_effects
 from eduloggen.config import AppConfig, config_fingerprint, load_file
 from eduloggen.core import ConfigError, RunContext
 from eduloggen.generators import available_generators, get_generator, load_model
@@ -193,18 +194,69 @@ def cmd_analyze(args: argparse.Namespace, run: Run) -> int:
     dataset = _load(_path(args.input, None, run, "--input"), run, "corpus")
     result = api.analyze(dataset, config=run.config)
     markdown = result.to_markdown()
+    files: dict[str, str | Mapping[str, Any]] = {
+        "analysis.json": result.to_dict(),
+        "analysis.md": markdown,
+    }
+    groups = (
+        _read_groups(_path(args.groups, None, run, "--groups")) if args.groups else None
+    )
+    if args.detail:
+        profiles = api.activity_profiles(dataset)
+        temporal = api.temporal_profile(dataset, timezone=args.timezone)
+        activities_md = "## Activities\n\n" + activity_table_markdown(profiles)
+        temporal_md = temporal.to_markdown()
+        temporal_data: dict[str, Any] = temporal.to_dict()
+        if args.deadlines:
+            effects = deadline_effects(
+                dataset,
+                [d.strip() for d in args.deadlines.split(",") if d.strip()],
+                timezone=args.timezone,
+            )
+            temporal_data["deadlines"] = [e.to_dict() for e in effects]
+            temporal_md += "\n| Deadline | Sessions/day before | Other days | Ratio |\n"
+            temporal_md += "| --- | --- | --- | --- |\n" + "".join(
+                f"| {e.deadline} | {e.window_per_day:.1f} | {e.other_per_day:.1f} | "
+                f"{'-' if e.ratio is None else f'{e.ratio:.2f}'} |\n"
+                for e in effects
+            )
+        files |= {
+            "activities.json": {"activities": [p.to_dict() for p in profiles]},
+            "activities.md": activities_md,
+            "temporal.json": temporal_data,
+            "temporal.md": temporal_md,
+        }
+        markdown += "\n" + activities_md + "\n" + temporal_md
+    if args.by:
+        strata = api.analyze_by(dataset, args.by, timezone=args.timezone, groups=groups)
+        files |= {"strata.json": strata.to_dict(), "strata.md": strata.to_markdown()}
+        markdown += "\n" + strata.to_markdown()
     if args.output:
         directory = _path(args.output, None, run, "--output")
-        _write_bundle(
-            directory,
-            {"analysis.json": result.to_dict(), "analysis.md": markdown},
-            "analysis.json",
-            run,
-        )
-        _print(f"wrote analysis to {directory}")
+        _write_bundle(directory, files, "analysis.json", run)
+        _print(f"wrote {', '.join(sorted(files))} to {directory}")
     else:
         _print(markdown)
     return EXIT_OK
+
+
+def _read_groups(path: Path) -> dict[str, str]:
+    """Read a ``learner_id,group`` CSV."""
+    try:
+        with path.open(newline="", encoding="utf-8-sig") as handle:
+            reader = csv.DictReader(handle)
+            if not {"learner_id", "group"} <= set(reader.fieldnames or ()):
+                raise ConfigError(
+                    "groups file needs 'learner_id' and 'group' columns",
+                    code="cli_invalid_argument",
+                )
+            return {row["learner_id"]: row["group"] for row in reader}
+    except FileNotFoundError:
+        raise ConfigError(
+            "groups file not found",
+            code="cli_missing_argument",
+            context={"path": str(path)},
+        ) from None
 
 
 def cmd_fit(args: argparse.Namespace, run: Run) -> int:
@@ -411,13 +463,30 @@ def cmd_validate(args: argparse.Namespace, run: Run) -> int:
         real_split=args.real_split,
     )
     markdown = report.to_markdown()
+    files: dict[str, str | Mapping[str, Any]] = {
+        "report.json": report.to_dict(),
+        "report.md": markdown,
+    }
+    if args.detailed:
+        groups = (
+            _read_groups(_path(args.groups, None, run, "--groups"))
+            if args.groups
+            else None
+        )
+        detailed = api.compare_detailed(
+            real, synthetic, by=args.by, timezone=args.timezone, groups=groups
+        )
+        files |= {
+            "detailed.json": detailed.to_dict(),
+            "detailed.md": detailed.to_markdown(),
+        }
+        markdown += "\n" + detailed.to_markdown()
+    elif args.by:
+        raise ConfigError("--by needs --detailed", code="cli_invalid_argument")
     _print(markdown)
     if args.output:
         _write_bundle(
-            _path(args.output, None, run, "--output"),
-            {"report.json": report.to_dict(), "report.md": markdown},
-            "report.json",
-            run,
+            _path(args.output, None, run, "--output"), files, "report.json", run
         )
     return EXIT_OK if report.passed else EXIT_FAILED
 
