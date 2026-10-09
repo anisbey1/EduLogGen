@@ -46,6 +46,16 @@ behavioral properties of real learner interaction logs.
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)
 
+## Case study
+
+On seven modules of the Open University Learning Analytics Dataset (10,143
+learners), Markov generators cut the sequence error of an order-blind
+baseline by two thirds, the semi-Markov generator also reproduces timing, and
+automatic profiles separate low-engagement from successful learners; the
+whole study runs in ten minutes on a laptop. See the
+[case study](https://anisbey1.github.io/EduLogGen/case-study-oulad/) and
+[`studies/oulad/`](https://github.com/anisbey1/EduLogGen/tree/main/studies/oulad).
+
 ## Requirements
 
 - Python 3.11 or newer

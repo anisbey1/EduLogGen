@@ -1,0 +1,356 @@
+%% EduLogGen -- SoftwareX Original Software Publication (draft).
+%% Built on Elsevier's elsarticle class. Before submission, transfer the
+%% content into the current official SoftwareX template from the journal's
+%% Guide for Authors (submissions that deviate from it may be desk-rejected).
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\journal{SoftwareX}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{EduLogGen: Analysing, generating, validating, and benchmarking synthetic educational interaction logs}
+
+%% TODO(author): replace with real authors, affiliations, and ORCIDs.
+\author[a]{\todo{Author name}\corref{cor1}}
+\cortext[cor1]{Corresponding author. E-mail: \todo{email}}
+\address[a]{\todo{Affiliation, city, country}}
+
+\begin{abstract}
+Interaction logs from learning platforms are central to learning analytics
+but are personal data that are hard to share, so methods are often evaluated
+on a single private dataset and rarely against a known ground truth.
+EduLogGen is an open-source Python package that ingests real logs with
+pseudonymisation, analyses them, fits interpretable Markov and semi-Markov
+generators, generates seeded synthetic logs, validates them against the real
+data with fidelity metrics and privacy indicators, and benchmarks generators
+under a versioned protocol on held-out learners. An experimental layer
+generates data with ground truth: labelled anomalies, controlled behavioural
+manipulations with a manipulation check, and behavioural profiles. On seven
+modules of the Open University Learning Analytics Dataset (OULAD), Markov
+generators reduced the bigram error of an independent baseline by about two
+thirds, only the semi-Markov generator reproduced the timing between active
+days, in six of seven modules profiles learned without outcome data separated
+learners with 0--11\% pass rates from those with 72--93\%, and the whole study ran in ten minutes on a laptop.
+\end{abstract}
+
+\begin{keyword}
+learning analytics \sep educational data mining \sep synthetic data \sep
+interaction logs \sep privacy \sep benchmarking
+\end{keyword}
+
+\end{frontmatter}
+
+%% ---------------------------------------------------------------------------
+\section*{Code metadata}
+\begin{table}[h]
+\small
+\begin{tabular}{p{0.06\linewidth}p{0.42\linewidth}p{0.42\linewidth}}
+\toprule
+Nr. & Code metadata description & Metadata \\
+\midrule
+C1 & Current code version & v1.4.1 \\
+C2 & Permanent link to code/repository used for this code version & \url{https://github.com/anisbey1/EduLogGen} \\
+C3 & Permanent link to Reproducible Capsule & \todo{Zenodo DOI of v1.4.1} \\
+C4 & Legal Code License & MIT \\
+C5 & Code versioning system used & git \\
+C6 & Software code languages, tools, and services used & Python 3.11--3.13 \\
+C7 & Compilation requirements, operating environments \& dependencies & Any OS with Python $\geq$ 3.11; PyYAML; optional pyarrow (Parquet) and matplotlib (figures) \\
+C8 & If available, link to developer documentation/manual & \url{https://anisbey1.github.io/EduLogGen/} \\
+C9 & Support email for questions & \todo{email} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ---------------------------------------------------------------------------
+\section{Motivation and significance}
+
+Interaction logs from learning management systems are the raw material of
+learning analytics and educational data mining~\cite{romero2020edm}. They are
+also personal data: sharing them across institutions, attaching them to
+papers, or using them in teaching is restricted by privacy law and
+institutional
+policy~\cite{drachsler2016delicate}. As a result, many methods are evaluated
+on a single private dataset, results are hard to reproduce, and
+methods for tasks such as anomaly detection or learner clustering are rarely
+tested against a known ground truth.
+
+Synthetic data are a common answer to this tension~\cite{jordon2022synthetic},
+but educational logs have properties that generic tabular generators do not
+model: events are ordered within sessions, sessions are nested in learners and
+courses, time spent before the next action depends on the activity, and
+activity follows the course calendar. Researchers who want synthetic logs
+therefore write one-off scripts whose fidelity and privacy are seldom
+measured.
+
+EduLogGen is a Python package that makes this workflow explicit and
+reproducible. It (i) ingests real logs from common formats through a
+declarative mapping with pseudonymisation; (ii) sessionises and analyses them;
+(iii) fits interpretable sequence generators; (iv) generates seeded synthetic
+corpora; (v) validates synthetic against real data with fidelity metrics and
+privacy indicators; and (vi) benchmarks generators under versioned protocols.
+An experimental layer generates data with \emph{known} ground truth --
+labelled anomalies, deliberate behavioural manipulations with a manipulation
+check, and behavioural profiles -- so that detection and clustering methods
+can be scored against it.
+
+%% ---------------------------------------------------------------------------
+\section{Software description}
+
+\subsection{Architecture}
+
+EduLogGen is a pure-Python, fully typed package (one required dependency,
+PyYAML) organised in layers with enforced import rules (checked by the test
+suite): a core with immutable data models (events, sessions, datasets,
+models, annotations); input/output (CSV, TSV, JSON Lines, Parquet; atomic,
+fingerprinted corpus and model directories); analysis; generators; validation;
+benchmarking; scenarios (the experimental layer); evaluation; visualisation;
+and a command-line interface. Third-party readers, generators, metrics and
+anomaly types can be added through entry-point plugins.
+
+Every random step derives its seed from one user seed, every artifact records
+the fingerprints of its inputs, and models are stored as JSON rather than
+pickles, so a result can be traced to its data, parameters and seed and
+regenerated bit-for-bit.
+
+\subsection{Functionalities}
+
+\paragraph{Ingestion and sessionisation} A YAML mapping assigns source columns
+to canonical fields (learner, timestamp, activity, event type, course, score,
+success, duration), with optional salted hashing of identifiers, timezone
+handling, and a value-free data quality report. Sessions come from explicit
+identifiers, an idle timeout, or both.
+
+\paragraph{Analysis} Event and activity mixes, $n$-grams, transition
+matrices, session lengths and durations, dwell times per activity, navigation
+graphs, per-activity profiles, timezone-aware temporal patterns (hour,
+weekday, week, deadlines), and the same statistics stratified by course,
+week, cohort or any metadata field.
+
+\paragraph{Generators} \texttt{markov} (order-$k$ with back-off),
+\texttt{semi\_markov} (Markov transitions with per-activity dwell-time
+distributions~\cite{yu2010hsmm}), and an \texttt{independent} baseline. Models
+also learn session lengths, sessions per learner, when sessions start (hour
+and day), and which activities accompany each event type. Generated
+identifiers are re-mapped so no source identifier is reproduced.
+
+\paragraph{Validation} Real and synthetic corpora are compared on marginal
+(event-type total variation distance, activity Jensen--Shannon divergence),
+structural (session length Kolmogorov--Smirnov, duration Wasserstein),
+temporal, sequential (bigram and transition divergence) and navigation
+metrics, plus privacy indicators (exact session duplication, rare $n$-gram
+replay, nearest-neighbour distances). A detailed mode ranks where synthetic
+data differ most (tokens, transitions, hours, groups).
+
+\paragraph{Benchmarking} A versioned protocol (\texttt{session\_fidelity\_v1})
+splits learners into training and holdout sets, fits each generator on the
+training learners only, generates several seeded samples the size of the
+holdout, and reports every metric as mean and spread, so generators are
+compared on unseen learners.
+
+\paragraph{Experimental layer} (i) Anomaly injection: five types (event
+frequency, abnormal timing, unexpected transition, repetition, inactivity),
+each labelled as an invalid workflow or unusual-but-valid behaviour and
+stored as separate annotations, with an evaluator for detector predictions
+(ROC-AUC, average precision, precision/recall). (ii) Controls: re-weighting
+event types, scaling dwell times, fixing session lengths or sessions per
+learner, and course calendars with deadline surges, verified by an automatic
+manipulation check against an uncontrolled baseline. (iii) Behavioural
+profiles learned by seeded $k$-means++~\cite{arthur2007kmeanspp} on training
+learners, imported from a mapping, or defined manually by their behaviour;
+mixtures of profiles are generated with learner-level ground truth, and
+\texttt{evaluate\_clustering} reports the adjusted Rand
+index~\cite{hubert1985ari}, normalised mutual information and purity.
+
+\subsection{Quality assurance}
+The package has 1{,}008 tests with 99\% line and branch coverage, strict
+static typing, and continuous integration on Python 3.11--3.13 that also runs
+an end-to-end pipeline and builds the documentation.
+
+%% ---------------------------------------------------------------------------
+\section{Illustrative example}
+
+\subsection{Command-line workflow}
+A typical session uses six commands; every output directory records the
+fingerprints of its inputs and the seed:
+\begin{verbatim}
+eduloggen ingest --input events.csv --mapping mapping.yaml --output corpus/
+eduloggen sessionize --input corpus/ --output sessions/
+eduloggen fit --input sessions/ --generator semi_markov --output model/
+eduloggen generate --model model/ --n-sessions 5000 --seed 7 --output synthetic/
+eduloggen validate --real sessions/ --synthetic synthetic/ --output report/
+eduloggen benchmark --input sessions/ --output benchmark/
+\end{verbatim}
+The same steps are available from Python, together with the experimental
+layer:
+\begin{verbatim}
+import eduloggen as elg
+profiles = elg.fit_profiles(train, n_profiles=4, seed=0)   # training only
+groups = profiles.assign(holdout)                           # nearest profile
+mix = elg.generate_profiles(profiles, 10_000, seed=1)       # + ground truth
+report = elg.evaluate_clustering(mix.annotations, predictions)
+\end{verbatim}
+
+\subsection{Case study: the Open University Learning Analytics Dataset}
+We applied EduLogGen to the seven modules of the 2014J presentation of
+OULAD~\cite{kuzilek2017oulad} (10{,}143 learners; Table~\ref{tab:oulad}).
+OULAD records clicks per learner, resource and \emph{day}, without time of
+day, and the order of rows within a day is not meaningful. We therefore
+defined an event as an active learner-day (event type: the activity type with
+most clicks that day) and a session as a learner's week of the module, so that
+sequences and inter-event gaps (whole days) are observed rather than
+invented; hour-of-day and weekday analyses were not used. The conversion and
+analysis scripts are in the repository (\texttt{studies/oulad/}) and all
+results below are reproduced by them with seed 0.
+
+\paragraph{Fidelity} The \texttt{session\_fidelity\_v1} protocol fits each
+generator on 70\% of the learners and compares three synthetic samples with
+the remaining 30\%. As a reference it also compares the two real halves,
+which shows how much two samples of real learners differ
+(Table~\ref{tab:fidelity}, Fig.~\ref{fig:fidelity}). All generators matched
+the event-type mix and session lengths within that real-versus-real range.
+The independent baseline, which ignores order, had a bigram total variation
+distance of 0.220; first- and second-order Markov and semi-Markov generators
+reduced it to 0.073--0.079 (reference 0.038). Only the semi-Markov generator,
+which learns time spent per activity, reproduced the distribution of gaps
+between active days (Kolmogorov--Smirnov 0.013 against 0.281 for the
+others; reference 0.010). The second-order model did not improve on the
+first-order one for these short weekly sequences.
+
+\paragraph{Reading privacy indicators} Between 66\% and 75\% of synthetic
+sessions exactly matched a real session, but so did 77\% of real holdout
+sessions with respect to the training learners: with at most seven active
+days and a handful of activity types per week, identical weekly patterns are
+common among real learners. Duplication is therefore not, on its own,
+evidence of memorisation here; EduLogGen reports the real-versus-real
+reference so that such indicators can be interpreted.
+
+\paragraph{Profiles} Automatic profiles ($k=4$) were learned on training
+learners only, and holdout learners were assigned to the nearest profile.
+Without using outcomes, six of the seven modules produced a
+low-engagement profile (2.6--6.9 active weeks on average) whose holdout
+learners passed or obtained a distinction in 0--11\% of cases; in every
+module the most successful profile reached 72--93\%. In the smallest module
+(AAA, 357 learners) the least active profile still passed in 57\% of cases.
+A profile dominated by forum activity appeared in all seven modules.
+The normalised mutual information between profile and final result was
+modest (0.10--0.30), and part of the association reflects persistence, since
+learners who withdraw stop generating activity. These profiles are
+descriptive behavioural clusters, not validated learner types. Generating a
+synthetic population from the profiles and clustering it again recovered the
+known profile of each synthetic learner with an adjusted Rand index of
+0.78--0.92.
+
+\paragraph{Detection with ground truth} We injected 5\% unexpected
+transitions (invalid workflow) and 5\% repetitions (unusual but valid) into
+real holdout sessions and scored a simple detector, the mean negative
+log-likelihood of each session's transitions under a smoothed bigram model
+fitted on training learners. It reached a ROC-AUC of 0.88--0.92 and an
+average precision of 0.47--0.57, giving a known-truth baseline against which
+better detectors can be compared.
+
+\paragraph{Cost} The full study (seven modules, four generators, three seeds,
+profiles and detection) took ten minutes on a laptop CPU with the pure-Python
+implementation; the largest module (167{,}164 learner-days) took 136~s.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Fidelity on held-out learners, mean over the seven OULAD 2014J
+modules (three seeds each). ``Real vs real'' compares the training and
+holdout learners. Best generator in bold.}
+\label{tab:fidelity}
+\input{table_fidelity.tex}
+\end{table}
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Per module: size, profile recovery (ARI), association of holdout
+profiles with final results (NMI), and the baseline detector.}
+\label{tab:oulad}
+\input{table_presentations.tex}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_fidelity.pdf}
+\caption{Bigram total variation distance and inter-event time
+Kolmogorov--Smirnov statistic per OULAD module (lower is better), with the
+real-versus-real reference.}
+\label{fig:fidelity}
+\end{figure}
+
+
+%% ---------------------------------------------------------------------------
+\section{Impact}
+EduLogGen addresses three recurring obstacles in learning analytics
+research. First, \emph{sharing}: a research group can publish synthetic logs
+fitted on data it cannot release, together with a validation report showing
+how close they are and what the privacy indicators say, so that others can
+develop and test methods before applying for access to the real data.
+Second, \emph{ground truth}: anomaly detectors and clustering methods can be
+scored on data where the anomalous sessions and the generating profiles are
+known, separately for invalid workflows and unusual-but-valid behaviour; the
+OULAD case study gives reference values for a simple detector and for
+profile recovery. Third, \emph{reproducibility}: seeds, fingerprints,
+versioned protocols and JSON models make every number traceable and
+regenerable, and the benchmark compares generators on unseen learners
+against a real-versus-real reference rather than on the training data.
+
+The package also supports teaching, by giving students realistic logs
+without personal data, and controlled studies of methods, for example how a
+detector degrades when deadline surges or new activity types are introduced
+through the controls and calendars. Its plugin interfaces let users add
+readers for other platforms, new generators (e.g.\ neural sequence models)
+and metrics while reusing the validation and benchmarking machinery.
+\todo{Add any known users, courses, or projects that already use EduLogGen.}
+
+%% ---------------------------------------------------------------------------
+\section{Conclusions}
+EduLogGen provides an end-to-end, reproducible workflow for synthetic
+educational interaction logs, from ingestion to validated and benchmarked
+synthetic corpora, and an experimental layer that generates data with known
+ground truth. On OULAD, interpretable Markov and semi-Markov generators
+reproduced event mixes, session structure and, for the semi-Markov model,
+timing, within or near the variation between real learner samples, while
+remaining fast. Planned work includes simulated learning outcomes with
+leakage-safe prediction splits, scenario files with a dedicated command-line
+interface, further anomaly types, and differentially private generators.
+
+%% ---------------------------------------------------------------------------
+\section*{CRediT authorship contribution statement}
+\todo{Author}: Conceptualization, Methodology, Software, Validation, Writing --
+original draft, Writing -- review \& editing.
+
+\section*{Declaration of competing interest}
+The authors declare that they have no known competing financial interests or
+personal relationships that could have appeared to influence the work reported
+in this paper.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+%% Elsevier requires this statement when AI tools were used. Adjust it so it
+%% accurately describes how you used them.
+During the preparation of this work the author(s) used Claude (Anthropic)
+for software development assistance and for drafting parts of this
+manuscript. After using this tool, the author(s) reviewed, tested and edited
+the code and the content as needed and take(s) full responsibility for the
+content of the publication.
+
+\section*{Data availability}
+The OULAD dataset~\cite{kuzilek2017oulad} is publicly available under a
+CC BY 4.0 licence. All scripts that reproduce the results are in the
+repository under \texttt{studies/oulad/}.
+
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}
