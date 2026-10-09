@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-10-09
+
+### Changed
+
+- Author metadata: Anis Bey (Higher School of Management Sciences, Annaba,
+  Algeria; ORCID 0000-0001-9410-0851) in the package metadata,
+  `CITATION.cff`, the license, and the manuscript draft
+
 ## [1.4.1] - 2026-10-09
 
 Ready for public release: PyPI publishing, citation metadata, an OULAD case
@@ -268,7 +276,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.4.2...HEAD
+[1.4.2]: https://github.com/anisbey1/EduLogGen/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/anisbey1/EduLogGen/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/anisbey1/EduLogGen/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/anisbey1/EduLogGen/compare/v1.2.0...v1.3.0
