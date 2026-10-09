@@ -136,11 +136,16 @@ def _supported_order(
             code="fit_insufficient_data",
             context={"order": requested, "longest_session": longest},
         )
-    logger.warning(
-        "reducing Markov order from %d to %d: sessions are too short",
-        requested,
-        supported,
-    )
+    if supported == requested:
+        logger.warning(
+            "every session has a single event: only start events are learned"
+        )
+    else:
+        logger.warning(
+            "reducing Markov order from %d to %d: sessions are too short",
+            requested,
+            supported,
+        )
     return supported
 
 

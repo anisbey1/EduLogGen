@@ -1,0 +1,3013 @@
+{
+  "environment": {
+    "eduloggen": "1.4.0",
+    "python": "3.11.15",
+    "machine": "x86_64",
+    "os": "Darwin"
+  },
+  "seed": 0,
+  "presentations": {
+    "AAA-2014J": {
+      "n_events": 30703,
+      "n_sessions": 9914,
+      "n_learners": 357,
+      "load_s": 1.5509444499984966,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 0.47929180700157303,
+            "generate_s": 0.45789491966570495,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.02167776351194652,
+                "std": 0.0038824584736719646
+              },
+              "activity_jsd": {
+                "mean": 0.007059060178295454,
+                "std": 0.0006312057125485725
+              },
+              "session_length_ks": {
+                "mean": 0.058026407227241145,
+                "std": 0.0036772082155171843
+              },
+              "interevent_time_ks": {
+                "mean": 0.24548736462093868,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.23482378648195978,
+                "std": 0.007576337946138785
+              },
+              "transition_jsd": {
+                "mean": 0.045768538460171204,
+                "std": 0.002631838166336527
+              },
+              "topn_path_overlap": {
+                "mean": 0.7000000000000001,
+                "std": 0.10000000000000003
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.6045330921111652,
+                "std": 0.0023052536686244828
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 0.4305647750006756,
+            "generate_s": 0.5292708563356427,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.017467700646740664,
+                "std": 0.003547088549346664
+              },
+              "activity_jsd": {
+                "mean": 0.00725050790452039,
+                "std": 0.00034623983939391503
+              },
+              "session_length_ks": {
+                "mean": 0.05130877924484597,
+                "std": 0.005617028331240289
+              },
+              "interevent_time_ks": {
+                "mean": 0.24548736462093868,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.05009751372360219,
+                "std": 0.0058313817699247065
+              },
+              "transition_jsd": {
+                "mean": 0.0035262494656296407,
+                "std": 0.00043778637677554854
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.6888945525007205,
+                "std": 0.01364557656761704
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 0.512225202000991,
+            "generate_s": 0.5421886329980529,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.009741134435056914,
+                "std": 0.004837068541952239
+              },
+              "activity_jsd": {
+                "mean": 0.007156029467536307,
+                "std": 0.0003268750150247431
+              },
+              "session_length_ks": {
+                "mean": 0.05130877924484597,
+                "std": 0.005617028331240289
+              },
+              "interevent_time_ks": {
+                "mean": 0.24548736462093868,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.05500394662417902,
+                "std": 0.006572311594464805
+              },
+              "transition_jsd": {
+                "mean": 0.0038053507256676587,
+                "std": 0.0004360207168871433
+              },
+              "topn_path_overlap": {
+                "mean": 0.8333333333333334,
+                "std": 0.05773502691896257
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7162011754118188,
+                "std": 0.011074197444336591
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 0.5238775190009619,
+            "generate_s": 0.4684531566648123,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.00983360312333546,
+                "std": 0.004025967586432296
+              },
+              "activity_jsd": {
+                "mean": 0.0075623521617587145,
+                "std": 0.0010634080322691876
+              },
+              "session_length_ks": {
+                "mean": 0.05837387074357194,
+                "std": 0.006764392749802589
+              },
+              "interevent_time_ks": {
+                "mean": 0.007492663157118755,
+                "std": 0.003579120429873486
+              },
+              "bigram_tvd": {
+                "mean": 0.056899560586606134,
+                "std": 0.005064977488816868
+              },
+              "transition_jsd": {
+                "mean": 0.003620530170239619,
+                "std": 0.0004748342409670299
+              },
+              "topn_path_overlap": {
+                "mean": 0.8666666666666667,
+                "std": 0.05773502691896257
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.673140076023996,
+                "std": 0.021161387092421435
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.024961937977814274,
+          "activity_jsd": 0.006270901058113649,
+          "session_length_ks": 0.05372854625136447,
+          "interevent_time_ks": 0.014783711922401022,
+          "bigram_tvd": 0.03140756344796709,
+          "transition_jsd": 0.0028549225871171546,
+          "topn_path_overlap": 0.9,
+          "exact_session_dup_rate": 0.747756985388362,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:30d546a469895091757163e8b047b334af1612182cd518e8eaae15efa8d93b52",
+            "n_events": 22285,
+            "n_sessions": 7036,
+            "n_learners": 249
+          },
+          {
+            "fingerprint": "sha256:71252c197acb8154bd3019b86e8c9cab85c281934a6534230776f3b0ff692649",
+            "n_events": 8418,
+            "n_sessions": 2878,
+            "n_learners": 108
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 2878,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 19.767993744004343,
+      "profiles": {
+        "fit_s": 0.8888549839975894,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.321285140562249,
+            "n_learners": 80,
+            "mean_sessions": 36.9125,
+            "mean_session_length": 3.468549653154793,
+            "distinguishing": [
+              {
+                "feature": "n_sessions",
+                "z": 0.7385505512227301
+              },
+              {
+                "feature": "share:oucontent",
+                "z": 0.5108535949769011
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 0.5108052393755795
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.2570281124497992,
+            "n_learners": 64,
+            "mean_sessions": 18.40625,
+            "mean_session_length": 2.121987877664714,
+            "distinguishing": [
+              {
+                "feature": "n_sessions",
+                "z": -0.840543149979748
+              },
+              {
+                "feature": "share:oucontent",
+                "z": 0.809216643905553
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -0.6261482845994641
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.25301204819277107,
+            "n_learners": 63,
+            "mean_sessions": 21.53968253968254,
+            "mean_session_length": 1.9366394168345518,
+            "distinguishing": [
+              {
+                "feature": "share:homepage",
+                "z": 1.2246560684402743
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -0.7826450673983875
+              },
+              {
+                "feature": "share:oucontent",
+                "z": -0.7298653039895708
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.1686746987951807,
+            "n_learners": 42,
+            "mean_sessions": 36.857142857142854,
+            "mean_session_length": 4.231668901711392,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.8269698044930218
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 1.1551359597718567
+              },
+              {
+                "feature": "share:oucontent",
+                "z": -1.1113485394467653
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 11,
+            "Fail": 3,
+            "Pass": 61,
+            "Withdrawn": 5
+          },
+          "profile_2": {
+            "Distinction": 1,
+            "Fail": 9,
+            "Pass": 33,
+            "Withdrawn": 21
+          },
+          "profile_3": {
+            "Distinction": 2,
+            "Fail": 16,
+            "Pass": 32,
+            "Withdrawn": 13
+          },
+          "profile_4": {
+            "Distinction": 5,
+            "Fail": 4,
+            "Pass": 28,
+            "Withdrawn": 5
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 3,
+            "Pass": 30,
+            "Withdrawn": 3
+          },
+          "profile_2": {
+            "Fail": 6,
+            "Pass": 17,
+            "Withdrawn": 7
+          },
+          "profile_3": {
+            "Distinction": 2,
+            "Fail": 8,
+            "Pass": 17,
+            "Withdrawn": 3
+          },
+          "profile_4": {
+            "Pass": 11,
+            "Withdrawn": 1
+          }
+        },
+        "train_outcome_nmi": 0.07480278301873704,
+        "holdout_outcome_nmi": 0.11573300878571637,
+        "recovery": {
+          "n_learners": 238,
+          "missing": 0,
+          "ari": 0.9138975947558177,
+          "nmi": 0.9072612549244652,
+          "purity": 0.9663865546218487,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 78,
+              "profile_2": 1,
+              "profile_3": 1
+            },
+            "profile_2": {
+              "profile_2": 6,
+              "profile_3": 55
+            },
+            "profile_3": {
+              "profile_2": 55
+            },
+            "profile_4": {
+              "profile_4": 42
+            }
+          }
+        }
+      },
+      "profiles_s": 3.7858029259950854,
+      "detection": {
+        "injection": "{'sessions': 2878, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 144, 'injected': 144, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 144, 'injected': 144, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 2878,
+          "n_anomalous": 288,
+          "confusion": {
+            "tp": 288,
+            "fp": 2590,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.10006949270326616,
+          "recall": 1.0,
+          "f1": 0.18193303853442833,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.9067453614328614,
+          "average_precision": 0.5466781681871588,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 1.268107167998096
+    },
+    "BBB-2014J": {
+      "n_events": 83111,
+      "n_sessions": 36982,
+      "n_learners": 1921,
+      "load_s": 5.839296430000104,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 2.7891117019971716,
+            "generate_s": 1.7999153443330822,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.03064642250801321,
+                "std": 0.002622954988150869
+              },
+              "activity_jsd": {
+                "mean": 0.003756013246870397,
+                "std": 0.0002858205608463144
+              },
+              "session_length_ks": {
+                "mean": 0.007368799424874191,
+                "std": 0.0031758801306744347
+              },
+              "interevent_time_ks": {
+                "mean": 0.34849916418344346,
+                "std": 6.798699777552591e-17
+              },
+              "bigram_tvd": {
+                "mean": 0.18260288413039263,
+                "std": 0.0034338368641416914
+              },
+              "transition_jsd": {
+                "mean": 0.03909030400597046,
+                "std": 0.0029409508879767845
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7666478516957609,
+                "std": 0.0057341490558220545
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 1.843588264004211,
+            "generate_s": 2.248057056334801,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.03341720522915172,
+                "std": 0.0018542492428011222
+              },
+              "activity_jsd": {
+                "mean": 0.004078704964293874,
+                "std": 0.0003143294759629684
+              },
+              "session_length_ks": {
+                "mean": 0.007668344116942301,
+                "std": 0.0027291464126271026
+              },
+              "interevent_time_ks": {
+                "mean": 0.34849916418344346,
+                "std": 6.798699777552591e-17
+              },
+              "bigram_tvd": {
+                "mean": 0.07814463214814153,
+                "std": 0.0041595685058177425
+              },
+              "transition_jsd": {
+                "mean": 0.002802290457583551,
+                "std": 0.000370701158330357
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7943796582399388,
+                "std": 0.003821978065494961
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 2.3929632939980365,
+            "generate_s": 2.081022428998646,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.036821909402157516,
+                "std": 0.0023428920890119485
+              },
+              "activity_jsd": {
+                "mean": 0.00441519495132412,
+                "std": 0.0003064019208469179
+              },
+              "session_length_ks": {
+                "mean": 0.007668344116942301,
+                "std": 0.0027291464126271026
+              },
+              "interevent_time_ks": {
+                "mean": 0.34849916418344346,
+                "std": 6.798699777552591e-17
+              },
+              "bigram_tvd": {
+                "mean": 0.08324669709639777,
+                "std": 0.003201779266834998
+              },
+              "transition_jsd": {
+                "mean": 0.0030958063351187288,
+                "std": 0.0003364810272382225
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.8111400604678926,
+                "std": 0.0016724607017091545
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 1.8400479460033239,
+            "generate_s": 1.7556500333351626,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.036218897332429854,
+                "std": 0.0013193232572676899
+              },
+              "activity_jsd": {
+                "mean": 0.0046824480316592166,
+                "std": 0.0004104935388198978
+              },
+              "session_length_ks": {
+                "mean": 0.009046249700455311,
+                "std": 0.002991700268906984
+              },
+              "interevent_time_ks": {
+                "mean": 0.00409970956929077,
+                "std": 0.0011153838895144098
+              },
+              "bigram_tvd": {
+                "mean": 0.07789577964466525,
+                "std": 0.002361076595878882
+              },
+              "transition_jsd": {
+                "mean": 0.0027100024440048338,
+                "std": 0.00013506913646626158
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.8062746867510286,
+                "std": 0.006431535231130628
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.029779678342314993,
+          "activity_jsd": 0.0029494893482718007,
+          "session_length_ks": 0.006716398176187854,
+          "interevent_time_ks": 0.004057464967519908,
+          "bigram_tvd": 0.04894186820689254,
+          "transition_jsd": 0.0020089297759362215,
+          "topn_path_overlap": 1.0,
+          "exact_session_dup_rate": 0.8220436280137773,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:6bb149aeb1524cc9cf27b40f98270ccad03e00bed46b066d3a7e83c71635df9b",
+            "n_events": 58224,
+            "n_sessions": 25854,
+            "n_learners": 1344
+          },
+          {
+            "fingerprint": "sha256:1388dd01be847c5ebbdaf1ab714ab86885c3e89ffbdf70345a1835e33a7020d9",
+            "n_events": 24887,
+            "n_sessions": 11128,
+            "n_learners": 577
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 11128,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 71.92845492000197,
+      "profiles": {
+        "fit_s": 4.727398877002997,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.41889880952380953,
+            "n_learners": 563,
+            "mean_sessions": 23.186500888099467,
+            "mean_session_length": 2.0033202148769567,
+            "distinguishing": [
+              {
+                "feature": "share:oucontent",
+                "z": 0.7155190671149464
+              },
+              {
+                "feature": "share:homepage",
+                "z": -0.47949494297057205
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.3516574399949331
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.3288690476190476,
+            "n_learners": 442,
+            "mean_sessions": 11.997737556561086,
+            "mean_session_length": 1.6652555704228678,
+            "distinguishing": [
+              {
+                "feature": "share:homepage",
+                "z": 0.8336456179734753
+              },
+              {
+                "feature": "share:oucontent",
+                "z": -0.7200564679967731
+              },
+              {
+                "feature": "n_sessions",
+                "z": -0.6444736267248323
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.1793154761904762,
+            "n_learners": 241,
+            "mean_sessions": 29.95020746887967,
+            "mean_session_length": 2.8421222452493278,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.5231021162819058
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 1.160355309620967
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.9538274968322792
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.07291666666666667,
+            "n_learners": 98,
+            "mean_sessions": 2.8469387755102042,
+            "mean_session_length": 1.0,
+            "distinguishing": [
+              {
+                "feature": "log_mean_duration_s",
+                "z": -3.4894058551710248
+              },
+              {
+                "feature": "n_sessions",
+                "z": -1.4591655351158233
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -1.288875595560582
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 61,
+            "Fail": 64,
+            "Pass": 383,
+            "Withdrawn": 55
+          },
+          "profile_2": {
+            "Distinction": 10,
+            "Fail": 148,
+            "Pass": 139,
+            "Withdrawn": 145
+          },
+          "profile_3": {
+            "Distinction": 55,
+            "Fail": 18,
+            "Pass": 148,
+            "Withdrawn": 20
+          },
+          "profile_4": {
+            "Fail": 28,
+            "Pass": 9,
+            "Withdrawn": 61
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 30,
+            "Fail": 32,
+            "Pass": 149,
+            "Withdrawn": 17
+          },
+          "profile_2": {
+            "Distinction": 1,
+            "Fail": 49,
+            "Pass": 57,
+            "Withdrawn": 59
+          },
+          "profile_3": {
+            "Distinction": 23,
+            "Fail": 12,
+            "Pass": 82,
+            "Withdrawn": 13
+          },
+          "profile_4": {
+            "Fail": 17,
+            "Pass": 3,
+            "Withdrawn": 33
+          }
+        },
+        "train_outcome_nmi": 0.133940128357744,
+        "holdout_outcome_nmi": 0.14077180598543115,
+        "recovery": {
+          "n_learners": 1338,
+          "missing": 0,
+          "ari": 0.8551809431904558,
+          "nmi": 0.8243266370970755,
+          "purity": 0.9484304932735426,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 532,
+              "profile_2": 22,
+              "profile_3": 1,
+              "profile_4": 3
+            },
+            "profile_2": {
+              "profile_1": 22,
+              "profile_2": 394,
+              "profile_3": 2,
+              "profile_4": 15
+            },
+            "profile_3": {
+              "profile_1": 3,
+              "profile_2": 1,
+              "profile_3": 236
+            },
+            "profile_4": {
+              "profile_4": 107
+            }
+          }
+        }
+      },
+      "profiles_s": 14.965252094996686,
+      "detection": {
+        "injection": "{'sessions': 11128, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 556, 'injected': 556, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 556, 'injected': 556, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 11128,
+          "n_anomalous": 1112,
+          "confusion": {
+            "tp": 1112,
+            "fp": 10016,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.09992810927390366,
+          "recall": 1.0,
+          "f1": 0.18169934640522875,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.9172724270663342,
+          "average_precision": 0.5351898943242726,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 2.497467895002046
+    },
+    "CCC-2014J": {
+      "n_events": 131279,
+      "n_sessions": 47579,
+      "n_learners": 2302,
+      "load_s": 7.776611886001774,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 2.247115053003654,
+            "generate_s": 2.3962081233306285,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.0215230942556239,
+                "std": 0.002123842868544303
+              },
+              "activity_jsd": {
+                "mean": 0.002766111978331517,
+                "std": 0.0003441911869966571
+              },
+              "session_length_ks": {
+                "mean": 0.014847913612138997,
+                "std": 0.00045426287081253166
+              },
+              "interevent_time_ks": {
+                "mean": 0.2657065005838848,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.24165541464192075,
+                "std": 0.00239483043281433
+              },
+              "transition_jsd": {
+                "mean": 0.06258703589836719,
+                "std": 0.0012873298747185567
+              },
+              "topn_path_overlap": {
+                "mean": 0.6,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.660732403719456,
+                "std": 0.007907011053156422
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 2.421242771000834,
+            "generate_s": 2.732064229666624,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.02700734954480287,
+                "std": 0.002720286055645475
+              },
+              "activity_jsd": {
+                "mean": 0.0026594113842492383,
+                "std": 0.0002832065839408196
+              },
+              "session_length_ks": {
+                "mean": 0.013032651446391577,
+                "std": 0.00039700067744728474
+              },
+              "interevent_time_ks": {
+                "mean": 0.2657065005838848,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.07621563556577488,
+                "std": 0.0021479450899349363
+              },
+              "transition_jsd": {
+                "mean": 0.0015974471776884225,
+                "std": 6.0929413107092085e-05
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7417738765708145,
+                "std": 0.0035085950795431305
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 2.8915757819995633,
+            "generate_s": 2.787692165329645,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.032747310818783515,
+                "std": 0.004222614872788924
+              },
+              "activity_jsd": {
+                "mean": 0.0029141601132523214,
+                "std": 0.00019382526218154984
+              },
+              "session_length_ks": {
+                "mean": 0.013032651446391577,
+                "std": 0.00039700067744728474
+              },
+              "interevent_time_ks": {
+                "mean": 0.2657065005838848,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.08254239767355624,
+                "std": 0.0018645960071615453
+              },
+              "transition_jsd": {
+                "mean": 0.001688690804364859,
+                "std": 0.00014625342104548553
+              },
+              "topn_path_overlap": {
+                "mean": 0.7333333333333334,
+                "std": 0.05773502691896263
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7690138185186135,
+                "std": 0.004396796610764631
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 3.011949920000916,
+            "generate_s": 2.65380523433123,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.026791508628873407,
+                "std": 0.00042886166723614806
+              },
+              "activity_jsd": {
+                "mean": 0.002765290333691149,
+                "std": 9.254499808779652e-05
+              },
+              "session_length_ks": {
+                "mean": 0.012939561078917361,
+                "std": 0.000633510558254384
+              },
+              "interevent_time_ks": {
+                "mean": 0.02030371745246473,
+                "std": 0.0016408022165950728
+              },
+              "bigram_tvd": {
+                "mean": 0.07752408816162328,
+                "std": 0.0033925523496836497
+              },
+              "transition_jsd": {
+                "mean": 0.0014534629141974432,
+                "std": 0.00014962364694103277
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7445930846578288,
+                "std": 0.007347028780682495
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.023142874112995454,
+          "activity_jsd": 0.0020843583337480233,
+          "session_length_ks": 0.011059972478326574,
+          "interevent_time_ks": 0.008711703174087981,
+          "bigram_tvd": 0.03637941378545154,
+          "transition_jsd": 0.0010813555250542388,
+          "topn_path_overlap": 0.8,
+          "exact_session_dup_rate": 0.7766883828936335,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:6f8f4cdba4b705c2260dfcc16685995d243086939e6e839f074ff844f034db66",
+            "n_events": 91266,
+            "n_sessions": 33256,
+            "n_learners": 1611
+          },
+          {
+            "fingerprint": "sha256:2c8b1e66954467d01210e89a7c0308d4d803678410c097dd8c58296a5b25aec6",
+            "n_events": 40013,
+            "n_sessions": 14323,
+            "n_learners": 691
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 14323,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 99.4947747230035,
+      "profiles": {
+        "fit_s": 9.561887555995781,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.5090006207324643,
+            "n_learners": 820,
+            "mean_sessions": 20.135365853658538,
+            "mean_session_length": 2.1331290483800767,
+            "distinguishing": [
+              {
+                "feature": "share:quiz",
+                "z": 0.43535691723675013
+              },
+              {
+                "feature": "share:oucontent",
+                "z": -0.38679814493905834
+              },
+              {
+                "feature": "share:forumng",
+                "z": -0.26163006024654634
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.1719428926132837,
+            "n_learners": 277,
+            "mean_sessions": 23.747292418772563,
+            "mean_session_length": 2.8559773956763337,
+            "distinguishing": [
+              {
+                "feature": "share:oucontent",
+                "z": 1.7828371917832329
+              },
+              {
+                "feature": "share:homepage",
+                "z": -0.6484062005765799
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 0.49752857688054236
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.16511483550589695,
+            "n_learners": 266,
+            "mean_sessions": 6.928571428571429,
+            "mean_session_length": 1.5241645479761279,
+            "distinguishing": [
+              {
+                "feature": "share:homepage",
+                "z": 1.4175953497575369
+              },
+              {
+                "feature": "log_mean_duration_s",
+                "z": -1.1632562812590332
+              },
+              {
+                "feature": "n_sessions",
+                "z": -1.038816620266963
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.15394165114835506,
+            "n_learners": 248,
+            "mean_sessions": 33.564516129032256,
+            "mean_session_length": 3.589655828098215,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.7555200494379153
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 1.2661845309369528
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.9787448739482202
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 99,
+            "Fail": 165,
+            "Pass": 264,
+            "Withdrawn": 292
+          },
+          "profile_2": {
+            "Distinction": 29,
+            "Fail": 44,
+            "Pass": 98,
+            "Withdrawn": 106
+          },
+          "profile_3": {
+            "Distinction": 2,
+            "Fail": 53,
+            "Pass": 15,
+            "Withdrawn": 196
+          },
+          "profile_4": {
+            "Distinction": 86,
+            "Fail": 23,
+            "Pass": 108,
+            "Withdrawn": 31
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 36,
+            "Fail": 59,
+            "Pass": 134,
+            "Withdrawn": 106
+          },
+          "profile_2": {
+            "Distinction": 8,
+            "Fail": 14,
+            "Pass": 40,
+            "Withdrawn": 52
+          },
+          "profile_3": {
+            "Distinction": 2,
+            "Fail": 30,
+            "Pass": 4,
+            "Withdrawn": 87
+          },
+          "profile_4": {
+            "Distinction": 44,
+            "Fail": 10,
+            "Pass": 45,
+            "Withdrawn": 20
+          }
+        },
+        "train_outcome_nmi": 0.08750427826267854,
+        "holdout_outcome_nmi": 0.10322904725179777,
+        "recovery": {
+          "n_learners": 1616,
+          "missing": 0,
+          "ari": 0.7807859898466613,
+          "nmi": 0.7514658962949751,
+          "purity": 0.9164603960396039,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 730,
+              "profile_2": 61,
+              "profile_3": 8,
+              "profile_4": 1
+            },
+            "profile_2": {
+              "profile_1": 12,
+              "profile_2": 5,
+              "profile_3": 266,
+              "profile_4": 3
+            },
+            "profile_3": {
+              "profile_1": 36,
+              "profile_2": 240,
+              "profile_3": 1,
+              "profile_4": 6
+            },
+            "profile_4": {
+              "profile_1": 1,
+              "profile_3": 1,
+              "profile_4": 245
+            }
+          }
+        }
+      },
+      "profiles_s": 27.246169470003224,
+      "detection": {
+        "injection": "{'sessions': 14323, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 716, 'injected': 716, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 716, 'injected': 716, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 14323,
+          "n_anomalous": 1432,
+          "confusion": {
+            "tp": 1432,
+            "fp": 12891,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.0999790546673183,
+          "recall": 1.0,
+          "f1": 0.18178356077435734,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.8962862607362375,
+          "average_precision": 0.5701149037124292,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 5.382211269999971
+    },
+    "DDD-2014J": {
+      "n_events": 109161,
+      "n_sessions": 38264,
+      "n_learners": 1647,
+      "load_s": 8.217255898998701,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 2.3129253880033502,
+            "generate_s": 2.0485455006686,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.017194383309012722,
+                "std": 0.006119852872239688
+              },
+              "activity_jsd": {
+                "mean": 0.0037430668300567744,
+                "std": 0.00038024754134908075
+              },
+              "session_length_ks": {
+                "mean": 0.017548328663213653,
+                "std": 0.00041885733737931325
+              },
+              "interevent_time_ks": {
+                "mean": 0.27785487264425446,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.2171200362678373,
+                "std": 0.0043052160453882354
+              },
+              "transition_jsd": {
+                "mean": 0.04688732650140193,
+                "std": 0.0020757325662854723
+              },
+              "topn_path_overlap": {
+                "mean": 0.8000000000000002,
+                "std": 1.3597399555105182e-16
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.6628068225335934,
+                "std": 0.006874182219813308
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 1.6384916349998093,
+            "generate_s": 1.9574799109977903,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.032282079722913776,
+                "std": 0.0006514416722791832
+              },
+              "activity_jsd": {
+                "mean": 0.004317836079409562,
+                "std": 0.00024045181721166025
+              },
+              "session_length_ks": {
+                "mean": 0.01505759814327364,
+                "std": 0.0018648287803944195
+              },
+              "interevent_time_ks": {
+                "mean": 0.27785487264425446,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.08511996179681182,
+                "std": 0.0022943310387872
+              },
+              "transition_jsd": {
+                "mean": 0.002129119261426508,
+                "std": 9.922193389737442e-05
+              },
+              "topn_path_overlap": {
+                "mean": 0.8333333333333334,
+                "std": 0.05773502691896257
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7122444893305401,
+                "std": 0.004572349557506366
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 1.7927021909999894,
+            "generate_s": 1.9959911316667178,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.04252654245048439,
+                "std": 0.00184587517120504
+              },
+              "activity_jsd": {
+                "mean": 0.004778861727097495,
+                "std": 0.00013754502653283158
+              },
+              "session_length_ks": {
+                "mean": 0.01505759814327364,
+                "std": 0.0018648287803944195
+              },
+              "interevent_time_ks": {
+                "mean": 0.27785487264425446,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.09487209285554861,
+                "std": 0.0004107524456183869
+              },
+              "transition_jsd": {
+                "mean": 0.0022088536122577274,
+                "std": 7.621003002501808e-05
+              },
+              "topn_path_overlap": {
+                "mean": 1.0,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7330166845136125,
+                "std": 0.0020223151839633296
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 2.1036556899998686,
+            "generate_s": 2.219459949999873,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.033125092131461455,
+                "std": 0.001722528863102582
+              },
+              "activity_jsd": {
+                "mean": 0.004609822382693517,
+                "std": 0.0001940642940176523
+              },
+              "session_length_ks": {
+                "mean": 0.012340437576066362,
+                "std": 0.0006485205195091598
+              },
+              "interevent_time_ks": {
+                "mean": 0.021897772917390368,
+                "std": 0.0014819478708197348
+              },
+              "bigram_tvd": {
+                "mean": 0.08563308567878686,
+                "std": 0.004681691860955006
+              },
+              "transition_jsd": {
+                "mean": 0.0021902260591913428,
+                "std": 0.0001312618875124004
+              },
+              "topn_path_overlap": {
+                "mean": 0.9,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7137924295777923,
+                "std": 0.01288340624092558
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.016551219461780536,
+          "activity_jsd": 0.00288120540398601,
+          "session_length_ks": 0.012799395047850659,
+          "interevent_time_ks": 0.010501319950168675,
+          "bigram_tvd": 0.02951284340712944,
+          "transition_jsd": 0.0014724855661298597,
+          "topn_path_overlap": 1.0,
+          "exact_session_dup_rate": 0.7725533078184801,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:51c129a5607622b9b284a1ecb23edcb2a548cfba25e285b3e873301dadc391b3",
+            "n_events": 75045,
+            "n_sessions": 26487,
+            "n_learners": 1152
+          },
+          {
+            "fingerprint": "sha256:3b37ecb0dc493071943c48908eed30454d13a87a95f3e422fb23c06c0d00b3db",
+            "n_events": 34116,
+            "n_sessions": 11777,
+            "n_learners": 495
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 11777,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 75.31273747399973,
+      "profiles": {
+        "fit_s": 5.74523327100178,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.3559027777777778,
+            "n_learners": 410,
+            "mean_sessions": 14.536585365853659,
+            "mean_session_length": 1.98402859684983,
+            "distinguishing": [
+              {
+                "feature": "share:oucontent",
+                "z": 0.8254968749923792
+              },
+              {
+                "feature": "n_sessions",
+                "z": -0.6415155128486563
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -0.4836991509941019
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.3159722222222222,
+            "n_learners": 364,
+            "mean_sessions": 30.45054945054945,
+            "mean_session_length": 2.4795467809915666,
+            "distinguishing": [
+              {
+                "feature": "share:subpage",
+                "z": 0.6505803117041252
+              },
+              {
+                "feature": "share:oucollaborate",
+                "z": 0.6117014246484606
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.5658561999264032
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.2361111111111111,
+            "n_learners": 272,
+            "mean_sessions": 32.8014705882353,
+            "mean_session_length": 3.6571362162572036,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.3691871612721538
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 1.1500126208223418
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.7442175224416735
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.0920138888888889,
+            "n_learners": 106,
+            "mean_sessions": 4.915094339622642,
+            "mean_session_length": 1.3727507272677502,
+            "distinguishing": [
+              {
+                "feature": "share:homepage",
+                "z": 2.0046945563857226
+              },
+              {
+                "feature": "log_mean_duration_s",
+                "z": -1.853455331109294
+              },
+              {
+                "feature": "n_sessions",
+                "z": -1.3714854963150651
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 9,
+            "Fail": 131,
+            "Pass": 76,
+            "Withdrawn": 194
+          },
+          "profile_2": {
+            "Distinction": 33,
+            "Fail": 62,
+            "Pass": 236,
+            "Withdrawn": 33
+          },
+          "profile_3": {
+            "Distinction": 38,
+            "Fail": 26,
+            "Pass": 161,
+            "Withdrawn": 47
+          },
+          "profile_4": {
+            "Fail": 29,
+            "Pass": 2,
+            "Withdrawn": 75
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 1,
+            "Fail": 59,
+            "Pass": 34,
+            "Withdrawn": 75
+          },
+          "profile_2": {
+            "Distinction": 17,
+            "Fail": 32,
+            "Pass": 106,
+            "Withdrawn": 16
+          },
+          "profile_3": {
+            "Distinction": 14,
+            "Fail": 13,
+            "Pass": 62,
+            "Withdrawn": 23
+          },
+          "profile_4": {
+            "Fail": 6,
+            "Pass": 3,
+            "Withdrawn": 34
+          }
+        },
+        "train_outcome_nmi": 0.15755674311854184,
+        "holdout_outcome_nmi": 0.14491864397991736,
+        "recovery": {
+          "n_learners": 1148,
+          "missing": 0,
+          "ari": 0.8402621067856707,
+          "nmi": 0.7980663673605233,
+          "purity": 0.9329268292682927,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 357,
+              "profile_2": 11,
+              "profile_3": 1,
+              "profile_4": 33
+            },
+            "profile_2": {
+              "profile_1": 14,
+              "profile_2": 357,
+              "profile_3": 1,
+              "profile_4": 2
+            },
+            "profile_3": {
+              "profile_1": 2,
+              "profile_2": 3,
+              "profile_3": 268
+            },
+            "profile_4": {
+              "profile_1": 7,
+              "profile_2": 3,
+              "profile_4": 89
+            }
+          }
+        }
+      },
+      "profiles_s": 16.44858087900502,
+      "detection": {
+        "injection": "{'sessions': 11777, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 589, 'injected': 589, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 589, 'injected': 589, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 11777,
+          "n_anomalous": 1178,
+          "confusion": {
+            "tp": 1178,
+            "fp": 10599,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.10002547338031757,
+          "recall": 1.0,
+          "f1": 0.18186028560401388,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.8809977588621536,
+          "average_precision": 0.5081159475080578,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 3.768997393002792
+    },
+    "EEE-2014J": {
+      "n_events": 76751,
+      "n_sessions": 26198,
+      "n_learners": 1097,
+      "load_s": 5.099925471004099,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 1.182237482003984,
+            "generate_s": 1.8139217589996406,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.018662668193338925,
+                "std": 0.0029643652152579534
+              },
+              "activity_jsd": {
+                "mean": 0.002456829604775844,
+                "std": 7.318287616124877e-05
+              },
+              "session_length_ks": {
+                "mean": 0.02271713115086608,
+                "std": 0.0009294908309918087
+              },
+              "interevent_time_ks": {
+                "mean": 0.2584732538543162,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.24259749846901368,
+                "std": 0.005658885956619364
+              },
+              "transition_jsd": {
+                "mean": 0.061869595214699986,
+                "std": 0.0018363997072424428
+              },
+              "topn_path_overlap": {
+                "mean": 0.6,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.617353534034332,
+                "std": 0.008442177823003993
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 1.2379284299968276,
+            "generate_s": 1.4605317956690367,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.031015275519065095,
+                "std": 0.0034452849898787136
+              },
+              "activity_jsd": {
+                "mean": 0.002585649902302117,
+                "std": 0.00021941400093835803
+              },
+              "session_length_ks": {
+                "mean": 0.022879396373372274,
+                "std": 0.009441671468500081
+              },
+              "interevent_time_ks": {
+                "mean": 0.2584732538543162,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.06865224092196737,
+                "std": 0.005443149659498338
+              },
+              "transition_jsd": {
+                "mean": 0.0021423668392457837,
+                "std": 0.00044788835009937307
+              },
+              "topn_path_overlap": {
+                "mean": 0.7666666666666666,
+                "std": 0.05773502691896263
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7164811143525852,
+                "std": 0.0051394820733860706
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 1.2005689039942808,
+            "generate_s": 1.448331239334948,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.03896328176304572,
+                "std": 0.004123381318399817
+              },
+              "activity_jsd": {
+                "mean": 0.00310839561224778,
+                "std": 0.00024817803615999914
+              },
+              "session_length_ks": {
+                "mean": 0.022879396373372274,
+                "std": 0.009441671468500081
+              },
+              "interevent_time_ks": {
+                "mean": 0.2584732538543162,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.07549985943342225,
+                "std": 0.007416186179605395
+              },
+              "transition_jsd": {
+                "mean": 0.0022283611556893853,
+                "std": 0.000603107009010849
+              },
+              "topn_path_overlap": {
+                "mean": 0.6999999999999998,
+                "std": 1.3597399555105182e-16
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7452862437239829,
+                "std": 0.003427509529006543
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 1.366465500999766,
+            "generate_s": 1.4454472409997834,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.03286618796616389,
+                "std": 0.009427714359762383
+              },
+              "activity_jsd": {
+                "mean": 0.002821259221742195,
+                "std": 0.00020870172161692918
+              },
+              "session_length_ks": {
+                "mean": 0.02060768325828566,
+                "std": 0.003472864342351137
+              },
+              "interevent_time_ks": {
+                "mean": 0.003168266153121676,
+                "std": 0.0013818018736121709
+              },
+              "bigram_tvd": {
+                "mean": 0.07330975884025275,
+                "std": 0.01075481978810384
+              },
+              "transition_jsd": {
+                "mean": 0.0024005924678180287,
+                "std": 0.00011552747456607161
+              },
+              "topn_path_overlap": {
+                "mean": 0.7666666666666666,
+                "std": 0.05773502691896263
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7245736664088359,
+                "std": 0.00947121195591813
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.018894208266704716,
+          "activity_jsd": 0.001731256263320661,
+          "session_length_ks": 0.020657675403682407,
+          "interevent_time_ks": 0.007980956854432009,
+          "bigram_tvd": 0.03275096453569465,
+          "transition_jsd": 0.0015993106543125903,
+          "topn_path_overlap": 0.9,
+          "exact_session_dup_rate": 0.7739816031537451,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:9447a95de45fa9e7d5250af896d89f8fb8fae9a151ee4cdb60cf9bcea144a05a",
+            "n_events": 52513,
+            "n_sessions": 17981,
+            "n_learners": 767
+          },
+          {
+            "fingerprint": "sha256:a3069557e80c6a902e8c1ccc04fe6b7c9484fe835e79bb0df7e3ed76be2a5ed8",
+            "n_events": 24238,
+            "n_sessions": 8217,
+            "n_learners": 330
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 8217,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 54.004613802993845,
+      "profiles": {
+        "fit_s": 2.9171460889992886,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.42633637548891784,
+            "n_learners": 327,
+            "mean_sessions": 31.501529051987767,
+            "mean_session_length": 2.724117899854716,
+            "distinguishing": [
+              {
+                "feature": "share:ouwiki",
+                "z": 0.7660117832888602
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.6209958637888245
+              },
+              {
+                "feature": "log_mean_duration_s",
+                "z": 0.29317016204611734
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.34159061277705344,
+            "n_learners": 262,
+            "mean_sessions": 11.988549618320612,
+            "mean_session_length": 2.0330387477125837,
+            "distinguishing": [
+              {
+                "feature": "share:ouwiki",
+                "z": -0.8912406041346161
+              },
+              {
+                "feature": "n_sessions",
+                "z": -0.8827412077552981
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -0.5416484604720435
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.16688396349413298,
+            "n_learners": 128,
+            "mean_sessions": 34.265625,
+            "mean_session_length": 3.682066375568625,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.615069620196272
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 1.1722302334742347
+              },
+              {
+                "feature": "share:oucontent",
+                "z": -0.9346438043611452
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.0651890482398957,
+            "n_learners": 50,
+            "mean_sessions": 3.06,
+            "mean_session_length": 1.2863596491228069,
+            "distinguishing": [
+              {
+                "feature": "log_mean_duration_s",
+                "z": -2.49363693127724
+              },
+              {
+                "feature": "share:homepage",
+                "z": 2.223456126360659
+              },
+              {
+                "feature": "n_sessions",
+                "z": -1.5708058419558883
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 70,
+            "Fail": 23,
+            "Pass": 230,
+            "Withdrawn": 4
+          },
+          "profile_2": {
+            "Distinction": 1,
+            "Fail": 97,
+            "Pass": 48,
+            "Withdrawn": 116
+          },
+          "profile_3": {
+            "Distinction": 40,
+            "Fail": 7,
+            "Pass": 71,
+            "Withdrawn": 10
+          },
+          "profile_4": {
+            "Fail": 13,
+            "Pass": 1,
+            "Withdrawn": 36
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 27,
+            "Fail": 11,
+            "Pass": 121
+          },
+          "profile_2": {
+            "Fail": 22,
+            "Pass": 16,
+            "Withdrawn": 42
+          },
+          "profile_3": {
+            "Distinction": 19,
+            "Fail": 3,
+            "Pass": 40,
+            "Withdrawn": 5
+          },
+          "profile_4": {
+            "Fail": 9,
+            "Withdrawn": 15
+          }
+        },
+        "train_outcome_nmi": 0.28150470476447853,
+        "holdout_outcome_nmi": 0.30237986811615725,
+        "recovery": {
+          "n_learners": 775,
+          "missing": 0,
+          "ari": 0.8815736941252603,
+          "nmi": 0.8324189919514494,
+          "purity": 0.9470967741935484,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 322,
+              "profile_2": 8
+            },
+            "profile_2": {
+              "profile_1": 5,
+              "profile_2": 238,
+              "profile_3": 1,
+              "profile_4": 16
+            },
+            "profile_3": {
+              "profile_2": 1,
+              "profile_3": 126
+            },
+            "profile_4": {
+              "profile_2": 9,
+              "profile_3": 1,
+              "profile_4": 48
+            }
+          }
+        }
+      },
+      "profiles_s": 9.090121074004855,
+      "detection": {
+        "injection": "{'sessions': 8217, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 411, 'injected': 411, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 411, 'injected': 411, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 8217,
+          "n_anomalous": 822,
+          "confusion": {
+            "tp": 822,
+            "fp": 7395,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.10003650967506389,
+          "recall": 1.0,
+          "f1": 0.18187852638566213,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.9009675604447669,
+          "average_precision": 0.5139100626960196,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 2.1942706519985222
+    },
+    "FFF-2014J": {
+      "n_events": 167164,
+      "n_sessions": 50431,
+      "n_learners": 2121,
+      "load_s": 8.454685010001413,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 2.452536684999359,
+            "generate_s": 2.6591279763306375,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.022117156630910795,
+                "std": 0.0027769880265608874
+              },
+              "activity_jsd": {
+                "mean": 0.0030800956596517735,
+                "std": 0.0003399660581708708
+              },
+              "session_length_ks": {
+                "mean": 0.01436031331592691,
+                "std": 0.004186205938596334
+              },
+              "interevent_time_ks": {
+                "mean": 0.22219987934848184,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.21882995912787095,
+                "std": 0.0038744277896225585
+              },
+              "transition_jsd": {
+                "mean": 0.04012054334386498,
+                "std": 0.0017087481683706678
+              },
+              "topn_path_overlap": {
+                "mean": 0.6999999999999998,
+                "std": 1.3597399555105182e-16
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.656857243115064,
+                "std": 0.001997936173999419
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 2.4460591090028174,
+            "generate_s": 2.867724508335717,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.02827641205271007,
+                "std": 0.0019736066973196796
+              },
+              "activity_jsd": {
+                "mean": 0.0031250914403609764,
+                "std": 9.142493973815346e-05
+              },
+              "session_length_ks": {
+                "mean": 0.01775456919060057,
+                "std": 0.003151464152630095
+              },
+              "interevent_time_ks": {
+                "mean": 0.22219987934848184,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.061189545430216125,
+                "std": 0.0035172395743212834
+              },
+              "transition_jsd": {
+                "mean": 0.0017282069904125594,
+                "std": 0.00023557343814030227
+              },
+              "topn_path_overlap": {
+                "mean": 0.6999999999999998,
+                "std": 1.3597399555105182e-16
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7232971050628968,
+                "std": 0.0019701293320439905
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 2.5852664220001316,
+            "generate_s": 2.8079774569972265,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.02957707250185843,
+                "std": 0.002173993273555971
+              },
+              "activity_jsd": {
+                "mean": 0.0031310551558561103,
+                "std": 5.3616017063824505e-05
+              },
+              "session_length_ks": {
+                "mean": 0.01775456919060057,
+                "std": 0.003151464152630095
+              },
+              "interevent_time_ks": {
+                "mean": 0.22219987934848184,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.06231037368046507,
+                "std": 0.0033819719988432586
+              },
+              "transition_jsd": {
+                "mean": 0.001690632432099974,
+                "std": 1.1873764272941676e-05
+              },
+              "topn_path_overlap": {
+                "mean": 0.8333333333333334,
+                "std": 0.05773502691896257
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7426897706427694,
+                "std": 0.002228203539939819
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 3.0234833619979327,
+            "generate_s": 2.751776782667245,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.025891756800238946,
+                "std": 0.0013607837430187372
+              },
+              "activity_jsd": {
+                "mean": 0.0031731240397521814,
+                "std": 0.00023422225810963276
+              },
+              "session_length_ks": {
+                "mean": 0.012771975630983479,
+                "std": 0.00386295788585663
+              },
+              "interevent_time_ks": {
+                "mean": 0.002799665591288303,
+                "std": 0.0010545015908338057
+              },
+              "bigram_tvd": {
+                "mean": 0.05981704194212417,
+                "std": 0.002929490117200665
+              },
+              "transition_jsd": {
+                "mean": 0.0017814896930731662,
+                "std": 0.00010547403230238802
+              },
+              "topn_path_overlap": {
+                "mean": 0.6999999999999998,
+                "std": 1.3597399555105182e-16
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7248288233881538,
+                "std": 0.008667103023621019
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.021549473236664677,
+          "activity_jsd": 0.002275479556735406,
+          "session_length_ks": 0.01543173261851466,
+          "interevent_time_ks": 0.0016242098091640012,
+          "bigram_tvd": 0.03373037632278886,
+          "transition_jsd": 0.0012843452829876239,
+          "topn_path_overlap": 0.9,
+          "exact_session_dup_rate": 0.7610281844627784,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:f86d7f596bdc7b11432290ed14adf5c594c83a27db39131e5f559410fe225778",
+            "n_events": 117033,
+            "n_sessions": 35111,
+            "n_learners": 1484
+          },
+          {
+            "fingerprint": "sha256:ec066a6e6edd0450044ee214ce16ac6ca477d95771a76c4cb51bf963f0614b83",
+            "n_events": 50131,
+            "n_sessions": 15320,
+            "n_learners": 637
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 15320,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 102.171311443999,
+      "profiles": {
+        "fit_s": 8.000180835995707,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.46900269541778977,
+            "n_learners": 696,
+            "mean_sessions": 33.67672413793103,
+            "mean_session_length": 3.4174745306606695,
+            "distinguishing": [
+              {
+                "feature": "n_sessions",
+                "z": 0.7182413050352046
+              },
+              {
+                "feature": "share:oucontent",
+                "z": 0.5243731038795191
+              },
+              {
+                "feature": "share:quiz",
+                "z": 0.47196786861269285
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.2931266846361186,
+            "n_learners": 435,
+            "mean_sessions": 12.367816091954023,
+            "mean_session_length": 2.0374917389117018,
+            "distinguishing": [
+              {
+                "feature": "n_sessions",
+                "z": -0.8096519162326639
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -0.7099487460882528
+              },
+              {
+                "feature": "share:subpage",
+                "z": 0.5762510501244357
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.18059299191374664,
+            "n_learners": 268,
+            "mean_sessions": 22.66417910447761,
+            "mean_session_length": 3.359134380696232,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.6344917486613437
+              },
+              {
+                "feature": "share:oucontent",
+                "z": -0.8400534881458399
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 0.4129832545095296
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.05727762803234501,
+            "n_learners": 85,
+            "mean_sessions": 2.5647058823529414,
+            "mean_session_length": 1.1590348866819455,
+            "distinguishing": [
+              {
+                "feature": "share:homepage",
+                "z": 2.8354174226552473
+              },
+              {
+                "feature": "log_mean_duration_s",
+                "z": -2.6789425662959823
+              },
+              {
+                "feature": "n_sessions",
+                "z": -1.5125553969870003
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 140,
+            "Fail": 68,
+            "Pass": 444,
+            "Withdrawn": 44
+          },
+          "profile_2": {
+            "Distinction": 6,
+            "Fail": 143,
+            "Pass": 63,
+            "Withdrawn": 223
+          },
+          "profile_3": {
+            "Distinction": 32,
+            "Fail": 40,
+            "Pass": 86,
+            "Withdrawn": 110
+          },
+          "profile_4": {
+            "Fail": 23,
+            "Withdrawn": 62
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 67,
+            "Fail": 29,
+            "Pass": 200,
+            "Withdrawn": 20
+          },
+          "profile_2": {
+            "Distinction": 2,
+            "Fail": 58,
+            "Pass": 38,
+            "Withdrawn": 106
+          },
+          "profile_3": {
+            "Distinction": 11,
+            "Fail": 20,
+            "Pass": 28,
+            "Withdrawn": 31
+          },
+          "profile_4": {
+            "Fail": 5,
+            "Withdrawn": 22
+          }
+        },
+        "train_outcome_nmi": 0.20117990767164284,
+        "holdout_outcome_nmi": 0.1992638860603489,
+        "recovery": {
+          "n_learners": 1522,
+          "missing": 0,
+          "ari": 0.9231067025279801,
+          "nmi": 0.8664809636671253,
+          "purity": 0.9671484888304862,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 686,
+              "profile_2": 9,
+              "profile_3": 1
+            },
+            "profile_2": {
+              "profile_1": 7,
+              "profile_2": 422,
+              "profile_3": 10,
+              "profile_4": 7
+            },
+            "profile_3": {
+              "profile_1": 3,
+              "profile_2": 3,
+              "profile_3": 279
+            },
+            "profile_4": {
+              "profile_2": 9,
+              "profile_3": 1,
+              "profile_4": 85
+            }
+          }
+        }
+      },
+      "profiles_s": 21.261311466994812,
+      "detection": {
+        "injection": "{'sessions': 15320, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 766, 'injected': 766, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 766, 'injected': 766, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 15320,
+          "n_anomalous": 1532,
+          "confusion": {
+            "tp": 1532,
+            "fp": 13788,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.1,
+          "recall": 1.0,
+          "f1": 0.18181818181818182,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.8859390066361107,
+          "average_precision": 0.5323606677718733,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 4.487055061996216
+    },
+    "GGG-2014J": {
+      "n_events": 25535,
+      "n_sessions": 12467,
+      "n_learners": 698,
+      "load_s": 1.2567018590052612,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 0.4943333480041474,
+            "generate_s": 0.45892067633152084,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.018669187526290525,
+                "std": 0.008431801751575785
+              },
+              "activity_jsd": {
+                "mean": 0.004395939317644009,
+                "std": 0.0007316464645658374
+              },
+              "session_length_ks": {
+                "mean": 0.024932975871313694,
+                "std": 0.005274079242065962
+              },
+              "interevent_time_ks": {
+                "mean": 0.3490541591085774,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.2057623798837485,
+                "std": 0.010649920215916353
+              },
+              "transition_jsd": {
+                "mean": 0.04593445880159447,
+                "std": 0.004717356716445354
+              },
+              "topn_path_overlap": {
+                "mean": 0.6,
+                "std": 0.0
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.6322195519715614,
+                "std": 0.002664307975631747
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 0.4729591010036529,
+            "generate_s": 0.47604198133194586,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.02460367637523665,
+                "std": 0.003510003514026321
+              },
+              "activity_jsd": {
+                "mean": 0.004621110025510481,
+                "std": 0.00030279890749804406
+              },
+              "session_length_ks": {
+                "mean": 0.013672922252010741,
+                "std": 0.00458123525218099
+              },
+              "interevent_time_ks": {
+                "mean": 0.3490541591085774,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.09552708779205017,
+                "std": 0.017577695159706724
+              },
+              "transition_jsd": {
+                "mean": 0.005945458381596678,
+                "std": 0.0009665626339202064
+              },
+              "topn_path_overlap": {
+                "mean": 0.8333333333333334,
+                "std": 0.05773502691896257
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7063427509874668,
+                "std": 0.007871521228997294
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 0.47900891300378134,
+            "generate_s": 0.49996431366647204,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.027715692076298246,
+                "std": 0.0036737273735546554
+              },
+              "activity_jsd": {
+                "mean": 0.004858959741880538,
+                "std": 0.0004195610529748971
+              },
+              "session_length_ks": {
+                "mean": 0.013672922252010741,
+                "std": 0.00458123525218099
+              },
+              "interevent_time_ks": {
+                "mean": 0.3490541591085774,
+                "std": 0.0
+              },
+              "bigram_tvd": {
+                "mean": 0.09676253791433327,
+                "std": 0.016712842082608016
+              },
+              "transition_jsd": {
+                "mean": 0.006055866895984385,
+                "std": 0.0016772178941262068
+              },
+              "topn_path_overlap": {
+                "mean": 0.6999999999999998,
+                "std": 1.3597399555105182e-16
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.7143210838051269,
+                "std": 0.014302147212150123
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 0.5272694140003296,
+            "generate_s": 0.4888947403378552,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.021108552130675234,
+                "std": 0.0056639647475793765
+              },
+              "activity_jsd": {
+                "mean": 0.004895125094877924,
+                "std": 0.0003237898024058301
+              },
+              "session_length_ks": {
+                "mean": 0.01760500446827527,
+                "std": 0.005663968499549885
+              },
+              "interevent_time_ks": {
+                "mean": 0.029766818977000398,
+                "std": 0.010397483764219518
+              },
+              "bigram_tvd": {
+                "mean": 0.08228545176597168,
+                "std": 0.003316673180676673
+              },
+              "transition_jsd": {
+                "mean": 0.0057618619168497325,
+                "std": 0.0008120901303372212
+              },
+              "topn_path_overlap": {
+                "mean": 0.8333333333333334,
+                "std": 0.05773502691896257
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.6943705727436388,
+                "std": 0.018102008406943766
+              },
+              "nn_distance_p05": {
+                "mean": 0.0,
+                "std": 0.0
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.01693620560955206,
+          "activity_jsd": 0.003309566999445272,
+          "session_length_ks": 0.018993795761209076,
+          "interevent_time_ks": 0.02547076216409061,
+          "bigram_tvd": 0.051707362562694634,
+          "transition_jsd": 0.0034930439437674855,
+          "topn_path_overlap": 0.8,
+          "exact_session_dup_rate": 0.7357790601813685,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:e613a0bfc58e17c25957620794d51f0ebcb8732f84f69899228b96c73a804a13",
+            "n_events": 17946,
+            "n_sessions": 8737,
+            "n_learners": 488
+          },
+          {
+            "fingerprint": "sha256:da0a653541a4b3a6638a33b0485bd0e3dea0264c2512ab5f8955e54856aa0ed1",
+            "n_events": 7589,
+            "n_sessions": 3730,
+            "n_learners": 210
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 3730,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 18.648432491994754,
+      "profiles": {
+        "fit_s": 1.6641938089960604,
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.48565573770491804,
+            "n_learners": 237,
+            "mean_sessions": 20.042194092827003,
+            "mean_session_length": 1.7883133628010701,
+            "distinguishing": [
+              {
+                "feature": "share:oucontent",
+                "z": 0.6782086324325938
+              },
+              {
+                "feature": "share:quiz",
+                "z": 0.38287906000608596
+              },
+              {
+                "feature": "share:forumng",
+                "z": -0.3653358250920513
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.22540983606557377,
+            "n_learners": 110,
+            "mean_sessions": 10.4,
+            "mean_session_length": 1.6565967483237467,
+            "distinguishing": [
+              {
+                "feature": "share:oucontent",
+                "z": -0.8468543515111883
+              },
+              {
+                "feature": "share:homepage",
+                "z": 0.751294533100805
+              },
+              {
+                "feature": "n_sessions",
+                "z": -0.7369271986354533
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.20081967213114754,
+            "n_learners": 98,
+            "mean_sessions": 27.714285714285715,
+            "mean_session_length": 2.5338761671831573,
+            "distinguishing": [
+              {
+                "feature": "share:forumng",
+                "z": 1.314145475128456
+              },
+              {
+                "feature": "mean_session_length",
+                "z": 1.128724246153853
+              },
+              {
+                "feature": "n_sessions",
+                "z": 0.9634856084778743
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.08811475409836066,
+            "n_learners": 43,
+            "mean_sessions": 2.953488372093023,
+            "mean_session_length": 1.0,
+            "distinguishing": [
+              {
+                "feature": "log_mean_duration_s",
+                "z": -3.162576485271264
+              },
+              {
+                "feature": "n_sessions",
+                "z": -1.4682391308374283
+              },
+              {
+                "feature": "mean_session_length",
+                "z": -1.362419180588103
+              }
+            ]
+          }
+        ],
+        "train_outcomes": {
+          "profile_1": {
+            "Distinction": 55,
+            "Fail": 31,
+            "Pass": 142,
+            "Withdrawn": 9
+          },
+          "profile_2": {
+            "Distinction": 1,
+            "Fail": 47,
+            "Pass": 24,
+            "Withdrawn": 38
+          },
+          "profile_3": {
+            "Distinction": 29,
+            "Fail": 7,
+            "Pass": 56,
+            "Withdrawn": 6
+          },
+          "profile_4": {
+            "Distinction": 1,
+            "Fail": 21,
+            "Pass": 1,
+            "Withdrawn": 20
+          }
+        },
+        "holdout_outcomes": {
+          "profile_1": {
+            "Distinction": 25,
+            "Fail": 13,
+            "Pass": 66,
+            "Withdrawn": 1
+          },
+          "profile_2": {
+            "Distinction": 2,
+            "Fail": 22,
+            "Pass": 9,
+            "Withdrawn": 13
+          },
+          "profile_3": {
+            "Distinction": 14,
+            "Fail": 9,
+            "Pass": 17
+          },
+          "profile_4": {
+            "Fail": 11,
+            "Pass": 2,
+            "Withdrawn": 6
+          }
+        },
+        "train_outcome_nmi": 0.192485673307878,
+        "holdout_outcome_nmi": 0.1977675786599128,
+        "recovery": {
+          "n_learners": 493,
+          "missing": 0,
+          "ari": 0.8505540411375935,
+          "nmi": 0.8207509114197613,
+          "purity": 0.9432048681541582,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 223,
+              "profile_2": 12
+            },
+            "profile_2": {
+              "profile_1": 6,
+              "profile_2": 100,
+              "profile_3": 1,
+              "profile_4": 4
+            },
+            "profile_3": {
+              "profile_3": 100
+            },
+            "profile_4": {
+              "profile_1": 5,
+              "profile_4": 42
+            }
+          }
+        }
+      },
+      "profiles_s": 4.169230530998902,
+      "detection": {
+        "injection": "{'sessions': 3730, 'anomalies': {'unexpected_transition': {'category': 'invalid_workflow', 'rate': 0.05, 'requested': 186, 'injected': 186, 'not_applicable': 0, 'parameters': {'transitions': None}}, 'repetition': {'category': 'unusual_valid', 'rate': 0.05, 'requested': 186, 'injected': 186, 'not_applicable': 0, 'parameters': {'pattern': 'ping_pong', 'length': 4, 'gap_s': 86400.0}}}}",
+        "detection": {
+          "level": "session",
+          "n_items": 3730,
+          "n_anomalous": 372,
+          "confusion": {
+            "tp": 372,
+            "fp": 3358,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.0997319034852547,
+          "recall": 1.0,
+          "f1": 0.18137493905411994,
+          "false_positive_rate": 1.0,
+          "roc_auc": 0.8981592665885352,
+          "average_precision": 0.47126670721728714,
+          "recall_by_type": {
+            "repetition": 1.0,
+            "unexpected_transition": 1.0
+          },
+          "recall_by_category": {
+            "invalid_workflow": 1.0,
+            "unusual_valid": 1.0
+          },
+          "threshold": 0.5
+        }
+      },
+      "detection_s": 0.7459026439973968
+    }
+  }
+}

@@ -184,6 +184,15 @@ def test_insufficient_data_fails_or_backs_off(abc: Dataset, caplog: Any) -> None
     assert "reducing Markov order" in caplog.text
 
 
+def test_single_event_sessions_back_off(caplog: Any) -> None:
+    data = build([("a",), ("b",)])
+    with caplog.at_level(logging.WARNING, logger="eduloggen.generators"):
+        model = MarkovGenerator().fit(data, {"on_insufficient_data": "backoff"})
+    assert model.parameters["order"] == 1
+    assert "single event" in caplog.text
+    assert "reducing" not in caplog.text
+
+
 def test_single_token_vocabulary() -> None:
     data = build([("a",), ("a", "a")])
     generator = MarkovGenerator()
