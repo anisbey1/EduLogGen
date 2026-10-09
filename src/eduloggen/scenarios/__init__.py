@@ -1,7 +1,7 @@
 """Level 2 experimental generation (design: ``docs/04_EXPERIMENTAL_GENERATOR.md``).
 
 Available so far: labelled anomaly injection (M1); controls, calendars, and
-the manipulation check (M2). Anomaly injection::
+the manipulation check (M2); behavioural profiles and mixtures (M3). Anomaly injection::
 
     from eduloggen.scenarios import inject_anomalies
 
@@ -48,6 +48,17 @@ from eduloggen.scenarios.inject import (
     inject_anomalies,
     load_anomaly_specs,
 )
+from eduloggen.scenarios.profiles import (
+    Profile,
+    ProfileMode,
+    ProfileResult,
+    ProfileSet,
+    define_profiles,
+    fit_profiles,
+    generate_profiles,
+    load_profile_assignments,
+    load_profiles,
+)
 
 __all__ = [
     "ANOMALIES",
@@ -65,13 +76,22 @@ __all__ = [
     "InjectionContext",
     "InjectionResult",
     "ManipulationCheck",
+    "Profile",
+    "ProfileMode",
+    "ProfileResult",
+    "ProfileSet",
     "Repetition",
     "UnexpectedTransition",
     "apply_controls",
     "available_anomalies",
+    "define_profiles",
+    "fit_profiles",
+    "generate_profiles",
     "get_anomaly",
     "inject_anomalies",
     "load_anomaly_specs",
+    "load_profile_assignments",
+    "load_profiles",
     "manipulation_check",
     "register_anomaly",
     "run_experiment",

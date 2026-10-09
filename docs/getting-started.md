@@ -232,6 +232,74 @@ In Python: `apply_controls(model, Controls(...))`, `SessionCalendar`, and
 `run_experiment(...)` in `eduloggen.scenarios`; `elg.generate(...,
 calendar=...)`.
 
+## Simulate behavioural profiles (Level 2)
+
+Generate a population that mixes distinct kinds of learners, and keep the
+ground truth of who is which:
+
+```python
+import eduloggen as elg
+from eduloggen.benchmark import split_by_learner
+from eduloggen.scenarios import load_profile_assignments
+
+train, holdout = split_by_learner(dataset, 0.3, seed=0)
+
+# auto: cluster the training learners (seeded k-means++ on behaviour)
+profiles = elg.fit_profiles(train, n_profiles=3, seed=0)
+print(profiles.to_markdown())          # what distinguishes each profile
+holdout_profiles = profiles.assign(holdout)  # nearest learned profile
+
+# provided: your own learner_id,profile CSV
+provided = elg.fit_profiles(
+    train, mode="provided", assignments=load_profile_assignments("groups.csv")
+)
+
+# manual: no real data, behaviour defined explicitly
+manual = elg.define_profiles({
+    "steady": {
+        "share": 2,
+        "start": {"view": 1},
+        "transitions": {"view": {"attempt": 0.8, "view": 0.2},
+                        "attempt": {"submit": 1}, "submit": {"view": 1}},
+        "session_length": {"mean": 5},
+        "sessions_per_learner": {"mean": 4},
+        "dwell_s": {"*": 30, "view": 120},
+    },
+    "crammer": {
+        "start": {"attempt": 1},
+        "transitions": {"attempt": {"attempt": 0.7, "submit": 0.3},
+                        "submit": {"attempt": 1}},
+        "session_length": {"fixed": 10},
+        "sessions_per_learner": {"fixed": 1},
+    },
+})
+
+result = elg.generate_profiles(profiles, 1000, seed=7, mixture={"profile_1": 0.5,
+                                "profile_2": 0.3, "profile_3": 0.2})
+result.dataset        # synthetic events and sessions
+result.annotations    # one "profile" row per synthetic learner
+profiles.save("profiles/")  # profiles.json, PROFILES.md, one model each
+```
+
+Rules worth knowing:
+
+- Fit `auto` profiles on the **training split only**; `assign` maps other
+  learners to the nearest profile without changing it.
+- A profile with fewer than `min_learners` (default 5) training learners is
+  an error, never silently dropped.
+- `mixture` sets the share of synthetic **learners** per profile (default:
+  the observed shares); per-profile `controls` and a shared `calendar` work
+  as in experiments.
+- Manual profiles need behaviour (`start` and `transitions`); a share alone
+  is rejected.
+- Profile names are descriptive. An unsupervised cluster is **not** a
+  validated psychological or pedagogical type; do not report it as one.
+
+To score a clustering method against the ground truth, use
+`elg.evaluate_clustering(result.annotations, predictions)` (adjusted Rand
+index, normalised mutual information, purity). A command-line interface for
+profiles arrives with the `scenario` commands (M5).
+
 ## Before sharing outputs
 
 Read [Privacy and responsible use](privacy.md). Synthetic data can still
