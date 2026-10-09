@@ -1,5 +1,8 @@
 # EduLogGen
 
+[![PyPI](https://img.shields.io/pypi/v/eduloggen)](https://pypi.org/project/eduloggen/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23264161.svg)](https://doi.org/10.5281/zenodo.23264161)
+
 Open-source Python framework for **analyzing**, **generating**, **validating**,
 and **benchmarking** synthetic educational interaction logs.
 
@@ -178,7 +181,9 @@ notebooks/              # Exploratory notebooks (planned)
 If you use EduLogGen in research, please cite it. GitHub shows a
 "Cite this repository" button generated from
 [`CITATION.cff`](https://github.com/anisbey1/EduLogGen/blob/main/CITATION.cff);
-each release is archived on Zenodo with its own DOI.
+each release is archived on Zenodo
+([doi:10.5281/zenodo.23264161](https://doi.org/10.5281/zenodo.23264161),
+which resolves to the latest version).
 
 ## Versioning
 
