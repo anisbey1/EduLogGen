@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Publishing: PyPI release workflow (trusted publishing, triggered by a
+  version tag, with a GitHub release from the changelog), documentation
+  deployment to GitHub Pages, `CITATION.cff`, `SECURITY.md`, and
+  `CODE_OF_CONDUCT.md`
+
+### Changed
+
+- README: `pip install eduloggen`, a citation section, and absolute links so
+  they work on PyPI
+
 ## [1.4.0] - 2026-10-09
 
 Level 2, milestone M3: behavioural profiles and profile mixtures, and

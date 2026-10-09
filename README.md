@@ -13,7 +13,7 @@ behavioral properties of real learner interaction logs.
 > Level 2, the experimental generator, is under way: labelled anomalies,
 > detector scoring, behavioural controls, course calendars, manipulation
 > checks, and behavioural profiles are available; outcomes follow
-> ([design](docs/04_EXPERIMENTAL_GENERATOR.md)).
+> ([design](https://github.com/anisbey1/EduLogGen/blob/main/docs/04_EXPERIMENTAL_GENERATOR.md)).
 
 ## Features
 
@@ -41,7 +41,7 @@ behavioral properties of real learner interaction logs.
   task and session lengths, schedule sessions with a course calendar and
   deadline surges, and get a manipulation check proving each effect
 - **Extend** with installable plugins for generators, metrics, readers,
-  plots, and benchmark protocols (see [`docs/plugins.md`](docs/plugins.md))
+  plots, and benchmark protocols (see [`docs/plugins.md`](https://github.com/anisbey1/EduLogGen/blob/main/docs/plugins.md))
 - **Try it instantly** with `eduloggen demo`, a fully synthetic course corpus
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)
@@ -53,9 +53,11 @@ behavioral properties of real learner interaction logs.
 ## Installation
 
 ```bash
-# From a local clone (recommended while the package is in early development)
-pip install -e ".[dev,docs]"
+pip install eduloggen              # core (CSV, TSV, JSON Lines)
+pip install "eduloggen[parquet,viz]"  # with Parquet and figures
 ```
+
+For development, from a clone: `pip install -e ".[dev,docs]"`.
 
 Optional extras:
 
@@ -89,7 +91,7 @@ eduloggen plot --real sessions/ --synthetic synthetic/ --output figures/
 ```
 
 `validate` exits with `1` when a threshold fails, so it can gate CI jobs. See
-[`examples/configs/`](examples/configs/) for a field mapping and a complete
+[`examples/configs/`](https://github.com/anisbey1/EduLogGen/tree/main/examples/configs) for a field mapping and a complete
 experiment configuration.
 
 From Python:
@@ -109,7 +111,7 @@ print(report.to_markdown())
 EduLogGen runs locally and never transmits data. Synthetic data reduces but
 does not remove re-identification risk: always review the privacy indicators
 in the validation report before sharing outputs. See
-[`docs/privacy.md`](docs/privacy.md).
+[`docs/privacy.md`](https://github.com/anisbey1/EduLogGen/blob/main/docs/privacy.md).
 
 ## Development
 
@@ -161,16 +163,23 @@ examples/               # Example configs (synthetic data only)
 notebooks/              # Exploratory notebooks (planned)
 ```
 
+## Citation
+
+If you use EduLogGen in research, please cite it. GitHub shows a
+"Cite this repository" button generated from
+[`CITATION.cff`](https://github.com/anisbey1/EduLogGen/blob/main/CITATION.cff);
+each release is archived on Zenodo with its own DOI.
+
 ## Versioning
 
 EduLogGen follows [Semantic Versioning](https://semver.org/). See
-[`CHANGELOG.md`](CHANGELOG.md) for release notes.
+[`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md) for release notes.
 
 ## Contributing
 
-Contributions are welcome. Please read [`CONTRIBUTING.md`](CONTRIBUTING.md)
+Contributions are welcome. Please read [`CONTRIBUTING.md`](https://github.com/anisbey1/EduLogGen/blob/main/CONTRIBUTING.md)
 before opening a pull request.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://github.com/anisbey1/EduLogGen/blob/main/LICENSE).

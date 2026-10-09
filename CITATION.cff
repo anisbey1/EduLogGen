@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use EduLogGen in your research, please cite it as below."
+title: "EduLogGen: synthetic educational interaction logs for reproducible learning analytics"
+type: software
+authors:
+  # TODO(author): replace with your name, affiliation, and ORCID
+  - family-names: "TODO-family-name"
+    given-names: "TODO-given-names"
+    affiliation: "TODO-affiliation"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+version: 1.4.1
+date-released: "2026-10-09"
+license: MIT
+repository-code: "https://github.com/anisbey1/EduLogGen"
+url: "https://anisbey1.github.io/EduLogGen/"
+keywords:
+  - learning analytics
+  - educational data mining
+  - synthetic data
+  - interaction logs
+  - privacy
+  - benchmarking
+abstract: >-
+  EduLogGen is an open-source Python framework for analysing real learner
+  interaction logs, generating privacy-aware synthetic logs with Markov and
+  semi-Markov models, validating them against the real data with fidelity
+  and privacy indicators, and benchmarking generators under a fixed
+  protocol. Its experimental layer adds labelled anomalies, behavioural
+  controls, course calendars, and behavioural profiles with ground truth for
+  evaluating detection and clustering methods.
