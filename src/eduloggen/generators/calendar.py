@@ -22,7 +22,7 @@ __all__ = ["Deadline", "SessionCalendar"]
 _Date = date
 
 _KEYS: Final = frozenset(
-    {"start", "weeks", "days", "timezone", "hours", "weekdays", "deadlines"}
+    {"start", "weeks", "days", "timezone", "hours", "weekdays", "deadlines", "daily"}
 )
 
 
@@ -65,6 +65,8 @@ class SessionCalendar:
         hours: 24 non-negative relative weights, hour 0 to 23.
         weekdays: 7 non-negative relative weights, Monday to Sunday.
         deadlines: Activity surges before deadlines.
+        daily: Optional weight for every day of the period (length ``days``),
+            used instead of ``weekdays``; e.g. learned from training data.
     """
 
     start: date
@@ -73,6 +75,7 @@ class SessionCalendar:
     hours: tuple[float, ...] = (1.0,) * 24
     weekdays: tuple[float, ...] = (1.0,) * 7
     deadlines: tuple[Deadline, ...] = ()
+    daily: tuple[float, ...] | None = None
     _zone: tzinfo = field(init=False, repr=False, compare=False, hash=False)
     _day_weights: tuple[float, ...] = field(
         init=False, repr=False, compare=False, hash=False
@@ -96,16 +99,22 @@ class SessionCalendar:
             zone: tzinfo = ZoneInfo(self.timezone)
         except (ZoneInfoNotFoundError, ValueError):
             raise _bad("timezone", "is not a known IANA timezone") from None
+        if self.daily is not None:
+            _weights("daily", self.daily, self.days)
         day_weights = tuple(
-            self.weekdays[day.weekday()]
+            (self.daily[i] if self.daily is not None else self.weekdays[day.weekday()])
             * _product(d.factor(day) for d in self.deadlines)
-            for day in (self.start + timedelta(days=i) for i in range(self.days))
+            for i, day in enumerate(
+                self.start + timedelta(days=i) for i in range(self.days)
+            )
         )
         if not any(day_weights) or not any(self.hours):
             raise _bad("hours", "no day or hour of the calendar has positive weight")
         object.__setattr__(self, "hours", tuple(float(h) for h in self.hours))
         object.__setattr__(self, "weekdays", tuple(float(w) for w in self.weekdays))
         object.__setattr__(self, "deadlines", tuple(self.deadlines))
+        if self.daily is not None:
+            object.__setattr__(self, "daily", tuple(float(w) for w in self.daily))
         object.__setattr__(self, "_zone", zone)
         object.__setattr__(self, "_day_weights", day_weights)
 
@@ -162,6 +171,7 @@ class SessionCalendar:
             "hours": list(self.hours),
             "weekdays": list(self.weekdays),
             "deadlines": [d.to_dict() for d in self.deadlines],
+            **({"daily": list(self.daily)} if self.daily is not None else {}),
         }
 
     @classmethod
@@ -214,6 +224,12 @@ class SessionCalendar:
             deadlines.append(
                 Deadline(_date(item.get("date"), "deadlines"), float(surge), before)
             )
+        daily = data.get("daily")
+        if daily is not None:
+            if isinstance(daily, str) or not isinstance(daily, list | tuple):
+                raise _bad("daily", "must be a list of numbers")
+            if "days" not in data and "weeks" not in data:
+                days = len(daily)
         return cls(
             start=_date(data.get("start"), "start"),
             days=days,
@@ -221,6 +237,7 @@ class SessionCalendar:
             hours=tuple(data.get("hours", (1.0,) * 24)),
             weekdays=tuple(data.get("weekdays", (1.0,) * 7)),
             deadlines=tuple(deadlines),
+            daily=None if daily is None else tuple(daily),
         )
 
 
