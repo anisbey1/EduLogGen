@@ -24,7 +24,7 @@ def test_version_module_matches_package() -> None:
     from eduloggen.__version__ import __version__ as module_version
 
     assert module_version == eduloggen.__version__
-    assert module_version == "1.2.0"
+    assert module_version == "1.3.0"
 
 
 @pytest.mark.parametrize(
