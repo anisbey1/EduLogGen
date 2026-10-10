@@ -31,7 +31,7 @@ python studies/oulad/prepare.py --oulad OULAD --output studies/oulad/data \
     --presentations AAA-2014J BBB-2014J CCC-2014J DDD-2014J EEE-2014J FFF-2014J GGG-2014J
 python studies/oulad/run.py --data studies/oulad/data --oulad OULAD --output studies/oulad/out
 python studies/report.py --oulad studies/oulad/out/results.json \
-    --ednet studies/ednet/out/results.json --output paper/softwarex
+    --ednet studies/ednet/out/results.json --output studies/report
 ```
 
 `run.py` applies the analyses in `studies/study.py` to each presentation

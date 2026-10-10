@@ -1,7 +1,7 @@
 """Tables and figures for the paper from the OULAD and EdNet study results.
 
     python studies/report.py --oulad studies/oulad/results/results.json \
-        --ednet studies/ednet/results/results.json --output paper/softwarex
+        --ednet studies/ednet/results/results.json --output studies/report
 
 Writes ``table_fidelity.tex``, ``table_diagnostics.tex`` (main text),
 ``supp_tables.tex`` (supplementary material), ``fig_fidelity.pdf``, and a

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- The manuscript draft is no longer kept in the repository
+
 ### Fixed
 
 - CI type check without PyTorch installed: `torch` is now treated like other

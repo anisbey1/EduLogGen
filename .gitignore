@@ -229,3 +229,7 @@ studies/**/run.log
 /EdNet*.zip
 /KT4*/
 /KT4*.zip
+
+# Manuscript drafts (kept locally, not published)
+/paper/
+studies/report/
