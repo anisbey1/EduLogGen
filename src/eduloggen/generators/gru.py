@@ -271,17 +271,17 @@ class GRUGenerator(BaseGenerator):
 
 
 def _network(torch: Any, n_tokens: int, timing_size: int, hp: Mapping[str, Any]) -> Any:
+    # A ModuleDict instead of a subclass keeps type checking independent of
+    # whether PyTorch is installed; submodules are reachable as attributes.
     nn = torch.nn
-
-    class Net(nn.Module):  # type: ignore[misc,name-defined]
-        def __init__(self) -> None:
-            super().__init__()
-            self.embed = nn.Embedding(n_tokens, hp["embedding_dim"])
-            self.gru = nn.GRU(hp["embedding_dim"], hp["hidden_dim"], batch_first=True)
-            self.next_token = nn.Linear(hp["hidden_dim"], n_tokens)
-            self.timing = nn.Linear(hp["hidden_dim"], timing_size)
-
-    return Net()
+    return nn.ModuleDict(
+        {
+            "embed": nn.Embedding(n_tokens, hp["embedding_dim"]),
+            "gru": nn.GRU(hp["embedding_dim"], hp["hidden_dim"], batch_first=True),
+            "next_token": nn.Linear(hp["hidden_dim"], n_tokens),
+            "timing": nn.Linear(hp["hidden_dim"], timing_size),
+        }
+    )
 
 
 def _session_gaps(dataset: Dataset) -> list[list[float]]:

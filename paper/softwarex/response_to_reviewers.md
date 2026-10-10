@@ -127,8 +127,8 @@ impact, and *availability*. It states that no external adoption is claimed
 yet.
 
 **C. Versioned artifact.** The paper cites v1.5.0, which contains the study
-scripts and aggregate results, and its version-specific Zenodo DOI (C3), in
-addition to the concept DOI. We checked that the archived release matches
+scripts and aggregate results, and its version-specific Zenodo DOI
+(10.5281/zenodo.23281595, C3), in addition to the concept DOI. We checked that the archived release matches
 the reported functionality. A fresh `pip install eduloggen` in a new
 environment runs both code listings unmodified and reproduces the snippet's
 ARI exactly. Re-running the full OULAD study on the released package

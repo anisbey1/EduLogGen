@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- CI type check without PyTorch installed: `torch` is now treated like other
+  optional imports, and the GRU network is built without subclassing a
+  PyTorch class. Models and generated data are unchanged.
+
 ## [1.5.0] - 2026-10-10
 
 An optional neural generator and reproducible case studies for the SoftwareX
