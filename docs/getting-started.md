@@ -141,10 +141,16 @@ of session starts side by side.
 | `markov` | Order-k token transitions; constant gap between events | Sequence structure matters, timing does not |
 | `semi_markov` | Transitions plus time spent on each token | Realistic timing matters |
 | `independent` | Tokens drawn independently | Baseline for benchmarks |
+| `gru` | GRU network over the session history: next event and time spent (log-normal mixture) | Longer-range dependencies; needs `pip install "eduloggen[neural]"` |
 
 Key hyperparameters: `order`, `smoothing_alpha`, `length_model`
 (`empirical`, `poisson`, `fixed`), and for `semi_markov` `timing_family`
-(`empirical`, `lognormal`, `gamma`, `exponential`).
+(`empirical`, `lognormal`, `gamma`, `exponential`). The `gru` generator
+takes `embedding_dim`, `hidden_dim`, `n_mixtures`, `epochs`, `batch_size`,
+`learning_rate`, `max_length` (sessions are truncated to this many events
+for training), `validation_fraction`, `patience`, `seed`, and `threads`.
+Its training is seeded and deterministic on CPU, and its models are saved as
+JSON like the others.
 
 ## Plot the results
 

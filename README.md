@@ -10,7 +10,7 @@ EduLogGen helps researchers, universities, and education-technology teams create
 privacy-preserving synthetic datasets that reproduce the statistical and
 behavioral properties of real learner interaction logs.
 
-> **Status:** 1.4.2 — the Level 1 log generator is complete: ingestion,
+> **Status:** 1.5.0 — the Level 1 log generator is complete: ingestion,
 > sessionization, analysis, Markov and Semi-Markov generation, validation,
 > benchmarking, visualization, and plugins, from Python and the CLI.
 > Level 2, the experimental generator, is under way: labelled anomalies,
@@ -30,7 +30,8 @@ behavioral properties of real learner interaction logs.
   and per group (course, week, cohort, device…); see exactly where synthetic
   data differs from real data
 - **Generate** with `markov` (order-k), `semi_markov` (per-activity timing),
-  or the `independent` baseline; seeded, reproducible, with remapped IDs
+  the `independent` baseline, or an optional `gru` neural generator; seeded,
+  reproducible, with remapped IDs
 - **Validate** real versus synthetic data on marginal, structural, temporal,
   sequential, and privacy metrics, with pass/fail thresholds for CI
 - **Benchmark** generators fairly with protocol `session_fidelity_v1`
@@ -49,15 +50,15 @@ behavioral properties of real learner interaction logs.
 - **Configure** runs in YAML/TOML/JSON with documented precedence
   (CLI > `EDULOGGEN_*` environment > file > defaults)
 
-## Case study
+## Case studies
 
-On seven modules of the Open University Learning Analytics Dataset (10,143
-learners), Markov generators cut the sequence error of an order-blind
-baseline by two thirds, the semi-Markov generator also reproduces timing, and
-automatic profiles separate low-engagement from successful learners; the
-whole study runs in ten minutes on a laptop. See the
-[case study](https://anisbey1.github.io/EduLogGen/case-study-oulad/) and
-[`studies/oulad/`](https://github.com/anisbey1/EduLogGen/tree/main/studies/oulad).
+On two public datasets, aggregated weekly activity of 10,143 OULAD learners
+and fine-grained EdNet clickstreams, Markov generators cut the sequence error
+of an order-blind baseline by two thirds to about 90%, the semi-Markov
+generator also reproduces timing, and synthetic data are no closer to the
+training learners than unseen real learners are. See the
+[case studies](https://anisbey1.github.io/EduLogGen/case-study-oulad/) and
+[`studies/`](https://github.com/anisbey1/EduLogGen/tree/main/studies).
 
 ## Requirements
 
@@ -68,6 +69,7 @@ whole study runs in ten minutes on a laptop. See the
 ```bash
 pip install eduloggen              # core (CSV, TSV, JSON Lines)
 pip install "eduloggen[parquet,viz]"  # with Parquet and figures
+pip install "eduloggen[neural]"       # GRU generator (PyTorch)
 ```
 
 For development, from a clone: `pip install -e ".[dev,docs]"`.
@@ -78,6 +80,7 @@ Optional extras:
 | ----- | ------- |
 | `parquet` | Parquet reading and writing (`pyarrow`) |
 | `viz` | Figures (`matplotlib`) |
+| `neural` | GRU generator (`torch`) |
 | `dev` | Ruff, Black, MyPy, PyTest, pre-commit (includes `parquet`, `viz`) |
 | `docs` | MkDocs and Material theme |
 | `all` | Development and documentation tools |

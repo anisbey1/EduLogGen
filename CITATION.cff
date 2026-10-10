@@ -8,7 +8,7 @@ authors:
     affiliation: "Higher School of Management Sciences, Annaba, Algeria"
     email: "beyanisse@gmail.com"
     orcid: "https://orcid.org/0000-0001-9410-0851"
-version: 1.4.2
+version: 1.5.0
 # Concept DOI: always resolves to the latest archived version on Zenodo.
 doi: 10.5281/zenodo.23264161
 identifiers:
@@ -18,7 +18,7 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.23264162
     description: Version 1.4.1
-date-released: "2026-10-09"
+date-released: "2026-10-10"
 license: MIT
 repository-code: "https://github.com/anisbey1/EduLogGen"
 url: "https://anisbey1.github.io/EduLogGen/"

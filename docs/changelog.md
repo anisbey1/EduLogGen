@@ -7,6 +7,12 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.5.0] - 2026-10-10
+
+An optional GRU neural generator (`eduloggen[neural]`), and reproducible
+case studies on OULAD (aggregated weekly activity) and EdNet (fine-grained
+clickstreams) for the SoftwareX article.
+
 ## [1.4.2] - 2026-10-09
 
 Author and citation metadata (Anis Bey, ORCID 0000-0001-9410-0851).

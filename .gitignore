@@ -225,3 +225,7 @@ __marimo__/
 studies/**/data/
 studies/**/out/
 studies/**/run.log
+/EdNet*/
+/EdNet*.zip
+/KT4*/
+/KT4*.zip

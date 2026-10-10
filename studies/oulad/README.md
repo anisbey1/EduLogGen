@@ -30,22 +30,27 @@ builds a representation where everything is observed:
 python studies/oulad/prepare.py --oulad OULAD --output studies/oulad/data \
     --presentations AAA-2014J BBB-2014J CCC-2014J DDD-2014J EEE-2014J FFF-2014J GGG-2014J
 python studies/oulad/run.py --data studies/oulad/data --oulad OULAD --output studies/oulad/out
-python studies/oulad/report.py --results studies/oulad/out/results.json --output paper/softwarex
+python studies/report.py --oulad studies/oulad/out/results.json \
+    --ednet studies/ednet/out/results.json --output paper/softwarex
 ```
 
-`run.py` performs, per presentation, with seed 0:
+`run.py` applies the analyses in `studies/study.py` to each presentation
+(seed 0, 70/30 learner split):
 
-1. **Fidelity**: the `session_fidelity_v1` benchmark (fit on 70% of learners,
-   compare three seeded samples with the 30% holdout) for the independent
-   baseline, first- and second-order Markov, and semi-Markov generators, next
-   to the real-versus-real reference (training vs holdout learners).
-2. **Profiles**: `auto` profiles (k = 4) on training learners only; holdout
-   learners assigned to the nearest profile; profiles cross-tabulated with
-   final results (descriptive only); recovery of a synthetic profile mixture
-   (ARI, NMI, purity).
-3. **Detection**: 5% unexpected transitions and 5% repetitions injected into
-   real holdout sessions; a smoothed transition-likelihood detector fitted on
-   training learners; ROC-AUC and average precision.
+1. **Fidelity**: the `session_fidelity_v1` benchmark for the independent,
+   first- and second-order Markov, semi-Markov, and GRU generators (the GRU
+   needs `pip install "eduloggen[neural]"`), next to the real-versus-real
+   reference.
+2. **Profiles**: `auto` profiles (k = 4) on training learners; stability
+   across seeds, 80% subsamples, and on holdout learners; relation to final
+   results (descriptive); recovery of a synthetic profile mixture.
+3. **Memorisation**: synthetic data and unseen holdout learners compared with
+   the training learners, per session and per learner.
+4. **Detection**: unexpected transitions and repetitions injected into real
+   and synthetic sessions; a transition-likelihood detector fitted on
+   training learners; an artefact check (normal synthetic vs normal real).
+
+Aggregate results (no learner data) are kept in `results/results.json`.
 
 Profiles are behavioural clusters, not validated learner types. Anomalies
 are data patterns, not misconduct.

@@ -1,0 +1,808 @@
+{
+  "environment": {
+    "eduloggen": "1.4.2",
+    "python": "3.11.15",
+    "machine": "x86_64",
+    "os": "Darwin"
+  },
+  "seed": 0,
+  "idle_timeout_s": 1800.0,
+  "presentations": {
+    "ednet-kt4-2000": {
+      "n_events": 967968,
+      "n_sessions": 10580,
+      "n_learners": 2000,
+      "load_s": 63.78583750799589,
+      "fidelity": {
+        "generators": {
+          "independent": {
+            "fit_s": 14.849716994001938,
+            "generate_s": 18.422233268002554,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.03891224405902038,
+                "std": 0.00022473086477816986,
+                "values": [
+                  0.03916368320101048,
+                  0.03884209183446551,
+                  0.03873095714158513
+                ]
+              },
+              "activity_jsd": {
+                "mean": 0.1247832010378594,
+                "std": 0.0004567756332645108,
+                "values": [
+                  0.12503764558944763,
+                  0.1250560880680924,
+                  0.12425586945603818
+                ]
+              },
+              "session_length_ks": {
+                "mean": 0.07897759908098789,
+                "std": 0.004071638965754661,
+                "values": [
+                  0.08357265939115444,
+                  0.07754164273406083,
+                  0.07581849511774841
+                ]
+              },
+              "interevent_time_ks": {
+                "mean": 0.5071601516234923,
+                "std": 0.0,
+                "values": [
+                  0.5071601516234923,
+                  0.5071601516234923,
+                  0.5071601516234923
+                ]
+              },
+              "bigram_tvd": {
+                "mean": 0.6552438899475073,
+                "std": 0.0005011621391527609,
+                "values": [
+                  0.655486316047317,
+                  0.6555777435732868,
+                  0.654667610221918
+                ]
+              },
+              "transition_jsd": {
+                "mean": 0.4875605030488745,
+                "std": 0.0005886931120213291,
+                "values": [
+                  0.487840687929716,
+                  0.48795677047323877,
+                  0.4868840507436687
+                ]
+              },
+              "topn_path_overlap": {
+                "mean": 0.10000000000000002,
+                "std": 1.6996749443881478e-17,
+                "values": [
+                  0.1,
+                  0.1,
+                  0.1
+                ]
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "nn_distance_p05": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              }
+            }
+          },
+          "markov": {
+            "fit_s": 15.236160397995263,
+            "generate_s": 18.850697952334787,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.04697409450858794,
+                "std": 0.002127964585679608,
+                "values": [
+                  0.04452105237844982,
+                  0.048323788252170444,
+                  0.04807744289514354
+                ]
+              },
+              "activity_jsd": {
+                "mean": 0.13140018771051068,
+                "std": 0.000941257423992514,
+                "values": [
+                  0.1304038356865426,
+                  0.13152229521613973,
+                  0.1322744322288497
+                ]
+              },
+              "session_length_ks": {
+                "mean": 0.0846256940455677,
+                "std": 0.0034502816946084614,
+                "values": [
+                  0.08443423319931076,
+                  0.08127512923607128,
+                  0.08816771970132109
+                ]
+              },
+              "interevent_time_ks": {
+                "mean": 0.5071601516234923,
+                "std": 0.0,
+                "values": [
+                  0.5071601516234923,
+                  0.5071601516234923,
+                  0.5071601516234923
+                ]
+              },
+              "bigram_tvd": {
+                "mean": 0.061414224057029725,
+                "std": 0.0018133085698147514,
+                "values": [
+                  0.05932047265576764,
+                  0.06247664876561695,
+                  0.06244555074970458
+                ]
+              },
+              "transition_jsd": {
+                "mean": 0.0038843611434984846,
+                "std": 1.4940302470359685e-05,
+                "values": [
+                  0.003901113584040656,
+                  0.0038724170891762423,
+                  0.003879552757278555
+                ]
+              },
+              "topn_path_overlap": {
+                "mean": 0.8000000000000002,
+                "std": 1.3597399555105182e-16,
+                "values": [
+                  0.8,
+                  0.8,
+                  0.8
+                ]
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.02082397333904097,
+                "std": 0.004222581688831985,
+                "values": [
+                  0.016133942161339423,
+                  0.02201447527141134,
+                  0.024323502584372148
+                ]
+              },
+              "nn_distance_p05": {
+                "mean": 0.18024305555555556,
+                "std": 0.0504386502232424,
+                "values": [
+                  0.21781250000000002,
+                  0.2,
+                  0.12291666666666672
+                ]
+              }
+            }
+          },
+          "markov2": {
+            "fit_s": 11.450310590007575,
+            "generate_s": 13.292335777000213,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.04522106247498734,
+                "std": 0.0016167937868920281,
+                "values": [
+                  0.04339382504561325,
+                  0.04646623010288848,
+                  0.04580313227646029
+                ]
+              },
+              "activity_jsd": {
+                "mean": 0.13168197227863923,
+                "std": 0.0006646540759959561,
+                "values": [
+                  0.13106394494833257,
+                  0.1323850629730439,
+                  0.13159690891454126
+                ]
+              },
+              "session_length_ks": {
+                "mean": 0.0846256940455677,
+                "std": 0.0034502816946084614,
+                "values": [
+                  0.08443423319931076,
+                  0.08127512923607128,
+                  0.08816771970132109
+                ]
+              },
+              "interevent_time_ks": {
+                "mean": 0.5071601516234923,
+                "std": 0.0,
+                "values": [
+                  0.5071601516234923,
+                  0.5071601516234923,
+                  0.5071601516234923
+                ]
+              },
+              "bigram_tvd": {
+                "mean": 0.05938553781080665,
+                "std": 0.0015874795956254085,
+                "values": [
+                  0.05755682869757875,
+                  0.06019053652201241,
+                  0.06040924821282878
+                ]
+              },
+              "transition_jsd": {
+                "mean": 0.003966807394861463,
+                "std": 4.981895896813077e-05,
+                "values": [
+                  0.003931793866187278,
+                  0.003944786089678217,
+                  0.004023842228718896
+                ]
+              },
+              "topn_path_overlap": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.034579959816167245,
+                "std": 0.004714501219284967,
+                "values": [
+                  0.030136986301369864,
+                  0.03407720144752714,
+                  0.039525691699604744
+                ]
+              },
+              "nn_distance_p05": {
+                "mean": 0.16932539682539685,
+                "std": 0.06161801465813941,
+                "values": [
+                  0.2327777777777778,
+                  0.16547619047619047,
+                  0.10972222222222225
+                ]
+              }
+            }
+          },
+          "semi_markov": {
+            "fit_s": 11.757076868001604,
+            "generate_s": 13.529011531330374,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.04781700615403534,
+                "std": 0.0018608946600126184,
+                "values": [
+                  0.045730586423454865,
+                  0.04930526485546252,
+                  0.04841516718318864
+                ]
+              },
+              "activity_jsd": {
+                "mean": 0.13257464630704893,
+                "std": 0.0015104920573859384,
+                "values": [
+                  0.13115228640328602,
+                  0.13416004332782785,
+                  0.13241160919003292
+                ]
+              },
+              "session_length_ks": {
+                "mean": 0.08634884166188013,
+                "std": 0.003070843372074547,
+                "values": [
+                  0.08989086731763352,
+                  0.08472142446869613,
+                  0.08443423319931076
+                ]
+              },
+              "interevent_time_ks": {
+                "mean": 0.027541805512226233,
+                "std": 0.0,
+                "values": [
+                  0.027541805512226233,
+                  0.027541805512226233,
+                  0.027541805512226233
+                ]
+              },
+              "bigram_tvd": {
+                "mean": 0.06318788743378094,
+                "std": 0.001978882618638212,
+                "values": [
+                  0.06097167113016335,
+                  0.0647779347830339,
+                  0.06381405638814557
+                ]
+              },
+              "transition_jsd": {
+                "mean": 0.004008524707896314,
+                "std": 0.00010226290620912619,
+                "values": [
+                  0.003991134471048194,
+                  0.0039160719804060325,
+                  0.0041183676722347145
+                ]
+              },
+              "topn_path_overlap": {
+                "mean": 0.8000000000000002,
+                "std": 1.3597399555105182e-16,
+                "values": [
+                  0.8,
+                  0.8,
+                  0.8
+                ]
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.02067239074637705,
+                "std": 0.0036546670613041093,
+                "values": [
+                  0.024515738498789345,
+                  0.020260054429996975,
+                  0.017241379310344827
+                ]
+              },
+              "nn_distance_p05": {
+                "mean": 0.1863809523809524,
+                "std": 0.02358888242689043,
+                "values": [
+                  0.2,
+                  0.2,
+                  0.15914285714285714
+                ]
+              }
+            }
+          },
+          "gru": {
+            "fit_s": 367.85855232999893,
+            "generate_s": 62.47248681033185,
+            "error": null,
+            "metrics": {
+              "event_type_tvd": {
+                "mean": 0.05420023447677902,
+                "std": 0.00456131465473155,
+                "values": [
+                  0.04973002145910265,
+                  0.05884749522237661,
+                  0.05402318674885781
+                ]
+              },
+              "activity_jsd": {
+                "mean": 0.12252362193729421,
+                "std": 0.0003752504958655022,
+                "values": [
+                  0.1222435234994882,
+                  0.12237736435659011,
+                  0.12294997795580435
+                ]
+              },
+              "session_length_ks": {
+                "mean": 0.08864637181696344,
+                "std": 0.013684093911223029,
+                "values": [
+                  0.07323377369327966,
+                  0.09333716255025848,
+                  0.09936817920735219
+                ]
+              },
+              "interevent_time_ks": {
+                "mean": 0.03183723100212351,
+                "std": 0.0002493959730939584,
+                "values": [
+                  0.03182197438381862,
+                  0.03209390504622017,
+                  0.03159581357633173
+                ]
+              },
+              "bigram_tvd": {
+                "mean": 0.09376479660737556,
+                "std": 0.005531772913126135,
+                "values": [
+                  0.08924462956560461,
+                  0.09993340657671469,
+                  0.09211635367980738
+                ]
+              },
+              "transition_jsd": {
+                "mean": 0.008696992295797802,
+                "std": 0.000688737459535289,
+                "values": [
+                  0.008102401758011338,
+                  0.00945167783289558,
+                  0.008536897296486485
+                ]
+              },
+              "topn_path_overlap": {
+                "mean": 0.8000000000000002,
+                "std": 1.3597399555105182e-16,
+                "values": [
+                  0.8,
+                  0.8,
+                  0.8
+                ]
+              },
+              "exact_session_dup_rate": {
+                "mean": 0.06862117044925,
+                "std": 0.00583290516061311,
+                "values": [
+                  0.06854716408856536,
+                  0.07449072666463971,
+                  0.0628256205945449
+                ]
+              },
+              "nn_distance_p05": {
+                "mean": 0.03242281056940122,
+                "std": 0.01479711280153557,
+                "values": [
+                  0.04330434782608696,
+                  0.015573770491803297,
+                  0.038390313390313395
+                ]
+              }
+            }
+          }
+        },
+        "reference": {
+          "event_type_tvd": 0.039269112490719564,
+          "activity_jsd": 0.10753760843225875,
+          "session_length_ks": 0.0838307188327071,
+          "interevent_time_ks": 0.019220785920671696,
+          "bigram_tvd": 0.052172649288381605,
+          "transition_jsd": 0.003924633369507149,
+          "topn_path_overlap": 1.0,
+          "exact_session_dup_rate": 0.20606150646263557,
+          "nn_distance_p05": 0.0
+        },
+        "split": [
+          {
+            "fingerprint": "sha256:58a762c2bb6ea626b784864df698706ec11883eb5d622fd7d4ee68a47371fde0",
+            "n_events": 602273,
+            "n_sessions": 7098,
+            "n_learners": 1400
+          },
+          {
+            "fingerprint": "sha256:9ab7ba2c8657bb150dcea507ef1f41d0473090baf95c6eca7c4cc4643e059cd0",
+            "n_events": 365695,
+            "n_sessions": 3482,
+            "n_learners": 600
+          }
+        ],
+        "protocol": {
+          "name": "session_fidelity_v1",
+          "description": "Fit on 70% of learners, generate as many sessions as the 30% holdout has, and compare each sample with the holdout on all built-in metrics; 3 seeds per generator.",
+          "holdout_fraction": 0.3,
+          "repeats": 3,
+          "n_sessions": 3482,
+          "metrics": [
+            "event_type_tvd",
+            "activity_jsd",
+            "session_length_ks",
+            "session_duration_w1",
+            "interevent_time_ks",
+            "bigram_tvd",
+            "transition_jsd",
+            "topn_path_overlap",
+            "exact_session_dup_rate",
+            "rare_ngram_replay_rate",
+            "nn_distance_p05"
+          ]
+        }
+      },
+      "fidelity_s": 3512.981785435004,
+      "profiles": {
+        "k": 4,
+        "profiles": [
+          {
+            "name": "profile_1",
+            "share": 0.37714285714285717,
+            "n_learners": 528,
+            "mean_sessions": 1.0473484848484849,
+            "mean_session_length": 23.03030303030303,
+            "distinguishing": [
+              {
+                "feature": "share:enter:bundle",
+                "z": 0.9568647763078498
+              },
+              {
+                "feature": "share:submit:bundle",
+                "z": 0.9568647763078498
+              },
+              {
+                "feature": "share:respond:question",
+                "z": 0.8355408814530881
+              }
+            ]
+          },
+          {
+            "name": "profile_2",
+            "share": 0.2764285714285714,
+            "n_learners": 387,
+            "mean_sessions": 1.1705426356589148,
+            "mean_session_length": 27.79784668389319,
+            "distinguishing": [
+              {
+                "feature": "share:enter:explanation",
+                "z": -0.6315056933612474
+              },
+              {
+                "feature": "share:quit:explanation",
+                "z": -0.6315056933612474
+              },
+              {
+                "feature": "log_mean_duration_s",
+                "z": -0.551027133043049
+              }
+            ]
+          },
+          {
+            "name": "profile_3",
+            "share": 0.18857142857142858,
+            "n_learners": 264,
+            "mean_sessions": 8.18939393939394,
+            "mean_session_length": 71.94977413752895,
+            "distinguishing": [
+              {
+                "feature": "share:enter:explanation",
+                "z": 1.4942896319317625
+              },
+              {
+                "feature": "share:quit:explanation",
+                "z": 1.4942896319317625
+              },
+              {
+                "feature": "log_mean_duration_s",
+                "z": 0.8339459757208753
+              }
+            ]
+          },
+          {
+            "name": "profile_4",
+            "share": 0.15785714285714286,
+            "n_learners": 221,
+            "mean_sessions": 17.782805429864254,
+            "mean_session_length": 122.6555934283919,
+            "distinguishing": [
+              {
+                "feature": "mean_session_length",
+                "z": 1.4757058508998158
+              },
+              {
+                "feature": "share:enter:bundle",
+                "z": -1.4727599470531487
+              },
+              {
+                "feature": "share:submit:bundle",
+                "z": -1.4727599470531487
+              }
+            ]
+          }
+        ],
+        "stability": {
+          "seed_ari": [
+            0.9893811174742064,
+            0.9930531107711287,
+            0.9906003713723387,
+            0.9893811174742064,
+            1.0,
+            0.9930531107711287,
+            0.9930531107711287,
+            1.0,
+            1.0
+          ],
+          "subsample_ari": [
+            0.9859400566067462,
+            0.971918523949245,
+            0.9855600425209183,
+            0.9899773683673553,
+            0.9895639182426196,
+            0.9545914260527345,
+            0.9738751301455935,
+            0.962995437935064,
+            0.9644403082820356,
+            0.9809441778439195
+          ],
+          "holdout_replication_ari": 0.9306576542072579
+        },
+        "recovery": {
+          "n_learners": 1450,
+          "missing": 0,
+          "ari": 0.7516087705339937,
+          "nmi": 0.726674711736059,
+          "purity": 0.9006896551724138,
+          "contingency": {
+            "profile_1": {
+              "profile_1": 490,
+              "profile_2": 21,
+              "profile_3": 2
+            },
+            "profile_2": {
+              "profile_1": 62,
+              "profile_2": 338,
+              "profile_3": 2
+            },
+            "profile_3": {
+              "profile_1": 7,
+              "profile_2": 7,
+              "profile_3": 270,
+              "profile_4": 21
+            },
+            "profile_4": {
+              "profile_1": 1,
+              "profile_2": 10,
+              "profile_3": 11,
+              "profile_4": 208
+            }
+          }
+        }
+      },
+      "profiles_s": 361.151636420007,
+      "memorisation": {
+        "holdout": {
+          "session": {
+            "sessions": 3310,
+            "match_any_train": 0.20241691842900303,
+            "match_unique_train": 0.027794561933534745
+          },
+          "learners_with_2plus_sessions": 163,
+          "trajectory_match_train": 0.0,
+          "dcr_median": 0.4194852482885422,
+          "dcr_p05": 0.002955832046499518,
+          "share_below_holdout_p05": 0.04833333333333333,
+          "share_dcr_zero": 0.0,
+          "learners": 600
+        },
+        "markov2": {
+          "session": {
+            "sessions": 3308,
+            "match_any_train": 0.02871825876662636,
+            "match_unique_train": 0.002720677146311971
+          },
+          "learners_with_2plus_sessions": 202,
+          "trajectory_match_train": 0.0,
+          "dcr_median": 1.6289553704462632,
+          "dcr_p05": 0.8914133204090954,
+          "share_below_holdout_p05": 0.0,
+          "share_dcr_zero": 0.0,
+          "learners": 611
+        },
+        "semi_markov": {
+          "session": {
+            "sessions": 3308,
+            "match_any_train": 0.018137847642079808,
+            "match_unique_train": 0.0024183796856106408
+          },
+          "learners_with_2plus_sessions": 193,
+          "trajectory_match_train": 0.0,
+          "dcr_median": 1.2578771787886163,
+          "dcr_p05": 0.7213629678391538,
+          "share_below_holdout_p05": 0.0,
+          "share_dcr_zero": 0.0,
+          "learners": 544
+        },
+        "gru": {
+          "session": {
+            "sessions": 3301,
+            "match_any_train": 0.07058467131172372,
+            "match_unique_train": 0.014238109663738261
+          },
+          "learners_with_2plus_sessions": 182,
+          "trajectory_match_train": 0.0,
+          "dcr_median": 1.066141256731829,
+          "dcr_p05": 0.47092839196888286,
+          "share_below_holdout_p05": 0.0,
+          "share_dcr_zero": 0.0,
+          "learners": 566
+        }
+      },
+      "memorisation_s": 53.365313293994404,
+      "detection": {
+        "real_background": {
+          "sessions": 3482,
+          "anomalous": 348,
+          "roc_auc": 0.7736142896962496,
+          "average_precision": 0.3079740335843921,
+          "per_type": {
+            "repetition": {
+              "n": 174,
+              "roc_auc": 0.8075913782100653,
+              "average_precision": 0.21219359772026822
+            },
+            "unexpected_transition": {
+              "n": 174,
+              "roc_auc": 0.7396372011824337,
+              "average_precision": 0.17059287079694135
+            }
+          },
+          "injection": {
+            "unexpected_transition": {
+              "category": "invalid_workflow",
+              "rate": 0.05,
+              "requested": 174,
+              "injected": 174,
+              "not_applicable": 0,
+              "parameters": {
+                "transitions": null
+              }
+            },
+            "repetition": {
+              "category": "unusual_valid",
+              "rate": 0.05,
+              "requested": 174,
+              "injected": 174,
+              "not_applicable": 0,
+              "parameters": {
+                "pattern": "ping_pong",
+                "length": 4,
+                "gap_s": 5.0
+              }
+            }
+          }
+        },
+        "synthetic_background": {
+          "sessions": 3482,
+          "anomalous": 348,
+          "roc_auc": 0.9037218786905207,
+          "average_precision": 0.5556467462343745,
+          "per_type": {
+            "repetition": {
+              "n": 174,
+              "roc_auc": 0.8963665104269818,
+              "average_precision": 0.4202320814476441
+            },
+            "unexpected_transition": {
+              "n": 174,
+              "roc_auc": 0.9110772469540597,
+              "average_precision": 0.4278090244509175
+            }
+          },
+          "injection": {
+            "unexpected_transition": {
+              "category": "invalid_workflow",
+              "rate": 0.05,
+              "requested": 174,
+              "injected": 174,
+              "not_applicable": 0,
+              "parameters": {
+                "transitions": null
+              }
+            },
+            "repetition": {
+              "category": "unusual_valid",
+              "rate": 0.05,
+              "requested": 174,
+              "injected": 174,
+              "not_applicable": 0,
+              "parameters": {
+                "pattern": "ping_pong",
+                "length": 4,
+                "gap_s": 5.0
+              }
+            }
+          }
+        },
+        "artifact_auc": 0.4896079979386892
+      },
+      "detection_s": 74.51661141500517,
+      "timing_added": {
+        "gru": {
+          "fidelity": 1011.453784917001,
+          "memorisation": 484.0805617159931
+        }
+      }
+    }
+  }
+}

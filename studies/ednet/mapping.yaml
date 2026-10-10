@@ -1,0 +1,13 @@
+# Field mapping for the event file written by prepare.py.
+fields:
+  event_id: event_id
+  # EdNet user ids are already anonymised (u1, u2, ...).
+  learner_id: student
+  timestamp:
+    source: time
+    format: "%Y-%m-%dT%H:%M:%S.%fZ"
+  activity_id: item
+  event_type: action
+
+metadata: [platform, source]
+timezone: UTC

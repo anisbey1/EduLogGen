@@ -11,6 +11,7 @@ from collections.abc import Callable
 
 from eduloggen.core import ConfigError, PluginError
 from eduloggen.generators.base import BaseGenerator
+from eduloggen.generators.gru import GRUGenerator
 from eduloggen.generators.markov import MarkovGenerator
 from eduloggen.generators.semi_markov import SemiMarkovGenerator
 from eduloggen.generators.statistical import IndependentGenerator
@@ -101,10 +102,16 @@ def get_generator(name: str) -> BaseGenerator:
     return generator
 
 
-for _builtin in (MarkovGenerator, SemiMarkovGenerator, IndependentGenerator):
+for _builtin in (
+    MarkovGenerator,
+    SemiMarkovGenerator,
+    IndependentGenerator,
+    GRUGenerator,
+):
     register_generator(_builtin.name, _builtin)
 
 BUILTIN_GENERATORS: frozenset[str] = frozenset(
-    g.name for g in (MarkovGenerator, SemiMarkovGenerator, IndependentGenerator)
+    g.name
+    for g in (MarkovGenerator, SemiMarkovGenerator, IndependentGenerator, GRUGenerator)
 )
 """Names of the generators shipped with EduLogGen."""

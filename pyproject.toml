@@ -64,6 +64,9 @@ parquet = [
 viz = [
     "matplotlib>=3.8",
 ]
+neural = [
+    "torch>=2.2",
+]
 dev = [
     "eduloggen[parquet,viz]",
     "ruff>=0.9.0",

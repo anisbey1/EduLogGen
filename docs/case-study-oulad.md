@@ -1,57 +1,70 @@
-# Case study: OULAD
+# Case studies: OULAD and EdNet
 
-EduLogGen applied to the seven modules of the 2014J presentation of the
-[Open University Learning Analytics Dataset](https://doi.org/10.1038/sdata.2017.171)
-(OULAD; CC BY 4.0): 10,143 learners and 623,704 active learner-days. All numbers
-are reproduced by the scripts in
-[`studies/oulad/`](https://github.com/anisbey1/EduLogGen/tree/main/studies/oulad)
-with seed 0.
+EduLogGen applied to two public datasets with the same analyses
+([`studies/`](https://github.com/anisbey1/EduLogGen/tree/main/studies), seed
+0, 70/30 learner split). Only aggregate results are kept in the repository.
 
-**Representation.** OULAD records clicks per learner, resource, and *day*,
-without time of day. An event is an active learner-day (its most-clicked
-activity type), and a session is a learner's week of the module, so sequences
-and gaps between events (whole days) are observed rather than invented. Hour
-of day and weekday are not analysed.
+| Dataset | Granularity | Size |
+| ------- | ----------- | ---- |
+| [OULAD](https://doi.org/10.1038/sdata.2017.171), 7 modules of 2014J (CC BY 4.0) | **Aggregated**: one event per active learner-day (most-clicked activity), one session per learner-week | 10,143 learners, 623,704 learner-days |
+| [EdNet-KT4](https://doi.org/10.1007/978-3-030-52240-7_13), random 2,000 students (CC BY-NC 4.0) | **Fine-grained**: every app action with a millisecond timestamp; 30-minute idle-timeout sessions | 967,968 events, 10,580 sessions (median 49 events, up to 1,575) |
 
-**What it shows.**
+OULAD has no time of day, so hour and weekday are not analysed there.
 
-- Every generator matches the event mix and session lengths within the
-  variation between two samples of real learners ("real vs real").
-- Markov generators cut the bigram error of the order-blind baseline by about
-  two thirds; only the semi-Markov generator reproduces the gaps between
-  active days.
-- Exact duplicate sessions must be read against the reference: 77% of real
-  holdout sessions also match a training session, because weekly patterns of
-  at most seven days repeat naturally.
-- Automatic profiles, learned on training learners only, separate
-  low-engagement learners (0–11% pass in six of seven modules) from the most
-  successful profile (72–93%). They are descriptive clusters, not learner
-  types; withdrawn learners stop producing activity, so persistence explains
-  part of the association.
-- A simple transition-likelihood detector reaches ROC-AUC 0.88–0.92 on
-  injected anomalies, a known-truth baseline for better detectors.
-- The whole study runs in about ten minutes on a laptop.
+## Fidelity on held-out learners
 
-## Fidelity (mean over presentations)
+"Real vs real" compares the training learners with the holdout learners: how
+much two samples of real learners differ. Values: mean over OULAD modules /
+EdNet seeds.
 
-| Metric | Real vs real | Independent | Markov (1) | Markov (2) | Semi-Markov |
-| --- | --- | --- | --- | --- | --- |
-| Event-type TVD | 0.022 | **0.021** | 0.028 | 0.031 | 0.027 |
-| Bigram TVD | 0.038 | 0.220 | 0.074 | 0.079 | **0.073** |
-| Transition JSD | 0.002 | 0.049 | **0.003** | 0.003 | 0.003 |
-| Session length KS | 0.020 | 0.023 | **0.020** | 0.020 | 0.021 |
-| Inter-event time KS | 0.010 | 0.281 | 0.281 | 0.281 | **0.013** |
-| Top-10 path overlap | 0.900 | 0.700 | 0.833 | 0.814 | **0.838** |
-| Exact duplicate sessions | 0.770 | 0.657 | 0.726 | 0.747 | 0.726 |
+| Metric | Dataset | Real vs real | Independent | Markov-1 | Markov-2 | Semi-Markov | GRU |
+| ------ | ------- | ------------ | ----------- | -------- | -------- | ----------- | --- |
+| Bigram TVD ↓ | OULAD | 0.038 | 0.220 | 0.074 | 0.079 | 0.073 | 0.098 |
+| | EdNet | 0.052 | 0.655 | 0.061 | 0.059 | 0.063 | 0.094 |
+| Inter-event time KS ↓ | OULAD | 0.010 | 0.281 | 0.281 | 0.281 | 0.013 | 0.017 |
+| | EdNet | 0.019 | 0.507 | 0.507 | 0.507 | 0.028 | 0.032 |
+| Session-length KS ↓ | OULAD | 0.020 | 0.023 | 0.020 | 0.020 | 0.021 | 0.022 |
+| | EdNet | 0.084 | 0.079 | 0.085 | 0.085 | 0.086 | 0.089 |
 
-## Per presentation
+- Markov models cut the order-blind baseline's bigram error by two thirds
+  (OULAD) to about 90% (EdNet), approaching but not reaching the
+  real-vs-real reference.
+- Only the semi-Markov generator and the optional GRU network reproduce
+  inter-event timing. The untuned GRU is less faithful to event sequences
+  than the Markov models: flexibility alone does not buy fidelity.
 
-| Presentation | Learners | Learner-days | Sessions | Profiles (k) | Recovery ARI | Outcome NMI (holdout) | Detector ROC-AUC | Detector AP | Run time (s) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| AAA-2014J | 357 | 30,703 | 9,914 | 4 | 0.91 | 0.116 | 0.907 | 0.547 | 26 |
-| BBB-2014J | 1,921 | 83,111 | 36,982 | 4 | 0.86 | 0.141 | 0.917 | 0.535 | 95 |
-| CCC-2014J | 2,302 | 131,279 | 47,579 | 4 | 0.78 | 0.103 | 0.896 | 0.570 | 140 |
-| DDD-2014J | 1,647 | 109,161 | 38,264 | 4 | 0.84 | 0.145 | 0.881 | 0.508 | 104 |
-| EEE-2014J | 1,097 | 76,751 | 26,198 | 4 | 0.88 | 0.302 | 0.901 | 0.514 | 70 |
-| FFF-2014J | 2,121 | 167,164 | 50,431 | 4 | 0.92 | 0.199 | 0.886 | 0.532 | 136 |
-| GGG-2014J | 698 | 25,535 | 12,467 | 4 | 0.85 | 0.198 | 0.898 | 0.471 | 25 |
+## Memorisation, profiles, and detection
+
+| Diagnostic | OULAD | EdNet |
+| ---------- | ----- | ----- |
+| Sessions matching a once-seen training session: holdout / synthetic | 5.3–8.5% / 5.1–8.9% | 2.8% / 0.2–1.4% |
+| Learners repeating a training learner's trajectory: holdout / synthetic | 0–3.1% / 0–1.4% | 0% / 0% |
+| Median distance to nearest training learner: holdout / synthetic | 0.64–0.90 / 0.62–0.94 | 0.42 / 1.07–1.63 |
+| Profile stability across seeds / 80% subsamples (ARI) | 0.93–1.00 / 0.78–0.95 | 0.99 / 0.98 |
+| Profile replication on holdout learners (ARI) | 0.36–0.84 | 0.93 |
+| Detector ROC-AUC: real / synthetic background | 0.88–0.92 / 0.88–0.92 | 0.77 / 0.90 |
+| Detector: normal synthetic vs normal real (AUC) | 0.48–0.52 | 0.49 |
+
+- **Memorisation** is measured against the training learners, with unseen
+  holdout learners as the baseline. Synthetic data are no closer to the
+  training learners than unseen real learners are. On EdNet they are
+  further away, which also shows a learner-level realism gap: sessions are
+  generated independently of each other.
+- **Profiles** are stable on EdNet. On OULAD they are stable across seeds
+  but only moderately reproducible on new learners. On OULAD, the
+  low-engagement profile passes 0–11% of the time in six of seven modules,
+  against 72–93% for the most successful profile. This is descriptive only:
+  withdrawn learners stop producing activity.
+- **Detection:** anomalies injected into synthetic sessions were easier to
+  detect than in real ones on EdNet. Use synthetic backgrounds to compare
+  detectors, not to estimate their absolute accuracy.
+
+These diagnostics estimate risk; they do not make synthetic data anonymous.
+Profiles are descriptive clusters, not learner types; anomalies are data
+patterns, not misconduct.
+
+## Cost
+
+On a laptop (Intel Core i9-9880H, one process), OULAD takes 20–108 s per
+module for the four-generator benchmark. EdNet takes 59 minutes, almost all
+of it in the nearest-neighbour edit distances between long sessions.

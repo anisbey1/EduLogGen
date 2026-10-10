@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-10
+
+An optional neural generator and reproducible case studies for the SoftwareX
+article.
+
+### Added
+
+- `gru` generator (optional extra `eduloggen[neural]`, PyTorch): a GRU over
+  the session's event types predicts the next event type and the time spent
+  after the current event (mixture of log-normals). Training is seeded,
+  deterministic, and single-threaded by default, with early stopping on a
+  validation split. Models stay JSON (weights as base64 float32). Session
+  lengths, learners, and start times use the shared machinery, as for every
+  generator
+- CI job running the GRU tests with CPU-only PyTorch
+- Fine-grained case study on EdNet-KT4 (`studies/ednet/`): 2,000 random
+  students, 967,968 timestamped app actions, idle-timeout sessions
+- Shared study analyses (`studies/study.py`): profile stability across
+  seeds, subsamples, and holdout learners; memorisation diagnostics against
+  training learners at session and learner level; anomaly detection on real
+  and synthetic backgrounds with an artefact check; one report script for
+  both datasets (`studies/report.py`)
+- Aggregate results of both studies (`studies/*/results/results.json`) and a
+  "Case studies" documentation page
+
+### Changed
+
+- The OULAD study uses the shared analyses; `studies/oulad/report.py` is
+  replaced by `studies/report.py`
+
 ## [1.4.2] - 2026-10-09
 
 ### Changed
@@ -276,7 +306,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.4.2...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/anisbey1/EduLogGen/compare/v1.4.2...v1.5.0
 [1.4.2]: https://github.com/anisbey1/EduLogGen/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/anisbey1/EduLogGen/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/anisbey1/EduLogGen/compare/v1.3.0...v1.4.0

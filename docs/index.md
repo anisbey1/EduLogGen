@@ -31,7 +31,7 @@ detector scoring, behavioural controls and course calendars with a
 manipulation check, and behavioural profiles (learned, provided, or defined
 by hand) are available; simulated outcomes follow (see the
 [design note](04_EXPERIMENTAL_GENERATOR.md)). The
-[OULAD case study](case-study-oulad.md) shows the package on real data.
+[case studies](case-study-oulad.md) show the package on real data (OULAD and EdNet).
 
 To cite EduLogGen, use the "Cite this repository" button on GitHub or the
 Zenodo DOI [10.5281/zenodo.23264161](https://doi.org/10.5281/zenodo.23264161).
@@ -39,7 +39,7 @@ Zenodo DOI [10.5281/zenodo.23264161](https://doi.org/10.5281/zenodo.23264161).
 ## Next steps
 
 - [Getting Started](getting-started.md) — install and run the full workflow
-- [Case study: OULAD](case-study-oulad.md) — results on real data
+- [Case studies](case-study-oulad.md) — results on OULAD and EdNet
 - [Vision](01_VISION.md) — goals, scope, and scientific contributions
 - [API Reference](api/index.md) — package surface area
 - [Contributing](contributing.md) — how to contribute

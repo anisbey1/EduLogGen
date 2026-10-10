@@ -239,12 +239,12 @@ Before full scenario files exist, M1 and M2 are available directly:
 | M1 | Annotations in corpora; five P0 anomalies with categories; `inject_anomalies`; `generate --anomalies`; `evaluate_detection` and `eduloggen evaluate` | 1.1.0 |
 | M2 | Controls + calendar + manipulation check | 1.2.0 |
 | M3 | Profiles (`auto`, `provided`, `manual`) + mixture + `evaluate_clustering` | 1.4.0 |
-| M4 | Outcomes (observational, simulated) + leakage-safe prediction splits + `evaluate_prediction` | 1.5.0 |
-| M5 | Scenario files and `scenario fit/generate/validate/inspect`; P1 anomalies; anomaly plugins; tutorial | 1.6.0 |
+| M4 | Outcomes (observational, simulated) + leakage-safe prediction splits + `evaluate_prediction` | 1.6.0 |
+| M5 | Scenario files and `scenario fit/generate/validate/inspect`; P1 anomalies; anomaly plugins; tutorial | 1.7.0 |
 
 Each milestone ships with tests and documentation and is useful on its own.
-Release 1.3.0 was used for fine-grained analysis (outside Level 2), so M3–M5
-shifted by one minor version.
+Releases 1.3.0 (fine-grained analysis) and 1.5.0 (GRU generator and case
+studies) are outside Level 2, so the later milestones shifted accordingly.
 
 ## 15. Decisions
 

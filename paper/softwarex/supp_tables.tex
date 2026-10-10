@@ -1,0 +1,176 @@
+\subsection*{OULAD (7 modules): AAA-2014J}
+357 learners, 30{,}703 events, 9{,}914 sessions; wall time 46~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.025 & 0.022 $\pm$ 0.004 & 0.017 $\pm$ 0.004 & 0.010 $\pm$ 0.005 & 0.010 $\pm$ 0.004 & 0.040 $\pm$ 0.009 \\
+Bigram TVD $\downarrow$ & 0.031 & 0.235 $\pm$ 0.008 & 0.050 $\pm$ 0.006 & 0.055 $\pm$ 0.007 & 0.057 $\pm$ 0.005 & 0.093 $\pm$ 0.011 \\
+Transition JSD $\downarrow$ & 0.003 & 0.046 $\pm$ 0.003 & 0.004 $\pm$ 0.000 & 0.004 $\pm$ 0.000 & 0.004 $\pm$ 0.000 & 0.005 $\pm$ 0.001 \\
+Session-length KS $\downarrow$ & 0.054 & 0.058 $\pm$ 0.004 & 0.051 $\pm$ 0.006 & 0.051 $\pm$ 0.006 & 0.058 $\pm$ 0.007 & 0.053 $\pm$ 0.011 \\
+Inter-event time KS $\downarrow$ & 0.015 & 0.245 $\pm$ 0.000 & 0.245 $\pm$ 0.000 & 0.245 $\pm$ 0.000 & 0.007 $\pm$ 0.004 & 0.010 $\pm$ 0.002 \\
+Top-10 path overlap $\uparrow$ & 0.900 & 0.700 $\pm$ 0.100 & 0.900 $\pm$ 0.000 & 0.833 $\pm$ 0.058 & 0.867 $\pm$ 0.058 & 0.833 $\pm$ 0.058 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 0.91, 0.85, 0.94, 0.91, 0.95, 0.94, 0.95, 0.95, 0.92; subsample ARI 0.78, 0.82, 0.77, 0.87, 0.85, 0.90, 0.72, 0.89, 0.82, 0.71; holdout replication ARI 0.71; recovery ARI 0.91; NMI with final result (holdout) 0.116.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 86.0\%, once-seen 7.1\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 0.64; Markov-2: any 80.9\%, once-seen 8.0\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 0.63; semi-Markov: any 77.5\%, once-seen 8.1\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 0.64; GRU: any 81.3\%, once-seen 8.9\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 0.70.
+
+Detection (real background): repetition: ROC-AUC 0.83, AP 0.26; unexpected transition: ROC-AUC 0.98, AP 0.55; synthetic background ROC-AUC 0.92; synthetic-vs-real AUC 0.48.
+
+\subsection*{OULAD (7 modules): BBB-2014J}
+1{,}921 learners, 83{,}111 events, 36{,}982 sessions; wall time 188~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.030 & 0.031 $\pm$ 0.003 & 0.033 $\pm$ 0.002 & 0.037 $\pm$ 0.002 & 0.036 $\pm$ 0.001 & 0.055 $\pm$ 0.004 \\
+Bigram TVD $\downarrow$ & 0.049 & 0.183 $\pm$ 0.003 & 0.078 $\pm$ 0.004 & 0.083 $\pm$ 0.003 & 0.078 $\pm$ 0.002 & 0.115 $\pm$ 0.004 \\
+Transition JSD $\downarrow$ & 0.002 & 0.039 $\pm$ 0.003 & 0.003 $\pm$ 0.000 & 0.003 $\pm$ 0.000 & 0.003 $\pm$ 0.000 & 0.005 $\pm$ 0.000 \\
+Session-length KS $\downarrow$ & 0.007 & 0.007 $\pm$ 0.003 & 0.008 $\pm$ 0.003 & 0.008 $\pm$ 0.003 & 0.009 $\pm$ 0.003 & 0.012 $\pm$ 0.000 \\
+Inter-event time KS $\downarrow$ & 0.004 & 0.348 $\pm$ 0.000 & 0.348 $\pm$ 0.000 & 0.348 $\pm$ 0.000 & 0.004 $\pm$ 0.001 & 0.015 $\pm$ 0.004 \\
+Top-10 path overlap $\uparrow$ & 1.000 & 0.900 $\pm$ 0.000 & 0.900 $\pm$ 0.000 & 0.900 $\pm$ 0.000 & 0.900 $\pm$ 0.000 & 0.900 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.99, 1.00; subsample ARI 0.97, 0.45, 0.98, 0.63, 0.89, 0.96, 0.98, 0.93, 0.69, 0.98; holdout replication ARI 0.84; recovery ARI 0.86; NMI with final result (holdout) 0.141.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 87.8\%, once-seen 5.3\%, trajectories 3.1\%, feature-identical 8.3\%, median distance 0.70; Markov-2: any 85.5\%, once-seen 5.1\%, trajectories 0.4\%, feature-identical 3.2\%, median distance 0.81; semi-Markov: any 85.9\%, once-seen 6.2\%, trajectories 0.9\%, feature-identical 2.4\%, median distance 0.78; GRU: any 86.3\%, once-seen 5.5\%, trajectories 1.1\%, feature-identical 3.0\%, median distance 0.81.
+
+Detection (real background): repetition: ROC-AUC 0.87, AP 0.28; unexpected transition: ROC-AUC 0.97, AP 0.49; synthetic background ROC-AUC 0.91; synthetic-vs-real AUC 0.49.
+
+\subsection*{OULAD (7 modules): CCC-2014J}
+2{,}302 learners, 131{,}279 events, 47{,}579 sessions; wall time 264~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.023 & 0.022 $\pm$ 0.002 & 0.027 $\pm$ 0.003 & 0.033 $\pm$ 0.004 & 0.027 $\pm$ 0.000 & 0.057 $\pm$ 0.002 \\
+Bigram TVD $\downarrow$ & 0.036 & 0.242 $\pm$ 0.002 & 0.076 $\pm$ 0.002 & 0.083 $\pm$ 0.002 & 0.078 $\pm$ 0.003 & 0.104 $\pm$ 0.008 \\
+Transition JSD $\downarrow$ & 0.001 & 0.063 $\pm$ 0.001 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.000 & 0.001 $\pm$ 0.000 & 0.004 $\pm$ 0.000 \\
+Session-length KS $\downarrow$ & 0.011 & 0.015 $\pm$ 0.000 & 0.013 $\pm$ 0.000 & 0.013 $\pm$ 0.000 & 0.013 $\pm$ 0.001 & 0.015 $\pm$ 0.003 \\
+Inter-event time KS $\downarrow$ & 0.009 & 0.266 $\pm$ 0.000 & 0.266 $\pm$ 0.000 & 0.266 $\pm$ 0.000 & 0.020 $\pm$ 0.002 & 0.032 $\pm$ 0.001 \\
+Top-10 path overlap $\uparrow$ & 0.800 & 0.600 $\pm$ 0.000 & 0.900 $\pm$ 0.000 & 0.733 $\pm$ 0.058 & 0.900 $\pm$ 0.000 & 0.700 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.99, 1.00, 1.00; subsample ARI 0.93, 0.70, 0.70, 0.68, 0.94, 0.89, 0.73, 0.87, 0.99, 0.75; holdout replication ARI 0.70; recovery ARI 0.78; NMI with final result (holdout) 0.103.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 83.9\%, once-seen 6.2\%, trajectories 2.3\%, feature-identical 5.8\%, median distance 0.74; Markov-2: any 82.7\%, once-seen 5.8\%, trajectories 0.7\%, feature-identical 3.7\%, median distance 0.81; semi-Markov: any 80.3\%, once-seen 6.2\%, trajectories 0.6\%, feature-identical 1.9\%, median distance 0.79; GRU: any 84.6\%, once-seen 5.3\%, trajectories 0.4\%, feature-identical 1.0\%, median distance 0.75.
+
+Detection (real background): repetition: ROC-AUC 0.82, AP 0.25; unexpected transition: ROC-AUC 0.98, AP 0.63; synthetic background ROC-AUC 0.89; synthetic-vs-real AUC 0.52.
+
+\subsection*{OULAD (7 modules): DDD-2014J}
+1{,}647 learners, 109{,}161 events, 38{,}264 sessions; wall time 259~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.017 & 0.017 $\pm$ 0.006 & 0.032 $\pm$ 0.001 & 0.043 $\pm$ 0.002 & 0.033 $\pm$ 0.002 & 0.069 $\pm$ 0.005 \\
+Bigram TVD $\downarrow$ & 0.030 & 0.217 $\pm$ 0.004 & 0.085 $\pm$ 0.002 & 0.095 $\pm$ 0.000 & 0.086 $\pm$ 0.005 & 0.122 $\pm$ 0.007 \\
+Transition JSD $\downarrow$ & 0.001 & 0.047 $\pm$ 0.002 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.000 & 0.005 $\pm$ 0.000 \\
+Session-length KS $\downarrow$ & 0.013 & 0.018 $\pm$ 0.000 & 0.015 $\pm$ 0.002 & 0.015 $\pm$ 0.002 & 0.012 $\pm$ 0.001 & 0.014 $\pm$ 0.002 \\
+Inter-event time KS $\downarrow$ & 0.011 & 0.278 $\pm$ 0.000 & 0.278 $\pm$ 0.000 & 0.278 $\pm$ 0.000 & 0.022 $\pm$ 0.001 & 0.007 $\pm$ 0.004 \\
+Top-10 path overlap $\uparrow$ & 1.000 & 0.800 $\pm$ 0.000 & 0.833 $\pm$ 0.058 & 1.000 $\pm$ 0.000 & 0.900 $\pm$ 0.000 & 1.000 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 1.00, 0.95, 1.00, 0.98, 0.96, 1.00, 1.00, 1.00, 1.00; subsample ARI 0.96, 0.97, 0.92, 0.74, 0.89, 0.94, 0.97, 0.93, 0.78, 0.98; holdout replication ARI 0.54; recovery ARI 0.84; NMI with final result (holdout) 0.145.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 81.8\%, once-seen 7.2\%, trajectories 1.3\%, feature-identical 3.6\%, median distance 0.90; Markov-2: any 80.3\%, once-seen 6.4\%, trajectories 0.0\%, feature-identical 1.4\%, median distance 0.94; semi-Markov: any 76.8\%, once-seen 7.0\%, trajectories 0.0\%, feature-identical 2.4\%, median distance 0.90; GRU: any 79.4\%, once-seen 6.6\%, trajectories 0.0\%, feature-identical 1.5\%, median distance 0.92.
+
+Detection (real background): repetition: ROC-AUC 0.79, AP 0.21; unexpected transition: ROC-AUC 0.97, AP 0.53; synthetic background ROC-AUC 0.88; synthetic-vs-real AUC 0.50.
+
+\subsection*{OULAD (7 modules): EEE-2014J}
+1{,}097 learners, 76{,}751 events, 26{,}198 sessions; wall time 137~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.019 & 0.019 $\pm$ 0.003 & 0.031 $\pm$ 0.003 & 0.039 $\pm$ 0.004 & 0.033 $\pm$ 0.009 & 0.036 $\pm$ 0.001 \\
+Bigram TVD $\downarrow$ & 0.033 & 0.243 $\pm$ 0.006 & 0.069 $\pm$ 0.005 & 0.075 $\pm$ 0.007 & 0.073 $\pm$ 0.011 & 0.080 $\pm$ 0.001 \\
+Transition JSD $\downarrow$ & 0.002 & 0.062 $\pm$ 0.002 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.001 & 0.002 $\pm$ 0.000 & 0.003 $\pm$ 0.000 \\
+Session-length KS $\downarrow$ & 0.021 & 0.023 $\pm$ 0.001 & 0.023 $\pm$ 0.009 & 0.023 $\pm$ 0.009 & 0.021 $\pm$ 0.003 & 0.021 $\pm$ 0.006 \\
+Inter-event time KS $\downarrow$ & 0.008 & 0.258 $\pm$ 0.000 & 0.258 $\pm$ 0.000 & 0.258 $\pm$ 0.000 & 0.003 $\pm$ 0.001 & 0.027 $\pm$ 0.005 \\
+Top-10 path overlap $\uparrow$ & 0.900 & 0.600 $\pm$ 0.000 & 0.767 $\pm$ 0.058 & 0.700 $\pm$ 0.000 & 0.767 $\pm$ 0.058 & 0.700 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 0.97, 0.95, 0.94, 0.97, 0.97, 0.94, 0.89, 0.97, 0.99; subsample ARI 0.93, 0.94, 0.95, 0.92, 0.95, 0.97, 0.96, 0.95, 0.89, 0.94; holdout replication ARI 0.81; recovery ARI 0.88; NMI with final result (holdout) 0.302.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 84.1\%, once-seen 6.8\%, trajectories 1.9\%, feature-identical 4.8\%, median distance 0.69; Markov-2: any 80.8\%, once-seen 6.7\%, trajectories 0.3\%, feature-identical 2.0\%, median distance 0.75; semi-Markov: any 78.3\%, once-seen 7.3\%, trajectories 0.0\%, feature-identical 1.4\%, median distance 0.81; GRU: any 82.0\%, once-seen 7.1\%, trajectories 0.3\%, feature-identical 1.4\%, median distance 0.77.
+
+Detection (real background): repetition: ROC-AUC 0.83, AP 0.24; unexpected transition: ROC-AUC 0.97, AP 0.50; synthetic background ROC-AUC 0.90; synthetic-vs-real AUC 0.50.
+
+\subsection*{OULAD (7 modules): FFF-2014J}
+2{,}121 learners, 167{,}164 events, 50{,}431 sessions; wall time 316~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.022 & 0.022 $\pm$ 0.003 & 0.028 $\pm$ 0.002 & 0.030 $\pm$ 0.002 & 0.026 $\pm$ 0.001 & 0.027 $\pm$ 0.005 \\
+Bigram TVD $\downarrow$ & 0.034 & 0.219 $\pm$ 0.004 & 0.061 $\pm$ 0.004 & 0.062 $\pm$ 0.003 & 0.060 $\pm$ 0.003 & 0.060 $\pm$ 0.005 \\
+Transition JSD $\downarrow$ & 0.001 & 0.040 $\pm$ 0.002 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.000 & 0.002 $\pm$ 0.000 \\
+Session-length KS $\downarrow$ & 0.015 & 0.014 $\pm$ 0.004 & 0.018 $\pm$ 0.003 & 0.018 $\pm$ 0.003 & 0.013 $\pm$ 0.004 & 0.015 $\pm$ 0.003 \\
+Inter-event time KS $\downarrow$ & 0.002 & 0.222 $\pm$ 0.000 & 0.222 $\pm$ 0.000 & 0.222 $\pm$ 0.000 & 0.003 $\pm$ 0.001 & 0.010 $\pm$ 0.003 \\
+Top-10 path overlap $\uparrow$ & 0.900 & 0.700 $\pm$ 0.000 & 0.700 $\pm$ 0.000 & 0.833 $\pm$ 0.058 & 0.700 $\pm$ 0.000 & 0.900 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 0.93, 0.93, 0.92, 0.93, 0.94, 0.93, 0.93, 0.93, 0.98; subsample ARI 0.89, 0.90, 0.78, 0.64, 0.88, 0.96, 0.71, 0.91, 0.87, 0.95; holdout replication ARI 0.36; recovery ARI 0.92; NMI with final result (holdout) 0.199.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 83.2\%, once-seen 5.8\%, trajectories 0.8\%, feature-identical 3.1\%, median distance 0.66; Markov-2: any 81.2\%, once-seen 6.7\%, trajectories 0.3\%, feature-identical 1.4\%, median distance 0.63; semi-Markov: any 79.3\%, once-seen 7.3\%, trajectories 0.0\%, feature-identical 1.8\%, median distance 0.64; GRU: any 81.9\%, once-seen 6.6\%, trajectories 0.5\%, feature-identical 1.4\%, median distance 0.62.
+
+Detection (real background): repetition: ROC-AUC 0.80, AP 0.24; unexpected transition: ROC-AUC 0.97, AP 0.55; synthetic background ROC-AUC 0.89; synthetic-vs-real AUC 0.50.
+
+\subsection*{OULAD (7 modules): GGG-2014J}
+698 learners, 25{,}535 events, 12{,}467 sessions; wall time 54~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.017 & 0.019 $\pm$ 0.008 & 0.025 $\pm$ 0.004 & 0.028 $\pm$ 0.004 & 0.021 $\pm$ 0.006 & 0.042 $\pm$ 0.010 \\
+Bigram TVD $\downarrow$ & 0.052 & 0.206 $\pm$ 0.011 & 0.096 $\pm$ 0.018 & 0.097 $\pm$ 0.017 & 0.082 $\pm$ 0.003 & 0.116 $\pm$ 0.011 \\
+Transition JSD $\downarrow$ & 0.003 & 0.046 $\pm$ 0.005 & 0.006 $\pm$ 0.001 & 0.006 $\pm$ 0.002 & 0.006 $\pm$ 0.001 & 0.009 $\pm$ 0.002 \\
+Session-length KS $\downarrow$ & 0.019 & 0.025 $\pm$ 0.005 & 0.014 $\pm$ 0.005 & 0.014 $\pm$ 0.005 & 0.018 $\pm$ 0.006 & 0.027 $\pm$ 0.003 \\
+Inter-event time KS $\downarrow$ & 0.025 & 0.349 $\pm$ 0.000 & 0.349 $\pm$ 0.000 & 0.349 $\pm$ 0.000 & 0.030 $\pm$ 0.010 & 0.020 $\pm$ 0.008 \\
+Top-10 path overlap $\uparrow$ & 0.800 & 0.600 $\pm$ 0.000 & 0.833 $\pm$ 0.058 & 0.700 $\pm$ 0.000 & 0.833 $\pm$ 0.058 & 0.700 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 0.97, 0.95, 0.95, 1.00, 0.96, 0.62, 0.97, 0.92, 0.97; subsample ARI 0.61, 0.90, 0.57, 0.90, 0.77, 0.62, 0.88, 0.78, 0.63, 0.95; holdout replication ARI 0.60; recovery ARI 0.85; NMI with final result (holdout) 0.198.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 78.7\%, once-seen 8.5\%, trajectories 3.0\%, feature-identical 5.2\%, median distance 0.78; Markov-2: any 81.0\%, once-seen 7.2\%, trajectories 1.4\%, feature-identical 0.5\%, median distance 0.83; semi-Markov: any 76.9\%, once-seen 6.1\%, trajectories 0.5\%, feature-identical 0.5\%, median distance 0.80; GRU: any 78.0\%, once-seen 8.2\%, trajectories 0.5\%, feature-identical 2.8\%, median distance 0.80.
+
+Detection (real background): repetition: ROC-AUC 0.83, AP 0.18; unexpected transition: ROC-AUC 0.97, AP 0.49; synthetic background ROC-AUC 0.91; synthetic-vs-real AUC 0.49.
+
+\subsection*{EdNet-KT4: ednet-kt4-2000}
+2{,}000 learners, 967{,}968 events, 10{,}580 sessions; wall time 4066~s.
+
+\begin{tabular}{l r r r r r r }
+\toprule
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
+\midrule
+Event-type TVD $\downarrow$ & 0.039 & 0.039 $\pm$ 0.000 & 0.047 $\pm$ 0.002 & 0.045 $\pm$ 0.002 & 0.048 $\pm$ 0.002 & 0.054 $\pm$ 0.005 \\
+Bigram TVD $\downarrow$ & 0.052 & 0.655 $\pm$ 0.001 & 0.061 $\pm$ 0.002 & 0.059 $\pm$ 0.002 & 0.063 $\pm$ 0.002 & 0.094 $\pm$ 0.006 \\
+Transition JSD $\downarrow$ & 0.004 & 0.488 $\pm$ 0.001 & 0.004 $\pm$ 0.000 & 0.004 $\pm$ 0.000 & 0.004 $\pm$ 0.000 & 0.009 $\pm$ 0.001 \\
+Session-length KS $\downarrow$ & 0.084 & 0.079 $\pm$ 0.004 & 0.085 $\pm$ 0.003 & 0.085 $\pm$ 0.003 & 0.086 $\pm$ 0.003 & 0.089 $\pm$ 0.014 \\
+Inter-event time KS $\downarrow$ & 0.019 & 0.507 $\pm$ 0.000 & 0.507 $\pm$ 0.000 & 0.507 $\pm$ 0.000 & 0.028 $\pm$ 0.000 & 0.032 $\pm$ 0.000 \\
+Top-10 path overlap $\uparrow$ & 1.000 & 0.100 $\pm$ 0.000 & 0.800 $\pm$ 0.000 & 1.000 $\pm$ 0.000 & 0.800 $\pm$ 0.000 & 0.800 $\pm$ 0.000 \\
+\bottomrule
+\end{tabular}
+
+Profiles ($k=4$): seed ARI 0.99, 0.99, 0.99, 0.99, 1.00, 0.99, 0.99, 1.00, 1.00; subsample ARI 0.99, 0.97, 0.99, 0.99, 0.99, 0.95, 0.97, 0.96, 0.96, 0.98; holdout replication ARI 0.93; recovery ARI 0.75.
+
+Memorisation (sessions with $\geq$3 events; matches against training learners): holdout: any 20.2\%, once-seen 2.8\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 0.42; Markov-2: any 2.9\%, once-seen 0.3\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 1.63; semi-Markov: any 1.8\%, once-seen 0.2\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 1.26; GRU: any 7.1\%, once-seen 1.4\%, trajectories 0.0\%, feature-identical 0.0\%, median distance 1.07.
+
+Detection (real background): repetition: ROC-AUC 0.81, AP 0.21; unexpected transition: ROC-AUC 0.74, AP 0.17; synthetic background ROC-AUC 0.90; synthetic-vs-real AUC 0.49.
+

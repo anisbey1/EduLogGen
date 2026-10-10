@@ -1,13 +1,21 @@
-\begin{tabular}{l r r r r r }
+\begin{tabular}{l r r r r r r }
 \toprule
-Metric & Real vs real & Independent & Markov (1) & Markov (2) & Semi-Markov \\
+Metric & Real vs real & Independent & Markov-1 & Markov-2 & Semi-Markov & GRU \\
 \midrule
-Event-type TVD $\downarrow$ & 0.022 & \textbf{0.021} & 0.028 & 0.031 & 0.027 \\
-Bigram TVD $\downarrow$ & 0.038 & 0.220 & 0.074 & 0.079 & \textbf{0.073} \\
-Transition JSD $\downarrow$ & 0.002 & 0.049 & \textbf{0.003} & 0.003 & 0.003 \\
-Session length KS $\downarrow$ & 0.020 & 0.023 & \textbf{0.020} & 0.020 & 0.021 \\
-Inter-event time KS $\downarrow$ & 0.010 & 0.281 & 0.281 & 0.281 & \textbf{0.013} \\
-Top-10 path overlap $\uparrow$ & 0.900 & 0.700 & 0.833 & 0.814 & \textbf{0.838} \\
-Exact duplicate sessions  & 0.770 & 0.657 & 0.726 & 0.747 & 0.726 \\
+\multicolumn{7}{l}{\textit{OULAD (7 modules)}} \\
+Event-type TVD $\downarrow$ & 0.022 & 0.021 $\pm$ 0.004 & 0.028 $\pm$ 0.005 & 0.031 $\pm$ 0.011 & 0.027 $\pm$ 0.009 & 0.047 $\pm$ 0.014 \\
+Bigram TVD $\downarrow$ & 0.038 & 0.220 $\pm$ 0.022 & 0.074 $\pm$ 0.015 & 0.079 $\pm$ 0.016 & 0.073 $\pm$ 0.011 & 0.098 $\pm$ 0.022 \\
+Transition JSD $\downarrow$ & 0.002 & 0.049 $\pm$ 0.010 & 0.003 $\pm$ 0.002 & 0.003 $\pm$ 0.002 & 0.003 $\pm$ 0.001 & 0.005 $\pm$ 0.002 \\
+Session-length KS $\downarrow$ & 0.020 & 0.023 $\pm$ 0.017 & 0.020 $\pm$ 0.014 & 0.020 $\pm$ 0.014 & 0.021 $\pm$ 0.017 & 0.022 $\pm$ 0.014 \\
+Inter-event time KS $\downarrow$ & 0.010 & 0.281 $\pm$ 0.049 & 0.281 $\pm$ 0.049 & 0.281 $\pm$ 0.049 & 0.013 $\pm$ 0.011 & 0.017 $\pm$ 0.009 \\
+Top-10 path overlap $\uparrow$ & 0.900 & 0.700 $\pm$ 0.115 & 0.833 $\pm$ 0.077 & 0.814 $\pm$ 0.112 & 0.838 $\pm$ 0.078 & 0.819 $\pm$ 0.121 \\
+\midrule
+\multicolumn{7}{l}{\textit{EdNet-KT4}} \\
+Event-type TVD $\downarrow$ & 0.039 & 0.039 $\pm$ 0.000 & 0.047 $\pm$ 0.002 & 0.045 $\pm$ 0.002 & 0.048 $\pm$ 0.002 & 0.054 $\pm$ 0.005 \\
+Bigram TVD $\downarrow$ & 0.052 & 0.655 $\pm$ 0.001 & 0.061 $\pm$ 0.002 & 0.059 $\pm$ 0.002 & 0.063 $\pm$ 0.002 & 0.094 $\pm$ 0.006 \\
+Transition JSD $\downarrow$ & 0.004 & 0.488 $\pm$ 0.001 & 0.004 $\pm$ 0.000 & 0.004 $\pm$ 0.000 & 0.004 $\pm$ 0.000 & 0.009 $\pm$ 0.001 \\
+Session-length KS $\downarrow$ & 0.084 & 0.079 $\pm$ 0.004 & 0.085 $\pm$ 0.003 & 0.085 $\pm$ 0.003 & 0.086 $\pm$ 0.003 & 0.089 $\pm$ 0.014 \\
+Inter-event time KS $\downarrow$ & 0.019 & 0.507 $\pm$ 0.000 & 0.507 $\pm$ 0.000 & 0.507 $\pm$ 0.000 & 0.028 $\pm$ 0.000 & 0.032 $\pm$ 0.000 \\
+Top-10 path overlap $\uparrow$ & 1.000 & 0.100 $\pm$ 0.000 & 0.800 $\pm$ 0.000 & 1.000 $\pm$ 0.000 & 0.800 $\pm$ 0.000 & 0.800 $\pm$ 0.000 \\
 \bottomrule
 \end{tabular}

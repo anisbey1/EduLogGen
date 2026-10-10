@@ -72,7 +72,7 @@ nav:
   - Architecture: 03_ARCHITECTURE.md
   - Experimental Generator (Level 2): 04_EXPERIMENTAL_GENERATOR.md
   - Getting Started: getting-started.md
-  - "Case study: OULAD": case-study-oulad.md
+  - "Case studies": case-study-oulad.md
   - Privacy: privacy.md
   - Writing plugins: plugins.md
   - Contributing: contributing.md
