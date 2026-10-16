@@ -39,6 +39,7 @@ Zenodo DOI [10.5281/zenodo.23264161](https://doi.org/10.5281/zenodo.23264161).
 ## Next steps
 
 - [Getting Started](getting-started.md) — install and run the full workflow
+- [Use cases](use-cases.md) — what researchers can do, with examples
 - [Case studies](case-study-oulad.md) — results on OULAD and EdNet
 - [Vision](01_VISION.md) — goals, scope, and scientific contributions
 - [API Reference](api/index.md) — package surface area
