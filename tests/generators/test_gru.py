@@ -129,9 +129,25 @@ def test_binned_timing_reproduces_discrete_gaps() -> None:
 
 
 def test_bins_helper() -> None:
-    from eduloggen.generators.gru import _bins
+    from eduloggen.generators._neural import _bins
 
     assert _bins([], 4) == {"edges": [], "values": [[1.0]]}
     many = _bins([float(i) for i in range(1, 101)], 4)
     assert len(many["values"]) == 4
     assert sum(len(v) for v in many["values"]) == 100
+
+
+def test_learner_validation_split_is_opt_in(data: Dataset) -> None:
+    gru = get_generator("gru")
+    assert "validation_split" not in gru.validate_hyperparameters(SMALL)
+    assert gru.validate_hyperparameters({**SMALL, "validation_split": "session"}) == (
+        gru.validate_hyperparameters(SMALL)
+    )
+    learner = gru.validate_hyperparameters({**SMALL, "validation_split": "learner"})
+    assert learner["validation_split"] == "learner"
+    with pytest.raises(ConfigError):
+        gru.validate_hyperparameters({**SMALL, "validation_split": "event"})
+    pytest.importorskip("torch")
+    model = gru.fit(data, {**SMALL, "validation_split": "learner"})
+    assert model.hyperparameters["validation_split"] == "learner"
+    assert model.fingerprint() != gru.fit(data, SMALL).fingerprint()
