@@ -42,6 +42,11 @@ mkdocs build --strict
 python -m build
 ```
 
+The 95% coverage gate assumes the optional neural generators can run:
+install them with `pip install -e ".[dev,neural]"`. Without PyTorch their
+tests are skipped and coverage falls below the gate; CI enforces the gate in
+its PyTorch job.
+
 Pre-commit runs a subset of these checks automatically on `git commit`.
 
 ## Coding standards
