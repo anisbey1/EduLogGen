@@ -30,8 +30,8 @@ behavioral properties of real learner interaction logs.
   and per group (course, week, cohort, device…); see exactly where synthetic
   data differs from real data
 - **Generate** with `markov` (order-k), `semi_markov` (per-activity timing),
-  the `independent` baseline, or an optional `gru` neural generator; seeded,
-  reproducible, with remapped IDs
+  the `independent` baseline, or the optional `gru` and `transformer` neural
+  generators; seeded, reproducible, with remapped IDs
 - **Validate** real versus synthetic data on marginal, structural, temporal,
   sequential, and privacy metrics, with pass/fail thresholds for CI
 - **Benchmark** generators fairly with protocol `session_fidelity_v1`
@@ -69,7 +69,7 @@ training learners than unseen real learners are. See the
 ```bash
 pip install eduloggen              # core (CSV, TSV, JSON Lines)
 pip install "eduloggen[parquet,viz]"  # with Parquet and figures
-pip install "eduloggen[neural]"       # GRU generator (PyTorch)
+pip install "eduloggen[neural]"       # GRU and Transformer generators (PyTorch)
 ```
 
 For development, from a clone: `pip install -e ".[dev,docs]"`.
@@ -80,7 +80,7 @@ Optional extras:
 | ----- | ------- |
 | `parquet` | Parquet reading and writing (`pyarrow`) |
 | `viz` | Figures (`matplotlib`) |
-| `neural` | GRU generator (`torch`) |
+| `neural` | GRU and Transformer generators (`torch`) |
 | `dev` | Ruff, Black, MyPy, PyTest, pre-commit (includes `parquet`, `viz`) |
 | `docs` | MkDocs and Material theme |
 | `all` | Development and documentation tools |

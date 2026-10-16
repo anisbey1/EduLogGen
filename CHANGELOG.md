@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `transformer` generator (optional extra `eduloggen[neural]`): a
+  decoder-only causal Transformer over a session's event types, with
+  gap-bin inputs, a next-event head, and a next-gap head (the same timing
+  convention as `gru`). Learner-level early-stopping validation,
+  overlapping training windows for long sessions (no target discarded),
+  AdamW with gradient clipping and best-epoch checkpoints, key/value-cached
+  generation with a rolling context, temperature and top-k sampling. Models
+  stay JSON; training is seeded and deterministic on CPU for a fixed thread
+  count. See the "Transformer generator" documentation page
+- `gru`: opt-in `validation_split="learner"`; the default (`session`) and
+  v1.5.0 models are unchanged, fingerprints included
+- Studies: `studies/run_v16.py` and `studies/worker.py` for the
+  six-generator comparison, per-generator costs (fit and generation time,
+  peak memory, parameters, model size), and Transformer sensitivity to
+  context length and training-data size
+
+### Changed
+
+- Shared neural helpers moved to `eduloggen.generators._neural`
+  (behaviour-preserving)
+- CI enforces the coverage gate in the PyTorch job; the PyTorch-free jobs
+  still run every test
+- The planned outcome and scenario-file milestones move to 1.7.0 and 1.8.0
+
 ### Removed
 
 - The manuscript draft is no longer kept in the repository

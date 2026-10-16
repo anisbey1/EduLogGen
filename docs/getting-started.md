@@ -141,7 +141,8 @@ of session starts side by side.
 | `markov` | Order-k token transitions; constant gap between events | Sequence structure matters, timing does not |
 | `semi_markov` | Transitions plus time spent on each token | Realistic timing matters |
 | `independent` | Tokens drawn independently | Baseline for benchmarks |
-| `gru` | GRU network over the session history: next event and time spent (log-normal mixture) | Longer-range dependencies; needs `pip install "eduloggen[neural]"` |
+| `gru` | GRU network over the session history: next event and the time after it | Longer-range dependencies; needs `pip install "eduloggen[neural]"` |
+| `transformer` | Causal Transformer over the session history, with event and gap-bin inputs: next event and the time after it ([details](transformer.md)) | Long within-session dependencies; needs `pip install "eduloggen[neural]"` |
 
 Key hyperparameters: `order`, `smoothing_alpha`, `length_model`
 (`empirical`, `poisson`, `fixed`), and for `semi_markov` `timing_family`
