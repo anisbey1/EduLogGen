@@ -7,6 +7,7 @@ reused everywhere, so all analyses fit on the same training learners.
 
 from __future__ import annotations
 
+import json
 import math
 import random
 import time
@@ -53,8 +54,28 @@ GENERATORS = {
     "markov2": ("markov", {"order": 2}),
     "semi_markov": ("semi_markov", {}),
     "gru": ("gru", {}),
+    # v1.6.0: the GRU with the Transformer's validation and stopping rules
+    # (learner split, 100 epochs, patience 10), and the Transformer. Both use
+    # 8 threads (deterministic for a fixed thread count) and default sizes.
+    "gru_matched": (
+        "gru",
+        {"validation_split": "learner", "epochs": 100, "patience": 10, "threads": 8},
+    ),
+    "transformer": ("transformer", {"threads": 8}),
 }
 MEMORISATION = ("markov2", "semi_markov", "gru")
+NEURAL = ("gru_matched", "transformer")
+FAST_METRICS = (
+    "event_type_tvd",
+    "activity_jsd",
+    "bigram_tvd",
+    "transition_jsd",
+    "session_length_ks",
+    "interevent_time_ks",
+    "topn_path_overlap",
+)
+"""Metrics for the sensitivity runs: the benchmark's fidelity metrics without
+the (slow) privacy diagnostics; definitions are unchanged."""
 HOLDOUT = 0.3
 N_PROFILES = 4
 N_STABILITY = 10
@@ -311,10 +332,97 @@ def memorisation(
     for label in generators:
         generator, params = GENERATORS[label]
         family = get_generator(generator)
+        started = time.perf_counter()
         model = family.fit(train, params)
+        fit_s = time.perf_counter() - started
+        started = time.perf_counter()
         synthetic = family.generate(model, holdout.n_sessions, seed)
+        generate_s = time.perf_counter() - started
         out[label] = _summarise_dcr(describe(synthetic), p05)
+        out[label]["cost"] = {
+            "fit_s": fit_s,
+            "generate_s": generate_s,
+            "generated_events": synthetic.n_events,
+            "model_json_bytes": len(json.dumps(model.to_dict(), default=str)),
+            "n_parameters": _n_parameters(model),
+        }
     return out
+
+
+def _n_parameters(model: Any) -> int | None:
+    for key in ("transformer", "gru"):
+        if key in model.parameters:
+            return int(model.parameters[key]["n_parameters"])
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 5. Sensitivity (v1.6.0): fast fidelity of one configuration
+# ---------------------------------------------------------------------------
+
+
+def nested_subset(train: Dataset, fraction: float, seed: int) -> Dataset:
+    """The first ``fraction`` of the training learners in a seeded order.
+
+    The order is fixed per seed, so smaller fractions are nested in larger
+    ones; the holdout is never touched.
+    """
+    learners = sorted(train.learner_ids)
+    random.Random(f"{seed}-fraction").shuffle(learners)
+    keep = set(learners[: max(2, round(fraction * len(learners)))])
+    return _keep(train, keep, f"fraction={fraction}")
+
+
+def fast_fidelity(
+    train: Dataset,
+    holdout: Dataset,
+    generator: str,
+    params: Mapping[str, Any],
+    seed: int,
+    label: str,
+    repeats: int = 3,
+) -> dict[str, Any]:
+    """Fit on ``train``, compare ``repeats`` holdout-size samples with ``holdout``."""
+    from eduloggen.utils import derive_seed
+    from eduloggen.validation import validate
+
+    family = get_generator(generator)
+    started = time.perf_counter()
+    model = family.fit(train, params)
+    fit_s = time.perf_counter() - started
+    values: dict[str, list[float]] = {m: [] for m in FAST_METRICS}
+    generate_s = 0.0
+    for r in range(repeats):
+        started = time.perf_counter()
+        synthetic = family.generate(
+            model, holdout.n_sessions, derive_seed(seed, "sensitivity", label, r) or 0
+        )
+        generate_s += time.perf_counter() - started
+        report = validate(holdout, synthetic, metrics=list(FAST_METRICS), seed=seed)
+        for metric in report.metrics:
+            if metric.value is not None:
+                values[metric.name].append(metric.value)
+    return {
+        "metrics": {
+            m: {
+                "mean": sum(v) / len(v),
+                "std": (
+                    math.sqrt(sum((x - sum(v) / len(v)) ** 2 for x in v) / (len(v) - 1))
+                    if len(v) > 1
+                    else 0.0
+                ),
+                "values": v,
+            }
+            for m, v in values.items()
+            if v
+        },
+        "fit_s": fit_s,
+        "generate_s": generate_s / repeats,
+        "train_learners": len(train.learner_ids),
+        "train_sessions": train.n_sessions,
+        "n_parameters": _n_parameters(model),
+        "model_json_bytes": len(json.dumps(model.to_dict(), default=str)),
+    }
 
 
 def _summarise_dcr(desc: dict[str, Any], holdout_p05: float) -> dict[str, Any]:

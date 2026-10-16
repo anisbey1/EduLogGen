@@ -46,8 +46,8 @@ Generate:
     Session lengths, learners, and start times come from the shared
     machinery, as for every generator (no end-of-session token). Events and
     gaps are sampled step by step with the generator's own random number
-    generator (``temperature``, optional ``top_k``) on CPU, with a key/value
-    cache; beyond ``max_seq_len`` events the context rolls over the last
+    generator (``temperature``, optional ``top_k``) on one CPU thread, with a
+    key/value cache; beyond ``max_seq_len`` events the context rolls over the last
     ``max_seq_len`` positions while the whole session is kept in the output.
 
 The model sees one session at a time: it captures long within-session
@@ -221,6 +221,7 @@ class TransformerGenerator(BaseGenerator):
             for epoch in range(1, hp["epochs"] + 1):
                 net.train()
                 rng.shuffle(train)
+                running, seen = 0.0, 0
                 for batch in _batches(train, hp["batch_size"]):
                     optimiser.zero_grad()
                     loss = _loss(torch, net, batch, hp, device)
@@ -234,9 +235,13 @@ class TransformerGenerator(BaseGenerator):
                     loss.backward()
                     torch.nn.utils.clip_grad_norm_(net.parameters(), hp["grad_clip"])
                     optimiser.step()
+                    running += float(loss) * len(batch)
+                    seen += len(batch)
+                # running mean of the epoch's training batches (dropout on);
+                # early stopping uses the validation loss (dropout off)
+                train_loss = running / max(seen, 1)
                 net.eval()
                 with torch.no_grad():
-                    train_loss = _mean_loss(torch, net, train, hp, device)
                     val_loss = (
                         _mean_loss(torch, net, val, hp, device) if val else train_loss
                     )
@@ -321,6 +326,14 @@ class TransformerGenerator(BaseGenerator):
         temperature, top_k = hp["temperature"], hp["top_k"]
 
         def sample(rng: random.Random, length: int) -> tuple[list[str], list[float]]:
+            threads = torch.get_num_threads()
+            torch.set_num_threads(1)  # one step is too small to parallelise
+            try:
+                return _sample(rng, length)
+            finally:
+                torch.set_num_threads(threads)
+
+        def _sample(rng: random.Random, length: int) -> tuple[list[str], list[float]]:
             tokens: list[str] = []
             gaps: list[float] = []
             events_in, gaps_in = [BOS], [NO_GAP]
