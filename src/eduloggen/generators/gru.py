@@ -31,21 +31,31 @@ Hyperparameters:
     ``epochs`` (30), ``batch_size`` (64), ``learning_rate`` (0.003),
     ``max_length`` (256), ``validation_fraction`` (0.1), ``patience`` (3),
     ``seed`` (0), ``threads`` (1), plus ``length_model`` and ``fixed_length``.
+    ``validation_split`` (``session``, the v1.5.0 behaviour, or ``learner``):
+    with ``learner``, no learner appears in both the training and the
+    early-stopping validation group. It is recorded in the model only when
+    set to ``learner``, so default models keep their v1.5.0 fingerprints.
 """
 
 from __future__ import annotations
 
-import base64
 import logging
 import math
 import random
-from array import array
-from bisect import bisect_left
 from collections.abc import Mapping
-from itertools import pairwise
 from typing import Any, ClassVar
 
 from eduloggen.core import FitError, GenerationError
+from eduloggen.generators._neural import (
+    _bins,
+    _decode,
+    _draw,
+    _encode,
+    _learner_validation,
+    _session_gaps,
+    _session_learners,
+    _torch,
+)
 from eduloggen.generators.base import (
     BaseGenerator,
     SequenceSampler,
@@ -53,7 +63,6 @@ from eduloggen.generators.base import (
     _choice,
     _number,
 )
-from eduloggen.generators.distributions import sketch
 from eduloggen.models import Dataset, GeneratorModel
 
 __all__ = ["GRUGenerator"]
@@ -61,19 +70,6 @@ __all__ = ["GRUGenerator"]
 logger = logging.getLogger(__name__)
 
 _LOG_MIN_GAP = math.log(1e-3)
-
-
-def _torch(error: type[FitError] | type[GenerationError]) -> Any:
-    try:
-        import torch
-    except ImportError:
-        raise error(
-            "the gru generator requires PyTorch; install it with: "
-            'pip install "eduloggen[neural]"',
-            code="missing_dependency",
-            context={"package": "torch", "extra": "neural"},
-        ) from None
-    return torch
 
 
 class GRUGenerator(BaseGenerator):
@@ -99,6 +95,19 @@ class GRUGenerator(BaseGenerator):
         "seed": 0,
         "threads": 1,
     }
+
+    def validate_hyperparameters(
+        self, hyperparameters: Mapping[str, Any] | None = None
+    ) -> dict[str, Any]:
+        """Merge with defaults and validate (see the module docstring)."""
+        given = dict(hyperparameters or {})
+        split = given.pop("validation_split", "session")
+        merged = super().validate_hyperparameters(given)
+        if split not in ("session", "learner"):
+            raise _bad("validation_split", "must be one of session, learner")
+        if split == "learner":
+            merged["validation_split"] = split
+        return merged
 
     def _validate_family(self, hyperparameters: dict[str, Any]) -> None:
         for key in (
@@ -145,11 +154,18 @@ class GRUGenerator(BaseGenerator):
         bins = _bins(raw_gaps, hp["n_bins"]) if hp["timing"] == "binned" else None
         timing_size = len(bins["values"]) if bins else 3 * hp["n_mixtures"]
         rng = random.Random(hp["seed"])
-        order = list(range(len(examples)))
-        rng.shuffle(order)
-        n_val = int(len(order) * hp["validation_fraction"])
-        val = [examples[i] for i in order[:n_val]]
-        train = [examples[i] for i in order[n_val:]] or val
+        if hp.get("validation_split", "session") == "learner":
+            held = _learner_validation(
+                _session_learners(dataset), hp["validation_fraction"], rng
+            )
+            val = [e for i, e in enumerate(examples) if i in held]
+            train = [e for i, e in enumerate(examples) if i not in held] or val
+        else:
+            order = list(range(len(examples)))
+            rng.shuffle(order)
+            n_val = int(len(order) * hp["validation_fraction"])
+            val = [examples[i] for i in order[:n_val]]
+            train = [examples[i] for i in order[n_val:]] or val
 
         threads = torch.get_num_threads()
         deterministic = torch.are_deterministic_algorithms_enabled()
@@ -284,23 +300,6 @@ def _network(torch: Any, n_tokens: int, timing_size: int, hp: Mapping[str, Any])
     )
 
 
-def _session_gaps(dataset: Dataset) -> list[list[float]]:
-    by_session: dict[str, list[Any]] = {}
-    for event in dataset.events:
-        if event.session_id is not None:
-            by_session.setdefault(event.session_id, []).append(event)
-    out = []
-    # same order as session_sequences(): by session id
-    for session in sorted(dataset.sessions or (), key=lambda s: s.session_id):
-        events = sorted(
-            by_session.get(session.session_id, ()), key=lambda e: e.timestamp
-        )
-        out.append(
-            [(b.timestamp - a.timestamp).total_seconds() for a, b in pairwise(events)]
-        )
-    return out
-
-
 def _batches(
     examples: list[tuple[list[int], list[float]]], size: int
 ) -> list[list[tuple[list[int], list[float]]]]:
@@ -365,55 +364,3 @@ def _mean_loss(
         total += float(_loss(torch, net, batch, hp, edges)) * n
         weight += n
     return total / max(weight, 1)
-
-
-def _bins(gaps: list[float], n_bins: int) -> dict[str, Any]:
-    """Bins of log gaps: one per distinct value if few, else quantile bins.
-
-    ``edges`` are the inner bin boundaries in log seconds (a gap falls in
-    bin ``i`` when ``edges[i-1] < log(gap) <= edges[i]``); ``values`` holds,
-    per bin, a sketch of the training gaps in seconds that fell in it.
-    """
-    if not gaps:
-        return {"edges": [], "values": [[1.0]]}
-    logs = sorted(math.log(g) for g in gaps)
-    distinct = sorted(set(logs))
-    if len(distinct) <= n_bins:
-        edges = [(a + b) / 2 for a, b in pairwise(distinct)]
-    else:
-        quantiles = [
-            logs[round(i * (len(logs) - 1) / n_bins)] for i in range(1, n_bins)
-        ]
-        edges = sorted(set(quantiles))
-    members: list[list[float]] = [[] for _ in range(len(edges) + 1)]
-    for gap in gaps:
-        members[bisect_left(edges, math.log(gap))].append(gap)
-    values = [
-        sketch(m, 64) or [math.exp(e)]
-        for m, e in zip(members, [*edges, edges[-1] if edges else 0.0], strict=True)
-    ]
-    return {"edges": edges, "values": values}
-
-
-def _encode(tensor: Any) -> dict[str, Any]:
-    data = array("f", tensor.detach().reshape(-1).tolist()).tobytes()
-    return {
-        "shape": list(tensor.shape),
-        "float32": base64.b64encode(data).decode("ascii"),
-    }
-
-
-def _decode(torch: Any, item: Mapping[str, Any]) -> Any:
-    values = array("f")
-    values.frombytes(base64.b64decode(item["float32"]))
-    return torch.tensor(values.tolist(), dtype=torch.float32).reshape(item["shape"])
-
-
-def _draw(rng: random.Random, weights: list[float]) -> int:
-    threshold = rng.random() * sum(weights)
-    acc = 0.0
-    for i, w in enumerate(weights):
-        acc += w
-        if threshold < acc:
-            return i
-    return len(weights) - 1

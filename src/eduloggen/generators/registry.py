@@ -15,6 +15,7 @@ from eduloggen.generators.gru import GRUGenerator
 from eduloggen.generators.markov import MarkovGenerator
 from eduloggen.generators.semi_markov import SemiMarkovGenerator
 from eduloggen.generators.statistical import IndependentGenerator
+from eduloggen.generators.transformer import TransformerGenerator
 
 __all__ = [
     "BUILTIN_GENERATORS",
@@ -107,11 +108,18 @@ for _builtin in (
     SemiMarkovGenerator,
     IndependentGenerator,
     GRUGenerator,
+    TransformerGenerator,
 ):
     register_generator(_builtin.name, _builtin)
 
 BUILTIN_GENERATORS: frozenset[str] = frozenset(
     g.name
-    for g in (MarkovGenerator, SemiMarkovGenerator, IndependentGenerator, GRUGenerator)
+    for g in (
+        MarkovGenerator,
+        SemiMarkovGenerator,
+        IndependentGenerator,
+        GRUGenerator,
+        TransformerGenerator,
+    )
 )
 """Names of the generators shipped with EduLogGen."""
