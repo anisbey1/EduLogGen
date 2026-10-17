@@ -199,17 +199,42 @@ same = gen.load("transformer_model/")
 
 ## Cost
 
-Measured on a laptop CPU (Intel Core i9-9880H, 8 training threads):
+Measured on a laptop CPU (Intel Core i9-9880H; training on 8 threads,
+generation on one), default hyperparameters unless stated:
 
-| Data | Training | Generation |
-| ---- | -------- | ---------- |
-| Demo course, tutorial settings | about 20 s | about 1 s per 100 sessions |
-| OULAD module (short weekly sessions) | about a minute | about 1 ms per event |
-| EdNet sample (10,580 sessions, median 49 events) | about 90 s per epoch | about 2.3 ms per event |
+| Data | Training | Generation | Peak memory |
+| ---- | -------- | ---------- | ----------- |
+| Demo course, tutorial settings | about 20 s | about 1 s per 100 sessions | – |
+| OULAD module (weekly sessions of at most 7 events) | 1–5 min | 0.8–1.1 ms per event | 0.4–0.7 GB |
+| EdNet sample (7,098 training sessions, median 49 events) | 84 min | 2.4 ms per event | 3.3 GB |
 
-Generation is sequential, one event at a time, so it dominates the cost of
-large benchmarks. The [case studies](case-study-oulad.md) compare all
-generators on held-out learners.
+For comparison, Markov generators fit EdNet in about 10 s and generate
+0.04 ms per event. Generation is sequential, one event at a time, so it
+dominates the cost of large benchmarks.
+
+## How it compares
+
+On the OULAD and EdNet case studies (`studies/RESULTS_v16.md`; held-out
+learners, three seeds, default hyperparameters, no tuning for any
+generator):
+
+| | Bigram TVD ↓ OULAD / EdNet | Inter-event time KS ↓ OULAD / EdNet |
+| --- | --- | --- |
+| Real vs real | 0.038 / 0.052 | 0.010 / 0.019 |
+| Markov-1 | 0.074 / 0.061 | 0.281 / 0.507 |
+| Semi-Markov | 0.073 / 0.063 | 0.013 / 0.028 |
+| GRU (same validation and stopping rules) | 0.095 / 0.079 | 0.014 / 0.028 |
+| Transformer | 0.096 / 0.108 | 0.019 / 0.043 |
+
+With these untuned defaults, the Transformer reproduces timing but not
+event sequences better than the much simpler and faster Markov models; on
+EdNet it is the least faithful neural generator. In the sensitivity runs, a
+32-event context gave the lowest EdNet bigram error (0.069), and results
+varied non-monotonically with training-data size, which points to
+run-to-run variability of untuned training rather than a clear data-size
+effect. These are measurements of one configuration, not evidence about
+Transformers in general; tuning on inner-validation learners may change
+them. The [case studies](case-study-oulad.md) compare all generators.
 
 ## Limitations
 

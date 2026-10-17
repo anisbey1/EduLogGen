@@ -7,6 +7,14 @@ Release history for EduLogGen follows
 The canonical changelog lives in the repository root as
 [`CHANGELOG.md`](https://github.com/anisbey1/EduLogGen/blob/main/CHANGELOG.md).
 
+## [1.6.0] - 2026-10-17
+
+An optional time-aware Transformer generator (`eduloggen[neural]`), an
+opt-in learner-level validation split for the GRU, and a six-generator
+comparison with cost and sensitivity studies. Untuned, the Transformer
+reproduces timing but not event sequences better than the Markov
+generators.
+
 ## [1.5.0] - 2026-10-10
 
 An optional GRU neural generator (`eduloggen[neural]`), and reproducible

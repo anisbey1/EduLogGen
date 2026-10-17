@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-17
+
+An optional time-aware Transformer generator, new and experimental:
+measured as an untuned neural baseline, it reproduces timing but not event
+sequences better than the Markov generators (`studies/RESULTS_v16.md`).
+
 ### Added
 
 - `transformer` generator (optional extra `eduloggen[neural]`): a
@@ -342,7 +348,8 @@ validate them, compare generators, and plot the results, from Python or the
   validation, visualization, and CLI
 - MIT license and Semantic Versioning policy
 
-[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/anisbey1/EduLogGen/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/anisbey1/EduLogGen/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/anisbey1/EduLogGen/compare/v1.4.2...v1.5.0
 [1.4.2]: https://github.com/anisbey1/EduLogGen/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/anisbey1/EduLogGen/compare/v1.4.0...v1.4.1

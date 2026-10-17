@@ -11,15 +11,15 @@ Mean ± SD over the seven modules. Real vs real: training vs holdout learners.
 
 | Metric | Real vs real | Independent | Markov-1 | Markov-2 | Semi-Markov | GRU (v1.5.0 defaults) | GRU (matched) | Transformer |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Event-type TVD ↓ | 0.022 | 0.021 ± 0.004 | 0.028 ± 0.005 | 0.031 ± 0.011 | 0.027 ± 0.009 | 0.047 ± 0.014 | pending | pending |
-| Activity JSD ↓ | 0.003 | 0.004 ± 0.002 | 0.004 ± 0.002 | 0.004 ± 0.001 | 0.004 ± 0.002 | 0.005 ± 0.002 | pending | pending |
-| Bigram TVD ↓ | 0.038 | 0.220 ± 0.022 | 0.074 ± 0.015 | 0.079 ± 0.016 | 0.073 ± 0.011 | 0.098 ± 0.022 | pending | pending |
-| Transition JSD ↓ | 0.002 | 0.049 ± 0.010 | 0.003 ± 0.002 | 0.003 ± 0.002 | 0.003 ± 0.001 | 0.005 ± 0.002 | pending | pending |
-| Session-length KS ↓ | 0.020 | 0.023 ± 0.017 | 0.020 ± 0.014 | 0.020 ± 0.014 | 0.021 ± 0.017 | 0.022 ± 0.014 | pending | pending |
-| Inter-event time KS ↓ | 0.010 | 0.281 ± 0.049 | 0.281 ± 0.049 | 0.281 ± 0.049 | 0.013 ± 0.011 | 0.017 ± 0.009 | pending | pending |
-| Top-10 path overlap ↑ | 0.900 | 0.700 ± 0.115 | 0.833 ± 0.077 | 0.814 ± 0.112 | 0.838 ± 0.078 | 0.819 ± 0.121 | pending | pending |
-| Exact duplicates vs holdout (diagnostic) | 0.770 | 0.657 ± 0.053 | 0.726 ± 0.034 | 0.747 ± 0.034 | 0.726 ± 0.042 | 0.745 ± 0.043 | pending | pending |
-| NN edit distance, 5th pct. ↑ | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | pending | pending |
+| Event-type TVD ↓ | 0.022 | 0.021 ± 0.004 | 0.028 ± 0.005 | 0.031 ± 0.011 | 0.027 ± 0.009 | 0.047 ± 0.014 | 0.044 ± 0.016 | 0.044 ± 0.022 |
+| Activity JSD ↓ | 0.003 | 0.004 ± 0.002 | 0.004 ± 0.002 | 0.004 ± 0.001 | 0.004 ± 0.002 | 0.005 ± 0.002 | 0.005 ± 0.002 | 0.005 ± 0.002 |
+| Bigram TVD ↓ | 0.038 | 0.220 ± 0.022 | 0.074 ± 0.015 | 0.079 ± 0.016 | 0.073 ± 0.011 | 0.098 ± 0.022 | 0.095 ± 0.021 | 0.096 ± 0.024 |
+| Transition JSD ↓ | 0.002 | 0.049 ± 0.010 | 0.003 ± 0.002 | 0.003 ± 0.002 | 0.003 ± 0.001 | 0.005 ± 0.002 | 0.004 ± 0.002 | 0.005 ± 0.002 |
+| Session-length KS ↓ | 0.020 | 0.023 ± 0.017 | 0.020 ± 0.014 | 0.020 ± 0.014 | 0.021 ± 0.017 | 0.022 ± 0.014 | 0.022 ± 0.014 | 0.021 ± 0.016 |
+| Inter-event time KS ↓ | 0.010 | 0.281 ± 0.049 | 0.281 ± 0.049 | 0.281 ± 0.049 | 0.013 ± 0.011 | 0.017 ± 0.009 | 0.014 ± 0.009 | 0.019 ± 0.012 |
+| Top-10 path overlap ↑ | 0.900 | 0.700 ± 0.115 | 0.833 ± 0.077 | 0.814 ± 0.112 | 0.838 ± 0.078 | 0.819 ± 0.121 | 0.790 ± 0.098 | 0.781 ± 0.107 |
+| Exact duplicates vs holdout (diagnostic) | 0.770 | 0.657 ± 0.053 | 0.726 ± 0.034 | 0.747 ± 0.034 | 0.726 ± 0.042 | 0.745 ± 0.043 | 0.749 ± 0.039 | 0.749 ± 0.032 |
+| NN edit distance, 5th pct. ↑ | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
 
 ### EdNet-KT4, 2,000 students
 
@@ -27,15 +27,15 @@ Mean ± SD over three generation seeds. Real vs real: training vs holdout learne
 
 | Metric | Real vs real | Independent | Markov-1 | Markov-2 | Semi-Markov | GRU (v1.5.0 defaults) | GRU (matched) | Transformer |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Event-type TVD ↓ | 0.039 | 0.039 ± 0.000 | 0.047 ± 0.002 | 0.045 ± 0.002 | 0.048 ± 0.002 | 0.054 ± 0.005 | pending | pending |
-| Activity JSD ↓ | 0.108 | 0.125 ± 0.000 | 0.131 ± 0.001 | 0.132 ± 0.001 | 0.133 ± 0.002 | 0.123 ± 0.000 | pending | pending |
-| Bigram TVD ↓ | 0.052 | 0.655 ± 0.001 | 0.061 ± 0.002 | 0.059 ± 0.002 | 0.063 ± 0.002 | 0.094 ± 0.006 | pending | pending |
-| Transition JSD ↓ | 0.004 | 0.488 ± 0.001 | 0.004 ± 0.000 | 0.004 ± 0.000 | 0.004 ± 0.000 | 0.009 ± 0.001 | pending | pending |
-| Session-length KS ↓ | 0.084 | 0.079 ± 0.004 | 0.085 ± 0.003 | 0.085 ± 0.003 | 0.086 ± 0.003 | 0.089 ± 0.014 | pending | pending |
-| Inter-event time KS ↓ | 0.019 | 0.507 ± 0.000 | 0.507 ± 0.000 | 0.507 ± 0.000 | 0.028 ± 0.000 | 0.032 ± 0.000 | pending | pending |
-| Top-10 path overlap ↑ | 1.000 | 0.100 ± 0.000 | 0.800 ± 0.000 | 1.000 ± 0.000 | 0.800 ± 0.000 | 0.800 ± 0.000 | pending | pending |
-| Exact duplicates vs holdout (diagnostic) | 0.206 | 0.000 ± 0.000 | 0.021 ± 0.004 | 0.035 ± 0.005 | 0.021 ± 0.004 | 0.069 ± 0.006 | pending | pending |
-| NN edit distance, 5th pct. ↑ | 0.000 | 0.500 ± 0.000 | 0.180 ± 0.050 | 0.169 ± 0.062 | 0.186 ± 0.024 | 0.032 ± 0.015 | pending | pending |
+| Event-type TVD ↓ | 0.039 | 0.039 ± 0.000 | 0.047 ± 0.002 | 0.045 ± 0.002 | 0.048 ± 0.002 | 0.054 ± 0.005 | 0.044 ± 0.008 | 0.097 ± 0.005 |
+| Activity JSD ↓ | 0.108 | 0.125 ± 0.000 | 0.131 ± 0.001 | 0.132 ± 0.001 | 0.133 ± 0.002 | 0.123 ± 0.000 | 0.122 ± 0.001 | 0.123 ± 0.000 |
+| Bigram TVD ↓ | 0.052 | 0.655 ± 0.001 | 0.061 ± 0.002 | 0.059 ± 0.002 | 0.063 ± 0.002 | 0.094 ± 0.006 | 0.079 ± 0.004 | 0.108 ± 0.006 |
+| Transition JSD ↓ | 0.004 | 0.488 ± 0.001 | 0.004 ± 0.000 | 0.004 ± 0.000 | 0.004 ± 0.000 | 0.009 ± 0.001 | 0.005 ± 0.000 | 0.009 ± 0.001 |
+| Session-length KS ↓ | 0.084 | 0.079 ± 0.004 | 0.085 ± 0.003 | 0.085 ± 0.003 | 0.086 ± 0.003 | 0.089 ± 0.014 | 0.089 ± 0.014 | 0.090 ± 0.008 |
+| Inter-event time KS ↓ | 0.019 | 0.507 ± 0.000 | 0.507 ± 0.000 | 0.507 ± 0.000 | 0.028 ± 0.000 | 0.032 ± 0.000 | 0.028 ± 0.000 | 0.043 ± 0.003 |
+| Top-10 path overlap ↑ | 1.000 | 0.100 ± 0.000 | 0.800 ± 0.000 | 1.000 ± 0.000 | 0.800 ± 0.000 | 0.800 ± 0.000 | 0.833 ± 0.058 | 0.700 ± 0.000 |
+| Exact duplicates vs holdout (diagnostic) | 0.206 | 0.000 ± 0.000 | 0.021 ± 0.004 | 0.035 ± 0.005 | 0.021 ± 0.004 | 0.069 ± 0.006 | 0.063 ± 0.003 | 0.071 ± 0.005 |
+| NN edit distance, 5th pct. ↑ | 0.000 | 0.500 ± 0.000 | 0.180 ± 0.050 | 0.169 ± 0.062 | 0.186 ± 0.024 | 0.032 ± 0.015 | 0.030 ± 0.026 | 0.017 ± 0.029 |
 
 ### OULAD per module (mean ± SD over three seeds)
 
@@ -45,30 +45,30 @@ Mean ± SD over three generation seeds. Real vs real: training vs holdout learne
 | AAA-2014J | Inter-event time KS ↓ | 0.015 | 0.245 ± 0.000 | 0.245 ± 0.000 | 0.245 ± 0.000 | 0.007 ± 0.004 | 0.010 ± 0.002 | 0.018 ± 0.004 | 0.022 ± 0.003 |
 | AAA-2014J | Event-type TVD ↓ | 0.025 | 0.022 ± 0.004 | 0.017 ± 0.004 | 0.010 ± 0.005 | 0.010 ± 0.004 | 0.040 ± 0.009 | 0.024 ± 0.008 | 0.057 ± 0.002 |
 | AAA-2014J | Session-length KS ↓ | 0.054 | 0.058 ± 0.004 | 0.051 ± 0.006 | 0.051 ± 0.006 | 0.058 ± 0.007 | 0.053 ± 0.011 | 0.053 ± 0.011 | 0.057 ± 0.009 |
-| BBB-2014J | Bigram TVD ↓ | 0.049 | 0.183 ± 0.003 | 0.078 ± 0.004 | 0.083 ± 0.003 | 0.078 ± 0.002 | 0.115 ± 0.004 | 0.088 ± 0.005 | pending |
-| BBB-2014J | Inter-event time KS ↓ | 0.004 | 0.348 ± 0.000 | 0.348 ± 0.000 | 0.348 ± 0.000 | 0.004 ± 0.001 | 0.015 ± 0.004 | 0.010 ± 0.001 | pending |
-| BBB-2014J | Event-type TVD ↓ | 0.030 | 0.031 ± 0.003 | 0.033 ± 0.002 | 0.037 ± 0.002 | 0.036 ± 0.001 | 0.055 ± 0.004 | 0.039 ± 0.004 | pending |
-| BBB-2014J | Session-length KS ↓ | 0.007 | 0.007 ± 0.003 | 0.008 ± 0.003 | 0.008 ± 0.003 | 0.009 ± 0.003 | 0.012 ± 0.000 | 0.012 ± 0.000 | pending |
-| CCC-2014J | Bigram TVD ↓ | 0.036 | 0.242 ± 0.002 | 0.076 ± 0.002 | 0.083 ± 0.002 | 0.078 ± 0.003 | 0.104 ± 0.008 | pending | pending |
-| CCC-2014J | Inter-event time KS ↓ | 0.009 | 0.266 ± 0.000 | 0.266 ± 0.000 | 0.266 ± 0.000 | 0.020 ± 0.002 | 0.032 ± 0.001 | pending | pending |
-| CCC-2014J | Event-type TVD ↓ | 0.023 | 0.022 ± 0.002 | 0.027 ± 0.003 | 0.033 ± 0.004 | 0.027 ± 0.000 | 0.057 ± 0.002 | pending | pending |
-| CCC-2014J | Session-length KS ↓ | 0.011 | 0.015 ± 0.000 | 0.013 ± 0.000 | 0.013 ± 0.000 | 0.013 ± 0.001 | 0.015 ± 0.003 | pending | pending |
-| DDD-2014J | Bigram TVD ↓ | 0.030 | 0.217 ± 0.004 | 0.085 ± 0.002 | 0.095 ± 0.000 | 0.086 ± 0.005 | 0.122 ± 0.007 | pending | pending |
-| DDD-2014J | Inter-event time KS ↓ | 0.011 | 0.278 ± 0.000 | 0.278 ± 0.000 | 0.278 ± 0.000 | 0.022 ± 0.001 | 0.007 ± 0.004 | pending | pending |
-| DDD-2014J | Event-type TVD ↓ | 0.017 | 0.017 ± 0.006 | 0.032 ± 0.001 | 0.043 ± 0.002 | 0.033 ± 0.002 | 0.069 ± 0.005 | pending | pending |
-| DDD-2014J | Session-length KS ↓ | 0.013 | 0.018 ± 0.000 | 0.015 ± 0.002 | 0.015 ± 0.002 | 0.012 ± 0.001 | 0.014 ± 0.002 | pending | pending |
-| EEE-2014J | Bigram TVD ↓ | 0.033 | 0.243 ± 0.006 | 0.069 ± 0.005 | 0.075 ± 0.007 | 0.073 ± 0.011 | 0.080 ± 0.001 | pending | pending |
-| EEE-2014J | Inter-event time KS ↓ | 0.008 | 0.258 ± 0.000 | 0.258 ± 0.000 | 0.258 ± 0.000 | 0.003 ± 0.001 | 0.027 ± 0.005 | pending | pending |
-| EEE-2014J | Event-type TVD ↓ | 0.019 | 0.019 ± 0.003 | 0.031 ± 0.003 | 0.039 ± 0.004 | 0.033 ± 0.009 | 0.036 ± 0.001 | pending | pending |
-| EEE-2014J | Session-length KS ↓ | 0.021 | 0.023 ± 0.001 | 0.023 ± 0.009 | 0.023 ± 0.009 | 0.021 ± 0.003 | 0.021 ± 0.006 | pending | pending |
-| FFF-2014J | Bigram TVD ↓ | 0.034 | 0.219 ± 0.004 | 0.061 ± 0.004 | 0.062 ± 0.003 | 0.060 ± 0.003 | 0.060 ± 0.005 | pending | pending |
-| FFF-2014J | Inter-event time KS ↓ | 0.002 | 0.222 ± 0.000 | 0.222 ± 0.000 | 0.222 ± 0.000 | 0.003 ± 0.001 | 0.010 ± 0.003 | pending | pending |
-| FFF-2014J | Event-type TVD ↓ | 0.022 | 0.022 ± 0.003 | 0.028 ± 0.002 | 0.030 ± 0.002 | 0.026 ± 0.001 | 0.027 ± 0.005 | pending | pending |
-| FFF-2014J | Session-length KS ↓ | 0.015 | 0.014 ± 0.004 | 0.018 ± 0.003 | 0.018 ± 0.003 | 0.013 ± 0.004 | 0.015 ± 0.003 | pending | pending |
-| GGG-2014J | Bigram TVD ↓ | 0.052 | 0.206 ± 0.011 | 0.096 ± 0.018 | 0.097 ± 0.017 | 0.082 ± 0.003 | 0.116 ± 0.011 | pending | pending |
-| GGG-2014J | Inter-event time KS ↓ | 0.025 | 0.349 ± 0.000 | 0.349 ± 0.000 | 0.349 ± 0.000 | 0.030 ± 0.010 | 0.020 ± 0.008 | pending | pending |
-| GGG-2014J | Event-type TVD ↓ | 0.017 | 0.019 ± 0.008 | 0.025 ± 0.004 | 0.028 ± 0.004 | 0.021 ± 0.006 | 0.042 ± 0.010 | pending | pending |
-| GGG-2014J | Session-length KS ↓ | 0.019 | 0.025 ± 0.005 | 0.014 ± 0.005 | 0.014 ± 0.005 | 0.018 ± 0.006 | 0.027 ± 0.003 | pending | pending |
+| BBB-2014J | Bigram TVD ↓ | 0.049 | 0.183 ± 0.003 | 0.078 ± 0.004 | 0.083 ± 0.003 | 0.078 ± 0.002 | 0.115 ± 0.004 | 0.088 ± 0.005 | 0.075 ± 0.002 |
+| BBB-2014J | Inter-event time KS ↓ | 0.004 | 0.348 ± 0.000 | 0.348 ± 0.000 | 0.348 ± 0.000 | 0.004 ± 0.001 | 0.015 ± 0.004 | 0.010 ± 0.001 | 0.043 ± 0.001 |
+| BBB-2014J | Event-type TVD ↓ | 0.030 | 0.031 ± 0.003 | 0.033 ± 0.002 | 0.037 ± 0.002 | 0.036 ± 0.001 | 0.055 ± 0.004 | 0.039 ± 0.004 | 0.024 ± 0.004 |
+| BBB-2014J | Session-length KS ↓ | 0.007 | 0.007 ± 0.003 | 0.008 ± 0.003 | 0.008 ± 0.003 | 0.009 ± 0.003 | 0.012 ± 0.000 | 0.012 ± 0.000 | 0.007 ± 0.002 |
+| CCC-2014J | Bigram TVD ↓ | 0.036 | 0.242 ± 0.002 | 0.076 ± 0.002 | 0.083 ± 0.002 | 0.078 ± 0.003 | 0.104 ± 0.008 | 0.100 ± 0.007 | 0.122 ± 0.003 |
+| CCC-2014J | Inter-event time KS ↓ | 0.009 | 0.266 ± 0.000 | 0.266 ± 0.000 | 0.266 ± 0.000 | 0.020 ± 0.002 | 0.032 ± 0.001 | 0.032 ± 0.001 | 0.017 ± 0.002 |
+| CCC-2014J | Event-type TVD ↓ | 0.023 | 0.022 ± 0.002 | 0.027 ± 0.003 | 0.033 ± 0.004 | 0.027 ± 0.000 | 0.057 ± 0.002 | 0.045 ± 0.002 | 0.068 ± 0.002 |
+| CCC-2014J | Session-length KS ↓ | 0.011 | 0.015 ± 0.000 | 0.013 ± 0.000 | 0.013 ± 0.000 | 0.013 ± 0.001 | 0.015 ± 0.003 | 0.015 ± 0.003 | 0.013 ± 0.002 |
+| DDD-2014J | Bigram TVD ↓ | 0.030 | 0.217 ± 0.004 | 0.085 ± 0.002 | 0.095 ± 0.000 | 0.086 ± 0.005 | 0.122 ± 0.007 | 0.130 ± 0.005 | 0.122 ± 0.001 |
+| DDD-2014J | Inter-event time KS ↓ | 0.011 | 0.278 ± 0.000 | 0.278 ± 0.000 | 0.278 ± 0.000 | 0.022 ± 0.001 | 0.007 ± 0.004 | 0.009 ± 0.004 | 0.015 ± 0.003 |
+| DDD-2014J | Event-type TVD ↓ | 0.017 | 0.017 ± 0.006 | 0.032 ± 0.001 | 0.043 ± 0.002 | 0.033 ± 0.002 | 0.069 ± 0.005 | 0.076 ± 0.003 | 0.072 ± 0.001 |
+| DDD-2014J | Session-length KS ↓ | 0.013 | 0.018 ± 0.000 | 0.015 ± 0.002 | 0.015 ± 0.002 | 0.012 ± 0.001 | 0.014 ± 0.002 | 0.014 ± 0.002 | 0.016 ± 0.005 |
+| EEE-2014J | Bigram TVD ↓ | 0.033 | 0.243 ± 0.006 | 0.069 ± 0.005 | 0.075 ± 0.007 | 0.073 ± 0.011 | 0.080 ± 0.001 | 0.087 ± 0.007 | 0.089 ± 0.005 |
+| EEE-2014J | Inter-event time KS ↓ | 0.008 | 0.258 ± 0.000 | 0.258 ± 0.000 | 0.258 ± 0.000 | 0.003 ± 0.001 | 0.027 ± 0.005 | 0.006 ± 0.001 | 0.007 ± 0.002 |
+| EEE-2014J | Event-type TVD ↓ | 0.019 | 0.019 ± 0.003 | 0.031 ± 0.003 | 0.039 ± 0.004 | 0.033 ± 0.009 | 0.036 ± 0.001 | 0.042 ± 0.006 | 0.038 ± 0.004 |
+| EEE-2014J | Session-length KS ↓ | 0.021 | 0.023 ± 0.001 | 0.023 ± 0.009 | 0.023 ± 0.009 | 0.021 ± 0.003 | 0.021 ± 0.006 | 0.021 ± 0.006 | 0.016 ± 0.007 |
+| FFF-2014J | Bigram TVD ↓ | 0.034 | 0.219 ± 0.004 | 0.061 ± 0.004 | 0.062 ± 0.003 | 0.060 ± 0.003 | 0.060 ± 0.005 | 0.072 ± 0.007 | 0.058 ± 0.003 |
+| FFF-2014J | Inter-event time KS ↓ | 0.002 | 0.222 ± 0.000 | 0.222 ± 0.000 | 0.222 ± 0.000 | 0.003 ± 0.001 | 0.010 ± 0.003 | 0.009 ± 0.003 | 0.009 ± 0.001 |
+| FFF-2014J | Event-type TVD ↓ | 0.022 | 0.022 ± 0.003 | 0.028 ± 0.002 | 0.030 ± 0.002 | 0.026 ± 0.001 | 0.027 ± 0.005 | 0.034 ± 0.007 | 0.019 ± 0.003 |
+| FFF-2014J | Session-length KS ↓ | 0.015 | 0.014 ± 0.004 | 0.018 ± 0.003 | 0.018 ± 0.003 | 0.013 ± 0.004 | 0.015 ± 0.003 | 0.015 ± 0.003 | 0.021 ± 0.007 |
+| GGG-2014J | Bigram TVD ↓ | 0.052 | 0.206 ± 0.011 | 0.096 ± 0.018 | 0.097 ± 0.017 | 0.082 ± 0.003 | 0.116 ± 0.011 | 0.112 ± 0.005 | 0.097 ± 0.003 |
+| GGG-2014J | Inter-event time KS ↓ | 0.025 | 0.349 ± 0.000 | 0.349 ± 0.000 | 0.349 ± 0.000 | 0.030 ± 0.010 | 0.020 ± 0.008 | 0.017 ± 0.005 | 0.020 ± 0.007 |
+| GGG-2014J | Event-type TVD ↓ | 0.017 | 0.019 ± 0.008 | 0.025 ± 0.004 | 0.028 ± 0.004 | 0.021 ± 0.006 | 0.042 ± 0.010 | 0.045 ± 0.010 | 0.030 ± 0.003 |
+| GGG-2014J | Session-length KS ↓ | 0.019 | 0.025 ± 0.005 | 0.014 ± 0.005 | 0.014 ± 0.005 | 0.018 ± 0.006 | 0.027 ± 0.003 | 0.027 ± 0.002 | 0.019 ± 0.012 |
 
 ### EdNet per seed
 
@@ -84,10 +84,10 @@ Mean ± SD over three generation seeds. Real vs real: training vs holdout learne
 | Semi-Markov | Inter-event time KS ↓ | 0.0275 | 0.0275 | 0.0275 |
 | GRU (v1.5.0 defaults) | Bigram TVD ↓ | 0.0892 | 0.0999 | 0.0921 |
 | GRU (v1.5.0 defaults) | Inter-event time KS ↓ | 0.0318 | 0.0321 | 0.0316 |
-| GRU (matched) | Bigram TVD ↓ | pending | pending | pending |
-| GRU (matched) | Inter-event time KS ↓ | pending | pending | pending |
-| Transformer | Bigram TVD ↓ | pending | pending | pending |
-| Transformer | Inter-event time KS ↓ | pending | pending | pending |
+| GRU (matched) | Bigram TVD ↓ | 0.0823 | 0.0750 | 0.0808 |
+| GRU (matched) | Inter-event time KS ↓ | 0.0275 | 0.0275 | 0.0275 |
+| Transformer | Bigram TVD ↓ | 0.1084 | 0.1144 | 0.1021 |
+| Transformer | Inter-event time KS ↓ | 0.0405 | 0.0451 | 0.0445 |
 
 ## Memorisation
 
@@ -101,8 +101,8 @@ Ranges over modules where several. Holdout = unseen real learners (baseline).
 | Markov-2 | 5.1%–8.0% | 80.3%–85.5% | 0.0%–1.4% | 0.0%–3.7% | 0.63–0.94 |
 | Semi-Markov | 6.1%–8.1% | 76.8%–85.9% | 0.0%–0.9% | 0.0%–2.4% | 0.64–0.90 |
 | GRU (v1.5.0 defaults) | 5.3%–8.9% | 78.0%–86.3% | 0.0%–1.1% | 0.0%–3.0% | 0.62–0.92 |
-| GRU (matched) | pending | pending | pending | pending | pending |
-| Transformer | pending | pending | pending | pending | pending |
+| GRU (matched) | 5.5%–8.6% | 79.9%–86.8% | 0.0%–1.1% | 0.0%–3.0% | 0.64–0.95 |
+| Transformer | 5.6%–8.0% | 79.3%–86.1% | 0.0%–1.0% | 0.0%–3.0% | 0.60–0.93 |
 
 ### Memorisation against training learners: EdNet
 
@@ -114,8 +114,8 @@ Ranges over modules where several. Holdout = unseen real learners (baseline).
 | Markov-2 | 0.3% | 2.9% | 0.0% | 0.0% | 1.63 |
 | Semi-Markov | 0.2% | 1.8% | 0.0% | 0.0% | 1.26 |
 | GRU (v1.5.0 defaults) | 1.4% | 7.1% | 0.0% | 0.0% | 1.07 |
-| GRU (matched) | pending | pending | pending | pending | pending |
-| Transformer | pending | pending | pending | pending | pending |
+| GRU (matched) | 1.5% | 6.6% | 0.0% | 0.0% | 1.11 |
+| Transformer | 1.3% | 7.6% | 0.0% | 0.0% | 1.16 |
 
 ## Cost
 
@@ -125,13 +125,13 @@ One fit on the training learners and one holdout-size sample, each generator in 
 
 | Generator | Fit (s) | Generation (ms per event) | Peak memory (MB) | Parameters | Model JSON (MB) |
 | --- | --- | --- | --- | --- | --- |
-| Independent | pending | pending | pending | pending | pending |
-| Markov-1 | pending | pending | pending | pending | pending |
-| Markov-2 | pending | pending | pending | pending | pending |
-| Semi-Markov | pending | pending | pending | pending | pending |
-| GRU (v1.5.0 defaults) | pending | pending | pending | pending | pending |
-| GRU (matched) | pending | pending | pending | pending | pending |
-| Transformer | pending | pending | pending | pending | pending |
+| Independent | 0.4–2.1 | 0.041–0.060 | 102–418 | – | 0.01–0.02 |
+| Markov-1 | 0.4–2.5 | 0.041–0.056 | 103–436 | – | 0.02 |
+| Markov-2 | 0.4–2.3 | 0.043–0.110 | 105–434 | – | 0.02–0.04 |
+| Semi-Markov | 0.4–2.7 | 0.043–0.117 | 103–426 | – | 0.05–0.09 |
+| GRU (v1.5.0 defaults) | 10.4–51.7 | 0.238–0.330 | 308–649 | 20,758 | 0.12–0.13 |
+| GRU (matched) | 18.9–120.3 | 0.222–0.297 | 313–658 | 20,758 | 0.12–0.13 |
+| Transformer | 66.7–295.6 | 0.782–1.064 | 407–730 | 304,151 | 1.56–1.57 |
 
 ### Cost: EdNet
 
@@ -139,13 +139,13 @@ One fit on the training learners and one holdout-size sample, each generator in 
 
 | Generator | Fit (s) | Generation (ms per event) | Peak memory (MB) | Parameters | Model JSON (MB) |
 | --- | --- | --- | --- | --- | --- |
-| Independent | pending | pending | pending | pending | pending |
-| Markov-1 | pending | pending | pending | pending | pending |
-| Markov-2 | pending | pending | pending | pending | pending |
-| Semi-Markov | pending | pending | pending | pending | pending |
-| GRU (v1.5.0 defaults) | pending | pending | pending | pending | pending |
-| GRU (matched) | pending | pending | pending | pending | pending |
-| Transformer | pending | pending | pending | pending | pending |
+| Independent | 9.6 | 0.041 | 2053 | – | 0.66 |
+| Markov-1 | 10.1 | 0.040 | 2053 | – | 0.66 |
+| Markov-2 | 9.9 | 0.045 | 2050 | – | 0.68 |
+| Semi-Markov | 10.3 | 0.043 | 2075 | – | 0.76 |
+| GRU (v1.5.0 defaults) | 375.6 | 0.309 | 2593 | 22,642 | 0.79 |
+| GRU (matched) | 1015.9 | 0.230 | 2474 | 22,642 | 0.79 |
+| Transformer | 5018.3 | 2.363 | 3344 | 311,347 | 2.26 |
 
 ## Transformer sensitivity
 
@@ -155,10 +155,10 @@ Fast fidelity metrics (no privacy diagnostics), mean ± SD over three seeds.
 
 | max_seq_len | Bigram TVD ↓ | Transition JSD ↓ | Inter-event time KS ↓ | Session-length KS ↓ | Fit (s) | Generation (s per sample) | Peak memory (MB) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 32 | pending | pending | pending | pending | pending | pending | pending |
-| 64 | pending | pending | pending | pending | pending | pending | pending |
-| 128 | pending | pending | pending | pending | pending | pending | pending |
-| 256 | pending | pending | pending | pending | pending | pending | pending |
+| 32 | 0.069 ± 0.000 | 0.007 ± 0.000 | 0.028 ± 0.000 | 0.088 ± 0.002 | 1079 | 328 | 2710 |
+| 64 | 0.115 ± 0.002 | 0.014 ± 0.001 | 0.033 ± 0.002 | 0.088 ± 0.002 | 2041 | 417 | 2763 |
+| 128 | 0.128 ± 0.006 | 0.012 ± 0.001 | 0.060 ± 0.002 | 0.088 ± 0.002 | 2792 | 524 | 3162 |
+| 256 | 0.104 ± 0.003 | 0.009 ± 0.000 | 0.044 ± 0.003 | 0.088 ± 0.002 | 4574 | 868 | 3816 |
 
 ### Training-data size (nested subsets of the training learners)
 
@@ -166,11 +166,11 @@ Bigram TVD ↓ / inter-event time KS ↓; OULAD: mean over the seven modules; Ed
 
 | Data | Generator | 10% | 25% | 50% | 100% |
 | --- | --- | --- | --- | --- | --- |
-| OULAD | Markov-1 | pending | pending | pending | pending |
-| OULAD | Semi-Markov | pending | pending | pending | pending |
-| OULAD | GRU (matched) | pending | pending | pending | pending |
-| OULAD | Transformer | pending | pending | pending | pending |
-| EdNet | Markov-1 | pending | pending | pending | pending |
-| EdNet | Semi-Markov | pending | pending | pending | pending |
-| EdNet | GRU (matched) | pending | pending | pending | pending |
-| EdNet | Transformer | pending | pending | pending | pending |
+| OULAD | Markov-1 | 0.092 / 0.281 | 0.083 / 0.281 | 0.078 / 0.281 | 0.074 / 0.281 |
+| OULAD | Semi-Markov | 0.092 / 0.022 | 0.084 / 0.017 | 0.078 / 0.016 | 0.071 / 0.012 |
+| OULAD | GRU (matched) | 0.112 / 0.020 | 0.090 / 0.032 | 0.089 / 0.030 | 0.094 / 0.014 |
+| OULAD | Transformer | 0.130 / 0.039 | 0.108 / 0.031 | 0.094 / 0.027 | 0.099 / 0.017 |
+| EdNet | Markov-1 | 0.148 / 0.523 | 0.091 / 0.507 | 0.060 / 0.512 | 0.061 / 0.507 |
+| EdNet | Semi-Markov | 0.146 / 0.075 | 0.091 / 0.051 | 0.060 / 0.029 | 0.063 / 0.028 |
+| EdNet | GRU (matched) | 0.112 / 0.069 | 0.107 / 0.041 | 0.077 / 0.054 | 0.079 / 0.028 |
+| EdNet | Transformer | 0.170 / 0.080 | 0.083 / 0.051 | 0.147 / 0.030 | 0.104 / 0.044 |
