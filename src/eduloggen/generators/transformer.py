@@ -69,6 +69,8 @@ from eduloggen.core import FitError, GenerationError
 from eduloggen.generators._neural import (
     _bins,
     _decode,
+    _deterministic,
+    _device,
     _draw,
     _encode,
     _learner_validation,
@@ -207,7 +209,7 @@ class TransformerGenerator(BaseGenerator):
         threads = torch.get_num_threads()
         deterministic = torch.are_deterministic_algorithms_enabled()
         torch.set_num_threads(hp["threads"])
-        torch.use_deterministic_algorithms(True)
+        _deterministic(torch, device)
         try:
             torch.manual_seed(hp["seed"])
             net = _network(torch, len(vocabulary) + _FIRST_EVENT, n_bins, hp).to(device)
@@ -470,30 +472,6 @@ def _mean_loss(
 # ---------------------------------------------------------------------------
 # network
 # ---------------------------------------------------------------------------
-
-
-def _device(torch: Any, name: str) -> Any:
-    if name == "auto":
-        if torch.cuda.is_available():
-            name = "cuda"
-        elif getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
-            name = "mps"
-        else:
-            name = "cpu"
-    available = {
-        "cpu": True,
-        "cuda": torch.cuda.is_available(),
-        "mps": bool(
-            getattr(torch.backends, "mps", None) and torch.backends.mps.is_available()
-        ),
-    }
-    if not available[name]:
-        raise FitError(
-            f"device {name!r} is not available",
-            code="fit_invalid_hyperparameter",
-            context={"key": "device"},
-        )
-    return torch.device(name)
 
 
 def _network(torch: Any, n_events: int, n_bins: int, hp: Mapping[str, Any]) -> Any:

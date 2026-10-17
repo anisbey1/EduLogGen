@@ -149,8 +149,10 @@ Key hyperparameters: `order`, `smoothing_alpha`, `length_model`
 (`empirical`, `lognormal`, `gamma`, `exponential`). The `gru` generator
 takes `embedding_dim`, `hidden_dim`, `n_mixtures`, `epochs`, `batch_size`,
 `learning_rate`, `max_length` (sessions are truncated to this many events
-for training), `validation_fraction`, `patience`, `seed`, and `threads`.
-Its training is seeded and deterministic on CPU, and its models are saved as
+for training), `validation_fraction`, `validation_split` (`session` or
+`learner`), `patience`, `seed`, `threads`, and `device` (`cpu`, `cuda`,
+`mps`, or `auto`). Its training is seeded and deterministic on CPU (GPU
+training is best-effort deterministic only), and its models are saved as
 JSON like the others.
 
 ## Plot the results

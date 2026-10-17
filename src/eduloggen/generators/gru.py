@@ -35,6 +35,9 @@ Hyperparameters:
     with ``learner``, no learner appears in both the training and the
     early-stopping validation group. It is recorded in the model only when
     set to ``learner``, so default models keep their v1.5.0 fingerprints.
+    ``device`` (``cpu``, ``cuda``, ``mps``, or ``auto``; training only):
+    recorded only when not ``cpu``, for the same reason. GPU training is
+    best-effort deterministic only.
 """
 
 from __future__ import annotations
@@ -49,6 +52,8 @@ from eduloggen.core import FitError, GenerationError
 from eduloggen.generators._neural import (
     _bins,
     _decode,
+    _deterministic,
+    _device,
     _draw,
     _encode,
     _learner_validation,
@@ -102,11 +107,16 @@ class GRUGenerator(BaseGenerator):
         """Merge with defaults and validate (see the module docstring)."""
         given = dict(hyperparameters or {})
         split = given.pop("validation_split", "session")
+        device = given.pop("device", "cpu")
         merged = super().validate_hyperparameters(given)
         if split not in ("session", "learner"):
             raise _bad("validation_split", "must be one of session, learner")
         if split == "learner":
             merged["validation_split"] = split
+        if device not in ("cpu", "cuda", "mps", "auto"):
+            raise _bad("device", "must be one of cpu, cuda, mps, auto")
+        if device != "cpu":
+            merged["device"] = device
         return merged
 
     def _validate_family(self, hyperparameters: dict[str, Any]) -> None:
@@ -167,14 +177,15 @@ class GRUGenerator(BaseGenerator):
             val = [examples[i] for i in order[:n_val]]
             train = [examples[i] for i in order[n_val:]] or val
 
+        device = _device(torch, hp.get("device", "cpu"))
         threads = torch.get_num_threads()
         deterministic = torch.are_deterministic_algorithms_enabled()
         torch.set_num_threads(hp["threads"])
-        torch.use_deterministic_algorithms(True)
+        _deterministic(torch, device)
         try:
             torch.manual_seed(hp["seed"])
-            net = _network(torch, len(vocabulary) + 1, timing_size, hp)
-            edges = torch.tensor(bins["edges"]) if bins else None
+            net = _network(torch, len(vocabulary) + 1, timing_size, hp).to(device)
+            edges = torch.tensor(bins["edges"], device=device) if bins else None
             optimiser = torch.optim.Adam(net.parameters(), lr=hp["learning_rate"])
             best, best_state, stale, history = math.inf, None, 0, []
             for epoch in range(hp["epochs"]):
@@ -182,18 +193,19 @@ class GRUGenerator(BaseGenerator):
                 rng.shuffle(train)
                 for batch in _batches(train, hp["batch_size"]):
                     optimiser.zero_grad()
-                    loss = _loss(torch, net, batch, hp, edges)
+                    loss = _loss(torch, net, batch, hp, edges, device)
                     loss.backward()
                     torch.nn.utils.clip_grad_norm_(net.parameters(), 5.0)
                     optimiser.step()
                 net.eval()
                 with torch.no_grad():
-                    score = _mean_loss(torch, net, val or train, hp, edges)
+                    score = _mean_loss(torch, net, val or train, hp, edges, device)
                 history.append(score)
                 if score < best - 1e-6:
                     best, stale = score, 0
                     best_state = {
-                        k: v.detach().clone() for k, v in net.state_dict().items()
+                        k: v.detach().to("cpu").clone()
+                        for k, v in net.state_dict().items()
                     }
                 else:
                     stale += 1
@@ -312,6 +324,7 @@ def _loss(
     batch: list[tuple[list[int], list[float]]],
     hp: Mapping[str, Any],
     edges: Any = None,
+    device: Any = None,
 ) -> Any:
     k = hp["n_mixtures"]
     longest = max(len(tokens) for tokens, _ in batch)
@@ -329,6 +342,10 @@ def _loss(
             # step j (input = token j) predicts the gap after token j
             gap_targets[row, 1 : 1 + len(gaps)] = torch.tensor(gaps)
             gap_mask[row, 1 : 1 + len(gaps)] = 1.0
+    if device is not None:
+        inputs, targets, gap_targets, token_mask, gap_mask = (
+            t.to(device) for t in (inputs, targets, gap_targets, token_mask, gap_mask)
+        )
     out, _ = net.gru(net.embed(inputs))
     logits = net.next_token(out)
     token_nll = torch.nn.functional.cross_entropy(
@@ -357,10 +374,11 @@ def _mean_loss(
     examples: list[tuple[list[int], list[float]]],
     hp: Mapping[str, Any],
     edges: Any = None,
+    device: Any = None,
 ) -> float:
     total, weight = 0.0, 0
     for batch in _batches(examples, hp["batch_size"]):
         n = sum(len(tokens) for tokens, _ in batch)
-        total += float(_loss(torch, net, batch, hp, edges)) * n
+        total += float(_loss(torch, net, batch, hp, edges, device)) * n
         weight += n
     return total / max(weight, 1)

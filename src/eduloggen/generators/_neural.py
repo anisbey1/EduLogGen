@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import base64
 import math
+import os
 import random
 from array import array
 from bisect import bisect_left
@@ -127,3 +128,39 @@ def _learner_validation(
     rng.shuffle(distinct)
     held = set(distinct[: max(1, int(len(distinct) * fraction))])
     return {i for i, learner in enumerate(learners) if learner in held}
+
+
+def _device(torch: Any, name: str) -> Any:
+    if name == "auto":
+        if torch.cuda.is_available():
+            name = "cuda"
+        elif getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
+            name = "mps"
+        else:
+            name = "cpu"
+    available = {
+        "cpu": True,
+        "cuda": torch.cuda.is_available(),
+        "mps": bool(
+            getattr(torch.backends, "mps", None) and torch.backends.mps.is_available()
+        ),
+    }
+    if not available[name]:
+        raise FitError(
+            f"device {name!r} is not available",
+            code="fit_invalid_hyperparameter",
+            context={"key": "device"},
+        )
+    return torch.device(name)
+
+
+def _deterministic(torch: Any, device: Any) -> None:
+    """Enable deterministic algorithms for training on ``device``.
+
+    Strict on CPU. Best effort on a GPU: CUDA needs a fixed cuBLAS workspace
+    (set here unless already set), and operations without a deterministic GPU
+    implementation warn instead of failing.
+    """
+    if device.type == "cuda":
+        os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+    torch.use_deterministic_algorithms(True, warn_only=device.type != "cpu")

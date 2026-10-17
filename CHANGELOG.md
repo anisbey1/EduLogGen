@@ -24,12 +24,19 @@ sequences better than the Markov generators (`studies/RESULTS_v16.md`).
   generation with a rolling context, temperature and top-k sampling. Models
   stay JSON; training is seeded and deterministic on CPU for a fixed thread
   count. See the "Transformer generator" documentation page
-- `gru`: opt-in `validation_split="learner"`; the default (`session`) and
-  v1.5.0 models are unchanged, fingerprints included
+- `gru`: opt-in `validation_split="learner"` and `device` (`cuda`, `mps`,
+  `auto`; training only); the defaults and v1.5.0 models are unchanged,
+  fingerprints included
+- GPU training of both neural generators is best-effort deterministic: on
+  CUDA a fixed cuBLAS workspace is set, and operations without a
+  deterministic GPU kernel warn instead of failing
 - Studies: `studies/run_v16.py` and `studies/worker.py` for the
   six-generator comparison, per-generator costs (fit and generation time,
   peak memory, parameters, model size), and Transformer sensitivity to
-  context length and training-data size
+  context length and training-data size; `studies/tune_v16.py` and
+  `studies/colab_tuning.ipynb` for an equal-budget GRU and Transformer
+  tuning protocol (inner-validation selection, three training seeds), which
+  can run on a Colab GPU
 
 ### Changed
 

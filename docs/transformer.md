@@ -182,8 +182,16 @@ Plus the shared `length_model` and `fixed_length`.
 - Generation always runs on CPU and is reproducible for a given model and
   seed.
 - `device="cuda"`/`"mps"` (or `"auto"`) trains on a GPU when one is
-  available, and fails with a clear error otherwise. GPU training is not
-  covered by the test suite and is not guaranteed to be deterministic.
+  available, and fails with a clear error otherwise. `auto` picks CUDA, then
+  MPS, then the CPU. The same option exists for `gru`.
+- GPU training is best-effort deterministic only: on CUDA, EduLogGen sets
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8` (unless already set; set it before
+  anything uses CUDA), and operations without a deterministic GPU kernel
+  warn instead of failing. Two GPU fits may differ slightly; report GPU and
+  CPU results separately. GPU training is not covered by the CI test suite.
+- A GPU helps training only, and only for large data: on small data the
+  transfer overhead dominates. `studies/colab_tuning.ipynb` runs the
+  tuning study on a Colab GPU.
 
 ## Saving and loading
 

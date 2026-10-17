@@ -356,6 +356,16 @@ def _n_parameters(model: Any) -> int | None:
     return None
 
 
+def _training(model: Any) -> dict[str, Any] | None:
+    """Epochs and device of a neural fit (None for other generators)."""
+    if "transformer" in model.parameters:
+        t = model.parameters["transformer"]["training"]
+        return {k: t[k] for k in ("best_epoch", "epochs_trained", "device")}
+    if "gru" in model.parameters:
+        return {"epochs_trained": model.parameters["gru"]["epochs_trained"]}
+    return None
+
+
 # ---------------------------------------------------------------------------
 # 5. Sensitivity (v1.6.0): fast fidelity of one configuration
 # ---------------------------------------------------------------------------
@@ -422,6 +432,7 @@ def fast_fidelity(
         "train_sessions": train.n_sessions,
         "n_parameters": _n_parameters(model),
         "model_json_bytes": len(json.dumps(model.to_dict(), default=str)),
+        "training": _training(model),
     }
 
 

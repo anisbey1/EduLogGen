@@ -151,3 +151,22 @@ def test_learner_validation_split_is_opt_in(data: Dataset) -> None:
     model = gru.fit(data, {**SMALL, "validation_split": "learner"})
     assert model.hyperparameters["validation_split"] == "learner"
     assert model.fingerprint() != gru.fit(data, SMALL).fingerprint()
+
+
+def test_device_is_opt_in(data: Dataset) -> None:
+    gru = get_generator("gru")
+    assert "device" not in gru.validate_hyperparameters({**SMALL, "device": "cpu"})
+    assert gru.validate_hyperparameters({**SMALL, "device": "auto"})["device"] == "auto"
+    with pytest.raises(ConfigError):
+        gru.validate_hyperparameters({**SMALL, "device": "tpu"})
+    torch = pytest.importorskip("torch")
+    default = gru.fit(data, SMALL)
+    assert gru.fit(data, {**SMALL, "device": "cpu"}).fingerprint() == (
+        default.fingerprint()
+    )
+    if not torch.cuda.is_available():
+        with pytest.raises(FitError, match="not available"):
+            gru.fit(data, {**SMALL, "device": "cuda"})
+    if not torch.cuda.is_available() and not torch.backends.mps.is_available():
+        auto = gru.fit(data, {**SMALL, "device": "auto"})  # falls back to the CPU
+        assert auto.parameters["gru"]["weights"] == default.parameters["gru"]["weights"]

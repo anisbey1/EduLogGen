@@ -5,6 +5,7 @@ from __future__ import annotations
 import builtins
 import logging
 import math
+import os
 from itertools import pairwise
 from pathlib import Path
 from typing import Any
@@ -448,3 +449,22 @@ def test_cli_fit_and_generate(tmp_path: Path) -> None:
         == 0
     )
     assert (d / "s").is_dir()
+
+
+def test_deterministic_mode_per_device(monkeypatch: pytest.MonkeyPatch) -> None:
+    torch = pytest.importorskip("torch")
+    from eduloggen.generators._neural import _deterministic
+
+    calls: list[tuple[bool, bool]] = []
+    monkeypatch.setattr(
+        torch,
+        "use_deterministic_algorithms",
+        lambda mode, warn_only=False: calls.append((mode, warn_only)),
+    )
+    monkeypatch.delenv("CUBLAS_WORKSPACE_CONFIG", raising=False)
+    _deterministic(torch, torch.device("cpu"))
+    assert calls[-1] == (True, False)
+    assert "CUBLAS_WORKSPACE_CONFIG" not in os.environ
+    _deterministic(torch, torch.device("cuda"))
+    assert calls[-1] == (True, True)
+    assert os.environ["CUBLAS_WORKSPACE_CONFIG"] == ":4096:8"
